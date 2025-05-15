@@ -18,17 +18,14 @@ class AppDrawer extends StatelessWidget {
               color: Theme.of(context).colorScheme.primary,
               padding: const EdgeInsets.all(16.0),
               child: Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.center,
-                crossAxisAlignment:
-                    CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text('Menu', style: Theme.of(context).textTheme.bodyLarge),
                 ],
               ),
             ),
 
-            
             ListTile(
               title: Text('Home'),
               onTap: () {

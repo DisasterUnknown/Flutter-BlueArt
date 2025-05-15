@@ -24,7 +24,6 @@ class _LayoutState extends State<Layout> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
@@ -32,19 +31,19 @@ class _LayoutState extends State<Layout> {
         child: Scaffold(
           // Top App Bar Component
           appBar: TopAppBar(),
-        
+
           // AppDrawer component
           drawer: AppDrawer(
             selectedIndex: _selectedIndex,
             onItemTapped: _onItemTapped,
           ),
-        
+
           // Page Connect Component
-          body: PageContent(index: _selectedIndex),
-        
+          body: PageContent(index: _selectedIndex, onItemTapped: _onItemTapped),
+
           // Bottum Nav Bar Component
           bottomNavigationBar: BottomNavBar(
-            selectedIndex: _selectedIndex,
+            selectedIndex: _selectedIndex >= 0 && _selectedIndex <= 2 ? _selectedIndex : -1,
             onItemTapped: _onItemTapped,
           ),
         ),

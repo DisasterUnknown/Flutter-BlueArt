@@ -10,13 +10,13 @@ class BottomNavBar extends StatelessWidget {
     bool isValidIndex = selectedIndex >= 0 && selectedIndex <= 2;
 
     return BottomNavigationBar(
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
 
       // If the nav is in the nav list!!
       selectedItemColor: isValidIndex 
         ? Theme.of(context).colorScheme.onPrimaryContainer
-        : Theme.of(context).colorScheme.surface,
-      unselectedItemColor: Theme.of(context).colorScheme.surface,
+        : Theme.of(context).colorScheme.onPrimary,
+      unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
       type: BottomNavigationBarType.fixed,
       // Page Bottom Navigation
       items: const <BottomNavigationBarItem>[

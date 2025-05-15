@@ -223,7 +223,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             ['Customer', 'Seller'].map((role) {
                               return DropdownMenuItem(
                                 value: role,
-                                child: Text(role),
+                                child: Text(role, style: Theme.of(context).textTheme.bodyLarge,),
                               );
                             }).toList(),
                         onChanged: (value) {

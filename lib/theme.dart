@@ -6,6 +6,7 @@ class AppTheme {
     useMaterial3: true,
     colorScheme: ColorScheme.light(
       primary: Color(0xFF90CAF9),
+      onPrimaryContainer: Color.fromARGB(255, 35, 46, 255),
       surface: Colors.white,
       surfaceContainerHighest: const Color.fromARGB(255, 224, 224, 224),
       onPrimary: Colors.black,

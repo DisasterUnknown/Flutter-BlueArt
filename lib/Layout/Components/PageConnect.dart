@@ -10,11 +10,21 @@ class PageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Page Content Section
-    return IndexedStack(index: index, children: [
+    // Keep State Page Section
+    final List<Widget> stateNotLossPages = [
       Text('Index 0: Home'),
       Text('Index 1: Business'),
-      LoginPage(onItemTapped: onItemTapped),
-      RegisterPage(onItemTapped: onItemTapped),
-    ]);
+    ];
+
+    // Pages where the state should remove
+    if (index == 2) {
+      return LoginPage(onItemTapped: onItemTapped);
+    } else if (index == 3) {
+      return RegisterPage(onItemTapped: onItemTapped);
+    } else if (index >= 0 && index < stateNotLossPages.length) {
+      return IndexedStack(index: index, children: stateNotLossPages);
+    } else {
+      return Center(child: Text('Page not found'));
+    }
   }
 }

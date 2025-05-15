@@ -1,4 +1,5 @@
 import 'package:assignment/Pages/loginPage.dart';
+import 'package:assignment/Pages/registerPage.dart';
 import 'package:flutter/material.dart';
 
 class PageContent extends StatelessWidget {
@@ -13,7 +14,7 @@ class PageContent extends StatelessWidget {
       Text('Index 0: Home'),
       Text('Index 1: Business'),
       LoginPage(onItemTapped: onItemTapped),
-      Text("Register Page"),
+      RegisterPage(onItemTapped: onItemTapped),
     ]);
   }
 }

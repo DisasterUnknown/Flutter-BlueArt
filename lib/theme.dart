@@ -6,11 +6,11 @@ class AppTheme {
     useMaterial3: true,
     colorScheme: ColorScheme.light(
       primary: Color(0xFF90CAF9),
-      onPrimaryContainer: Color.fromARGB(255, 35, 46, 255),
-      surface: Colors.white,
+      onPrimaryContainer: Color.fromARGB(255, 35, 46, 255),                 // Selected Nav 
+      surface: Colors.white,                                                // Background Color and Bottom Nav Bar Unselected Icon Color
       surfaceContainerHighest: const Color.fromARGB(255, 224, 224, 224),
-      onPrimary: Colors.black,
-      onSurfaceVariant: Colors.white,
+      onPrimary: Colors.black,                                              // Hamburger Icon Color
+      onSurfaceVariant: Colors.white,                                       // Drawer Background Color
     ),
     textTheme: const TextTheme(
       titleLarge: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30.0,),
@@ -32,10 +32,11 @@ class AppTheme {
     useMaterial3: true,
     colorScheme: ColorScheme.dark(
       primary: Color(0xFF0D47A1),
-      surface: Colors.black,
+      onPrimaryContainer: Colors.white,                                     // Selected Nav 
+      surface: Colors.black,                                                // Background Color and Bottom Nav Bar Unselected Icon Color
       surfaceContainerHighest: const Color.fromARGB(255, 37, 37, 37),
-      onPrimary: Colors.white,
-      onSurfaceVariant: const Color.fromARGB(176, 44, 44, 44),
+      onPrimary: Colors.white,                                              // Hamburger Icon Color
+      onSurfaceVariant: const Color.fromARGB(176, 44, 44, 44),              // Drawer Background Color
     ),
     textTheme: const TextTheme(
       titleLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30.0,),

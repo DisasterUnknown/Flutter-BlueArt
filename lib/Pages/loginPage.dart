@@ -34,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final loginFormWidth = screenWidth * 0.8;
+    final loginFormWidth = screenWidth > 600 ? 400.0 : screenWidth * 0.8;
 
     return Stack(
       children: [
@@ -46,23 +46,23 @@ class _LoginPageState extends State<LoginPage> {
         Container(color: Colors.black.withOpacity(0.5)),
 
         Center(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Container(
-              width: loginFormWidth,
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                border: Border.all(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Container(
+                width: loginFormWidth,
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  width: 1.5,
+                  boxShadow: [BoxShadow(blurRadius: 6, offset: Offset(0, 3))],
                 ),
-                borderRadius: BorderRadius.circular(12),
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                boxShadow: [BoxShadow(blurRadius: 6, offset: Offset(0, 3))],
-              ),
-              child: Form(
-                key: _formKey,
-                child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,

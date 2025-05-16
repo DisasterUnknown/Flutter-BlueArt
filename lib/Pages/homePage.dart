@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
   final Function(int) onItemTapped;
-  const HomePage({super.key, required this.onItemTapped});
+  final Function(Item)? onProductSelect;
+  const HomePage({super.key, required this.onItemTapped, required this.onProductSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -69,78 +70,85 @@ class HomePage extends StatelessWidget {
                         // The product Card
                         child: LayoutBuilder(
                           builder: (context, constraints) {
-                            return Column(
-                              children: [
-                                Container(
-                                  height: constraints.maxHeight * 0.7,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(12),
-                                      topRight: Radius.circular(12),
-                                    ),
-
-                                    // Adding the img
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        artProductList[index].imageURL,
+                            return GestureDetector(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: constraints.maxHeight * 0.7,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(12),
+                                        topRight: Radius.circular(12),
                                       ),
-                                      fit: BoxFit.cover,
-                                      colorFilter: ColorFilter.mode(
-                                        Colors.black.withAlpha(30),
-                                        BlendMode.darken,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                // Product Details Section
-                                Container(
-                                  height: constraints.maxHeight * 0.3,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(12),
-                                      bottomRight: Radius.circular(12),
-                                    ),
-                                  ),
-
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 1.0,
+                              
+                                      // Adding the img
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          artProductList[index].imageURL,
                                         ),
-                                        child: Text(
-                                          artProductList[index].title,
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.titleMedium?.copyWith(
-                                            fontWeight: FontWeight.bold,
+                                        fit: BoxFit.cover,
+                                        colorFilter: ColorFilter.mode(
+                                          Colors.black.withAlpha(30),
+                                          BlendMode.darken,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              
+                                  // Product Details Section
+                                  Container(
+                                    height: constraints.maxHeight * 0.3,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(12),
+                                        bottomRight: Radius.circular(12),
+                                      ),
+                                    ),
+                              
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 1.0,
                                           ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 1.0,
-                                        ),
-                                        child: Text(
-                                          "LKR ${artProductList[index].price}",
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.bodyMedium?.copyWith(
-                                            fontWeight: FontWeight.w500,
+                                          child: Text(
+                                            artProductList[index].title,
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.titleMedium?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(height: 5),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 1.0,
+                                          ),
+                                          child: Text(
+                                            "LKR ${artProductList[index].price}",
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
+
+                              // Navigating to the View Product Details Page
+                              onTap: () {
+                                onProductSelect!(figureProductList[index]);
+                              },
                             );
                           },
                         ),
@@ -217,78 +225,85 @@ class HomePage extends StatelessWidget {
                         // Creating the container
                         child: LayoutBuilder(
                           builder: (context, constraints) {
-                            return Column(
-                              children: [
-                                Container(
-                                  height: constraints.maxHeight * 0.7,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(12),
-                                      topRight: Radius.circular(12),
-                                    ),
-
-                                    // Adding the img
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        figureProductList[index].imageURL,
+                            return GestureDetector(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: constraints.maxHeight * 0.7,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(12),
+                                        topRight: Radius.circular(12),
                                       ),
-                                      fit: BoxFit.cover,
-                                      colorFilter: ColorFilter.mode(
-                                        Colors.black.withAlpha(30),
-                                        BlendMode.darken,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                // Product Details Section
-                                Container(
-                                  height: constraints.maxHeight * 0.3,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(12),
-                                      bottomRight: Radius.circular(12),
-                                    ),
-                                  ),
-
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 1.0,
+                              
+                                      // Adding the img
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                          figureProductList[index].imageURL,
                                         ),
-                                        child: Text(
-                                          figureProductList[index].title,
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.titleMedium?.copyWith(
-                                            fontWeight: FontWeight.bold,
+                                        fit: BoxFit.cover,
+                                        colorFilter: ColorFilter.mode(
+                                          Colors.black.withAlpha(30),
+                                          BlendMode.darken,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              
+                                  // Product Details Section
+                                  Container(
+                                    height: constraints.maxHeight * 0.3,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(12),
+                                        bottomRight: Radius.circular(12),
+                                      ),
+                                    ),
+                              
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 1.0,
                                           ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 1.0,
-                                        ),
-                                        child: Text(
-                                          "LKR ${figureProductList[index].price}",
-                                          style: Theme.of(
-                                            context,
-                                          ).textTheme.bodyMedium?.copyWith(
-                                            fontWeight: FontWeight.w500,
+                                          child: Text(
+                                            figureProductList[index].title,
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.titleMedium?.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(height: 5),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 1.0,
+                                          ),
+                                          child: Text(
+                                            "LKR ${figureProductList[index].price}",
+                                            style: Theme.of(
+                                              context,
+                                            ).textTheme.bodyMedium?.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
+
+                              // Navigating to the View Product Details Page
+                              onTap: () {
+                                onProductSelect!(figureProductList[index]);
+                              },
                             );
                           },
                         ),

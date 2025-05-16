@@ -45,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final registerFormWidth = screenWidth * 0.8;
+    final registerFormWidth = screenWidth > 600 ? 400.0 : screenWidth * 0.8;
 
     return Stack(
       children: [
@@ -57,23 +57,23 @@ class _RegisterPageState extends State<RegisterPage> {
         Container(color: Colors.black.withOpacity(0.5)),
 
         Center(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Container(
-              width: registerFormWidth,
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                border: Border.all(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Container(
+                width: registerFormWidth,
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  width: 1.5,
+                  boxShadow: [BoxShadow(blurRadius: 6, offset: Offset(0, 3))],
                 ),
-                borderRadius: BorderRadius.circular(12),
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                boxShadow: [BoxShadow(blurRadius: 6, offset: Offset(0, 3))],
-              ),
-              child: Form(
-                key: _formKey,
-                child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -83,7 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       SizedBox(height: 20),
-
+                  
                       // Username input field
                       TextFormField(
                         controller: _unameIN,
@@ -100,7 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           return null;
                         },
                       ),
-
+                  
                       // Email input field
                       TextFormField(
                         controller: _emailIN,
@@ -117,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           return null;
                         },
                       ),
-
+                  
                       // Password input field
                       TextFormField(
                         controller: _passIN,
@@ -143,7 +143,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           return null;
                         },
                       ),
-
+                  
                       // Contact Number input field
                       if (_selectedRole == 'Seller') ...[
                         TextFormField(
@@ -160,7 +160,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 '',
                               );
                               final buffer = StringBuffer();
-
+                  
                               for (
                                 int i = 0;
                                 i < disgitsOnly.length && i < 10;
@@ -169,7 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 if (i == 3 || i == 6) buffer.write(' ');
                                 buffer.write(disgitsOnly[i]);
                               }
-
+                  
                               return TextEditingValue(
                                 text: buffer.toString(),
                                 selection: TextSelection.collapsed(
@@ -192,7 +192,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                         ),
                       ],
-
+                  
                       // Address input field
                       if (_selectedRole == 'Seller') ...[
                         TextFormField(
@@ -211,7 +211,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                         ),
                       ],
-
+                  
                       // Role Selection Dropdown
                       DropdownButtonFormField(
                         value: _selectedRole,
@@ -239,7 +239,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                       ),
                       SizedBox(height: 20),
-
+                  
                       // User Register Page Nav (Link)
                       ElevatedButton(
                         onPressed: _register,

@@ -1,3 +1,4 @@
+import 'package:assignment/Pages/homePage.dart';
 import 'package:assignment/Pages/loginPage.dart';
 import 'package:assignment/Pages/registerPage.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class PageContent extends StatelessWidget {
     // Page Content Section
     // Keep State Page Section
     final List<Widget> stateNotLossPages = [
-      Text('Index 0: Home'),
+      HomePage(onItemTapped: onItemTapped),
       Text('Index 1: Business'),
     ];
 

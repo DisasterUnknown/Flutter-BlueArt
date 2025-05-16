@@ -15,7 +15,7 @@ class BottomNavBar extends StatelessWidget {
       // If the nav is in the nav list!!
       selectedItemColor: isValidIndex 
         ? Theme.of(context).colorScheme.onPrimaryContainer
-        : Theme.of(context).colorScheme.onPrimary,
+        : Theme.of(context).colorScheme.surface,
       unselectedItemColor: Theme.of(context).colorScheme.surface,
       type: BottomNavigationBarType.fixed,
       // Page Bottom Navigation

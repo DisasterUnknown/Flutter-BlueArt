@@ -16,7 +16,7 @@ class Layout extends StatefulWidget {
 
 class _LayoutState extends State<Layout> {
   int _selectedIndex = 0;
-  Item _selectedProductID = artProductList[0];
+  Item _selectedProduct = artProductList[0];
   bool _isBottomNavVisible = true; 
 
   // Page Navigate index Store
@@ -27,9 +27,9 @@ class _LayoutState extends State<Layout> {
   }
 
   // Details Page product ID Store
-  void _onProductSelect(Item productID) {
+  void _onProductSelect(Item product) {
     setState(() {
-      _selectedProductID = productID;
+      _selectedProduct = product;
       _selectedIndex = 4;
     });
   }
@@ -74,7 +74,7 @@ class _LayoutState extends State<Layout> {
             child: PageContent(
               index: _selectedIndex,
               onItemTapped: _onItemTapped,
-              selectedProductID: _selectedProductID,
+              selectedProduct: _selectedProduct,
               onProductSelect: _onProductSelect,
             ),
           ),

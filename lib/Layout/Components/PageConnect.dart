@@ -9,9 +9,9 @@ class PageContent extends StatelessWidget {
   final int index;
   final Function(int) onItemTapped;
   final Function(Item)? onProductSelect;
-  final Item? selectedProductID;
+  final Item? selectedProduct;
 
-  const PageContent({required this.index, required this.onItemTapped, this.selectedProductID, this.onProductSelect});
+  const PageContent({required this.index, required this.onItemTapped, this.selectedProduct, this.onProductSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class PageContent extends StatelessWidget {
     } else if (index == 3) {
       return RegisterPage(onItemTapped: onItemTapped);
     } else if (index == 4) {
-      return ViewProductDetailsPage(ProductID: selectedProductID,);
+      return ViewProductDetailsPage(Product: selectedProduct,);
     } else if (index >= 0 && index < stateNotLossPages.length) {
       return IndexedStack(index: index, children: stateNotLossPages);
     } else {

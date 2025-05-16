@@ -147,7 +147,7 @@ class HomePage extends StatelessWidget {
 
                               // Navigating to the View Product Details Page
                               onTap: () {
-                                onProductSelect!(figureProductList[index]);
+                                onProductSelect!(artProductList[index]);
                               },
                             );
                           },

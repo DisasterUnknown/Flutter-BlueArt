@@ -11,6 +11,7 @@ class AppTheme {
       surfaceContainerHighest: const Color.fromARGB(255, 224, 224, 224),
       onPrimary: Colors.black,                                              // Hamburger Icon Color
       onSurfaceVariant: Colors.white,                                       // Drawer Background Color
+      tertiary: const Color.fromARGB(255, 0, 185, 62)                        // Confirm Color
     ),
     textTheme: const TextTheme(
       titleLarge: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30.0,),
@@ -34,9 +35,10 @@ class AppTheme {
       primary: Color(0xFF0D47A1),
       onPrimaryContainer: Colors.white,                                     // Selected Nav 
       surface: Colors.black,                                                // Background Color and Bottom Nav Bar Unselected Icon Color
-      surfaceContainerHighest: const Color.fromARGB(255, 37, 37, 37),
+      surfaceContainerHighest: const Color.fromARGB(255, 37, 37, 37),       // Form Color
       onPrimary: Colors.white,                                              // Hamburger Icon Color
       onSurfaceVariant: const Color.fromARGB(176, 44, 44, 44),              // Drawer Background Color
+      tertiary: const Color.fromARGB(255, 0, 90, 30)                        // Confirm Color
     ),
     textTheme: const TextTheme(
       titleLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30.0,),

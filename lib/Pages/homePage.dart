@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
 
           // Art Section
           Container(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: 400,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
                 // X axis Scrolling Area
                 Container(
                   margin: EdgeInsets.only(left: 15, right: 15),
-                  height: MediaQuery.of(context).size.height * 0.35,
+                  height: 350,
 
                   // Creating the x axis Scrole Products using the Products List
                   child: ListView.builder(
@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
                     itemCount: artProductList.length,
                     itemBuilder: (context, index) {
                       return Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
+                        width: 250,
                         margin: EdgeInsets.only(left: 10, right: 10, top: 10),
                         decoration: BoxDecoration(
                           color:
@@ -163,7 +163,7 @@ class HomePage extends StatelessWidget {
 
           // Action Figure Section
           Container(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: 400,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -189,7 +189,7 @@ class HomePage extends StatelessWidget {
                 // X axis Scrolling Area
                 Container(
                   margin: EdgeInsets.only(left: 15, right: 15),
-                  height: MediaQuery.of(context).size.height * 0.35,
+                  height: 350,
 
                   // Creating the x axis product list for Collectables
                   child: ListView.builder(
@@ -197,7 +197,7 @@ class HomePage extends StatelessWidget {
                     itemCount: figureProductList.length,
                     itemBuilder: (context, index) {
                       return Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
+                        width: 250,
                         margin: EdgeInsets.only(left: 10, right: 10, top: 10),
                         decoration: BoxDecoration(
                           color:

@@ -20,7 +20,7 @@ class AppDrawer extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
+                children: [
                   Text('Menu', style: Theme.of(context).textTheme.bodyLarge),
                 ],
               ),
@@ -41,7 +41,7 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Uni'),
+              title: Text('Login'),
               onTap: () {
                 Navigator.pop(context);
                 onItemTapped(2); // Close the drawer

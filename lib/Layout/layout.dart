@@ -5,7 +5,6 @@ import 'package:assignment/Layout/Components/BottomNavBar.dart';
 import 'package:assignment/Layout/Components/PageConnect.dart';
 import 'package:assignment/Layout/Components/AppDrawer.dart';
 import 'package:assignment/Lists/productsList.dart';
-import 'package:flutter/rendering.dart';
 
 class Layout extends StatefulWidget {
   const Layout({super.key});
@@ -16,8 +15,8 @@ class Layout extends StatefulWidget {
 
 class _LayoutState extends State<Layout> {
   int _selectedIndex = 0;
+  String _selectedProductCategory = 'art';
   Item _selectedProduct = artProductList[0];
-  bool _isBottomNavVisible = true; 
 
   // Page Navigate index Store
   void _onItemTapped(int index) {
@@ -34,6 +33,14 @@ class _LayoutState extends State<Layout> {
     });
   }
 
+  // Getting the user Selected Category type
+  void _onCategorySelect(String category) {
+    setState(() {
+      _selectedProductCategory = category;
+      _selectedIndex = 5;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
@@ -45,7 +52,7 @@ class _LayoutState extends State<Layout> {
       home: SafeArea(
         child: Scaffold(
           // Top App Bar Component
-          appBar: TopAppBar(),
+          appBar: TopAppBar(onItemTapped: _onItemTapped,),
 
           // AppDrawer component
           drawer: AppDrawer(
@@ -54,38 +61,24 @@ class _LayoutState extends State<Layout> {
           ),
 
           // Page Connect Component
-          body: NotificationListener<UserScrollNotification>(
-            // Checking the scrole direction to hide the bottum nav bar 
-            onNotification: (notification) {
-              if (isLandScape) {
-                if (notification.direction == ScrollDirection.reverse && _isBottomNavVisible) {
-                  setState(() {
-                    _isBottomNavVisible = false;
-                  });
-                } else if (notification.direction == ScrollDirection.forward && !_isBottomNavVisible) {
-                  setState(() {
-                    _isBottomNavVisible = true;
-                  });
-                }
-              }
-              return false;
-            },
-
-            child: PageContent(
-              index: _selectedIndex,
-              onItemTapped: _onItemTapped,
-              selectedProduct: _selectedProduct,
-              onProductSelect: _onProductSelect,
-            ),
+          body: PageContent(
+            index: _selectedIndex,
+            onItemTapped: _onItemTapped,
+            selectedProduct: _selectedProduct,
+            onProductSelect: _onProductSelect,
+            selectedProductCategory: _selectedProductCategory,
+            onCategorySelect: _onCategorySelect,
           ),
 
           // Bottum Nav Bar Component
-          bottomNavigationBar: BottomNavBar(
-            selectedIndex:
-                _selectedIndex >= 0 && _selectedIndex <= 2
-                    ? _selectedIndex
-                    : -1,
-            onItemTapped: _onItemTapped,
+          bottomNavigationBar: isLandScape
+            ? null
+            : BottomNavBar(
+              selectedIndex:
+                  _selectedIndex >= 0 && _selectedIndex <= 2
+                      ? _selectedIndex
+                      : -1,
+              onItemTapped: _onItemTapped,
           ),
         ),
       ),

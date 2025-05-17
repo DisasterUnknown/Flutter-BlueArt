@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   final Function(int) onItemTapped;
   final Function(Item)? onProductSelect;
-  const HomePage({super.key, required this.onItemTapped, required this.onProductSelect});
+  final Function(String)? onCategorySelect;
+  const HomePage({super.key, required this.onItemTapped, required this.onProductSelect, required this.onCategorySelect});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +13,7 @@ class HomePage extends StatelessWidget {
       child: Column(
         children: [
           // Margin top
-          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+          SizedBox(height: 50),
 
           // Art Section
           Container(
@@ -33,7 +34,7 @@ class HomePage extends StatelessWidget {
                       GestureDetector(
                         child: Text("See More > "), 
                         onTap: () {
-                          onItemTapped(1);
+                          onCategorySelect!('art');
                         }),
                     ],
                   ),
@@ -164,7 +165,7 @@ class HomePage extends StatelessWidget {
           // ===========================================================
           // ===========================================================
           // Middle Margin
-          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+          SizedBox(height: 50),
           // ===========================================================
           // ===========================================================
           // ===========================================================
@@ -188,7 +189,7 @@ class HomePage extends StatelessWidget {
                       GestureDetector(
                         child: Text("See More > "), 
                         onTap: () {
-                          onItemTapped(1);
+                          onCategorySelect!('figure');
                         }),
                     ],
                   ),
@@ -316,7 +317,7 @@ class HomePage extends StatelessWidget {
           ),
 
           // Margin Bottum
-          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+          SizedBox(height: 50),
         ],
       ),
     );

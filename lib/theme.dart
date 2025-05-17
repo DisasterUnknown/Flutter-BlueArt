@@ -20,6 +20,7 @@ class AppTheme {
       bodySmall: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15.0,),
 
       labelMedium: TextStyle(color: Color.fromARGB(255, 101, 101, 101), fontWeight: FontWeight.bold, fontSize: 20.0,),
+      labelSmall: TextStyle(color: Color.fromARGB(255, 0, 223, 74), fontWeight: FontWeight.bold, fontSize: 12.0,),          // Added to cart alert
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: Color(0xFF90CAF9),
@@ -47,6 +48,7 @@ class AppTheme {
       bodySmall: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15.0,),
       
       labelMedium: TextStyle(color: Color.fromARGB(255, 110, 110, 110), fontWeight: FontWeight.bold, fontSize: 20.0,),
+      labelSmall: TextStyle(color: Color.fromARGB(255, 0, 81, 27), fontWeight: FontWeight.bold, fontSize: 18.0,),          // Added to cart alert
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: Color(0xFF0D47A1),

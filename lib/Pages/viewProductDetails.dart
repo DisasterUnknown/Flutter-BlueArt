@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:intl/intl.dart';
 import 'package:assignment/Lists/productsList.dart';
 import 'package:flutter/material.dart';
 
@@ -10,10 +13,29 @@ class ViewProductDetailsPage extends StatefulWidget {
 }
 
 class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
+  int _productQuantity = 1;
+  bool _showMsg = false;
+
+  // Display Msg 
+  void _handleMsgDisplay() {
+    setState(() {
+      _showMsg = true;
+    });
+
+    Timer(Duration(seconds: 3), () {
+      if (mounted) {
+        setState(() {
+          _showMsg = false;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final productDetailsFormWidth = screenWidth > 600 ? 500.0 : screenWidth * 0.8;
+    final productDescriptionFormWidth = screenWidth > 600 ? screenWidth * 0.75 : screenWidth * 1.0;
 
     return Center(
       child: SingleChildScrollView(
@@ -84,7 +106,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Discount: ", style: Theme.of(context).textTheme.bodyLarge,),
-                          Text("LKR ${widget.Product!.discount}", style: Theme.of(context).textTheme.bodyLarge,)
+                          Text(widget.Product!.discount, style: Theme.of(context).textTheme.bodyLarge,)
                         ],
                       ),
                       SizedBox(height: 15,),
@@ -92,7 +114,17 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Price: ", style: Theme.of(context).textTheme.bodyLarge,),
-                          Text("LKR ${widget.Product!.price}", style: Theme.of(context).textTheme.bodyLarge,)
+                          Builder(
+                            builder: (context) {
+                              final formatter = NumberFormat("#,##0.0", "en_US");
+                              final itemPrice = widget.Product!.price.splitMapJoin(',',onMatch: (_) => '',);
+                              final itemDiscount = widget.Product!.discount.splitMapJoin('%', onMatch: (_) => '');
+                              final discount = int.parse(itemDiscount);
+                              final price = int.parse(itemPrice);
+                              final quantityPrice = (price - ((price/100)*discount)) * _productQuantity;
+                              return Text("LKR ${formatter.format(quantityPrice)}", style: Theme.of(context).textTheme.bodyLarge,);
+                            }
+                          )
                         ],
                       ),
                       SizedBox(height: 15,),
@@ -120,9 +152,29 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("<", style: Theme.of(context).textTheme.bodyLarge,),
-                                      Text("1", style: Theme.of(context).textTheme.bodyLarge,),
-                                      Text(">", style: Theme.of(context).textTheme.bodyLarge,),
+                                      GestureDetector(
+                                        child: Text(" < ", style: Theme.of(context).textTheme.bodyLarge,),
+                                        onTap: () {
+                                          setState(() {
+                                            _productQuantity++;
+                                            if (_productQuantity > 100) {
+                                              _productQuantity = 100;
+                                            }
+                                          });
+                                        },
+                                      ),
+                                      Text("$_productQuantity", style: Theme.of(context).textTheme.bodyLarge,),
+                                      GestureDetector(
+                                        child: Text(" > ", style: Theme.of(context).textTheme.bodyLarge,),
+                                        onTap: () {
+                                          setState(() {
+                                            _productQuantity--;
+                                            if (_productQuantity < 1) {
+                                              _productQuantity = 1;
+                                            }
+                                          });
+                                        },  
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -135,19 +187,31 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: 250,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                              color: Theme.of(context).colorScheme.tertiary,
+                          AnimatedOpacity(
+                            duration: Duration(milliseconds: 500),
+                            opacity: _showMsg ? 1.0 : 0.0,
+                            child: Text("Product Added To Cart!!", style: Theme.of(context).textTheme.labelSmall,)
+                          ),
+                          GestureDetector(
+                            child: Container(
+                              width: 250,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                color: Theme.of(context).colorScheme.tertiary,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 15, right: 15, top: 12, bottom: 11),
+                                child: Center(
+                                  child: Text("Add To Cart")
+                                ),
+                              ),
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 15, right: 15, top: 12, bottom: 11),
-                              child: Center(child: Text("Add To Cart")),
-                            ),
-                          )
+                            onTap: () {
+                              _handleMsgDisplay();
+                            },
+                          ),
                         ],
-                      )
+                      ),
                   ],
                 ),
               ),
@@ -161,9 +225,12 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
               children: [
                 Text("Description", style: Theme.of(context).textTheme.titleLarge,),
                 SizedBox(height: 30),
-                Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20),
-                  child: Text(widget.Product!.discription, textAlign: TextAlign.justify,),
+                Container(
+                  width: productDescriptionFormWidth,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    child: Text(widget.Product!.discription, textAlign: TextAlign.justify,),
+                  ),
                 ),
               ],
             ),

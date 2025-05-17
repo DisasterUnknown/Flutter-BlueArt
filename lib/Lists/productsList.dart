@@ -1,4 +1,4 @@
-List<Item> artProductList = [
+const List<Item> artProductList = [
   // Art Products
   Item(
     id: 1,
@@ -80,7 +80,7 @@ List<Item> figureProductList = [
     id: 2,
     title: 'Action Figure Monkey D. Luffy',
     price: '12,000',
-    discount: '1.5%',
+    discount: '15%',
     discription:
         "Set sail on the Grand Line with the fearless captain of the Straw Hat Pirates, Monkey D. Luffy! This highly detailed action figure captures Luffy in all his glory — from his signature straw hat to his iconic “Gomu Gomu no” poses. Made for collectors and One Piece fans, this figure is ready to bring Luffy’s indomitable spirit straight into your collection. 🏴‍☠️ Height: 7 inches (scale varies based on pose) 🧑‍🍳 Details: Luffy’s authentic red vest, blue shorts, and straw hat 💪 Pose Options: Includes interchangeable hands for different iconic action poses (Gomu Gomu no Pistol, Gear Second, etc.) 🔥 Material: High-quality PVC with realistic details and shading 🧳 Packaging: Premium box featuring One Piece artwork and logo 🔄 Articulation: Fully articulated for dynamic posing ⚓ 'I'm gonna be King of the Pirates!'",
     imageURL: 'assets/Figures/figur2.webp',
@@ -106,14 +106,14 @@ List<Item> figureProductList = [
 ];
 
 class Item {
-  int id;
-  String title;
-  String price;
-  String discount;
-  String discription;
-  String imageURL;
+  final int id;
+  final String title;
+  final String price;
+  final String discount;
+  final String discription;
+  final String imageURL;
 
-  Item({
+ const Item({
     required this.id,
     required this.title,
     required this.price,

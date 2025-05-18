@@ -15,12 +15,33 @@ class ViewProductDetailsPage extends StatefulWidget {
 class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
   int _productQuantity = 1;
   bool _showMsg = false;
+  String msgContent = "";
+
+  // Setting the Quantity value to the value of the cart product if exist
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < CartList.length; i++) {
+      if (CartList[i].id == widget.Product?.id) {
+        _productQuantity = CartList[i].quality;
+        break;
+      }
+    }
+  }
 
   // Display Msg 
-  void _handleMsgDisplay() {
+  void _handleMsgDisplay(int opption) {
     setState(() {
       _showMsg = true;
     });
+
+    if (opption == 1) {
+      msgContent = "Product Added To Cart!!";
+    } else if (opption == 2) {
+      msgContent = "Product Successfully Updated!!";
+    } else if (opption == 3) {
+      msgContent = "Product Already Exist in Cart!!";
+    }
 
     Timer(Duration(seconds: 3), () {
       if (mounted) {
@@ -190,7 +211,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                           AnimatedOpacity(
                             duration: Duration(milliseconds: 500),
                             opacity: _showMsg ? 1.0 : 0.0,
-                            child: Text("Product Added To Cart!!", style: Theme.of(context).textTheme.labelSmall,)
+                            child: Text(msgContent, style: Theme.of(context).textTheme.labelSmall,)
                           ),
                           GestureDetector(
                             child: Container(
@@ -207,7 +228,15 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                               ),
                             ),
                             onTap: () {
-                              _handleMsgDisplay();
+                              if (!CartList.any((item) => item.id == widget.Product!.id)) {
+                                Item.addProduct(widget.Product!, _productQuantity);
+                                _handleMsgDisplay(1);
+                              } else if (!CartList.any((item) => item.quality == _productQuantity)) {
+                                Item.updateProduct(widget.Product!, _productQuantity);
+                                _handleMsgDisplay(2);
+                              } else {
+                                _handleMsgDisplay(3);
+                              }
                             },
                           ),
                         ],

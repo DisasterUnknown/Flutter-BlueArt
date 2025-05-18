@@ -34,7 +34,7 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              title: Text('Business'),
+              title: Text('Cart'),
               onTap: () {
                 Navigator.pop(context);
                 onItemTapped(1); // Close the drawer

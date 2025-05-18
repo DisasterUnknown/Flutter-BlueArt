@@ -151,10 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
-                            TextInputFormatter.withFunction((
-                              oldValue,
-                              newValue,
-                            ) {
+                            TextInputFormatter.withFunction((oldValue, newValue,) {
                               final disgitsOnly = newValue.text.replaceAll(
                                 RegExp(r'[^0-9]'),
                                 '',

@@ -21,7 +21,7 @@ class BottomNavBar extends StatelessWidget {
       // Page Bottom Navigation
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.shop_2_outlined), label: 'Products',),
+        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart',),
         BottomNavigationBarItem(icon: Icon(Icons.login_outlined), label: 'Logout',),
       ],
       currentIndex: isValidIndex ? selectedIndex : 0,

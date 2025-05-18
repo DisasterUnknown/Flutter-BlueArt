@@ -11,7 +11,8 @@ class AppTheme {
       surfaceContainerHighest: const Color.fromARGB(255, 224, 224, 224),
       onPrimary: Colors.black,                                              // Hamburger Icon Color
       onSurfaceVariant: Colors.white,                                       // Drawer Background Color
-      tertiary: const Color.fromARGB(255, 0, 185, 62)                        // Confirm Color
+      tertiary: const Color.fromARGB(255, 0, 185, 62),                      // Confirm Color
+      onTertiary: const Color.fromARGB(255, 255, 108, 108),                 // Remove Color
     ),
     textTheme: const TextTheme(
       titleLarge: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 30.0,),
@@ -39,7 +40,8 @@ class AppTheme {
       surfaceContainerHighest: const Color.fromARGB(255, 37, 37, 37),       // Form Color
       onPrimary: Colors.white,                                              // Hamburger Icon Color
       onSurfaceVariant: const Color.fromARGB(176, 44, 44, 44),              // Drawer Background Color
-      tertiary: const Color.fromARGB(255, 0, 90, 30)                        // Confirm Color
+      tertiary: const Color.fromARGB(255, 0, 90, 30),                       // Confirm Color
+      onTertiary: const Color.fromARGB(255, 145, 0, 0),                     // Remove Color
     ),
     textTheme: const TextTheme(
       titleLarge: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30.0,),
@@ -48,7 +50,7 @@ class AppTheme {
       bodySmall: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15.0,),
       
       labelMedium: TextStyle(color: Color.fromARGB(255, 110, 110, 110), fontWeight: FontWeight.bold, fontSize: 20.0,),
-      labelSmall: TextStyle(color: Color.fromARGB(255, 0, 81, 27), fontWeight: FontWeight.bold, fontSize: 18.0,),          // Added to cart alert
+      labelSmall: TextStyle(color: Color.fromARGB(255, 0, 206, 69), fontWeight: FontWeight.bold, fontSize: 18.0,),          // Added to cart alert
     ),
     appBarTheme: AppBarTheme(
       backgroundColor: Color(0xFF0D47A1),

@@ -1,4 +1,6 @@
 import 'package:assignment/Lists/productsList.dart';
+import 'package:assignment/Pages/cartPage.dart';
+import 'package:assignment/Pages/checkOutPage.dart';
 import 'package:assignment/Pages/homePage.dart';
 import 'package:assignment/Pages/loginPage.dart';
 import 'package:assignment/Pages/registerPage.dart';
@@ -22,19 +24,20 @@ class PageContent extends StatelessWidget {
     // Keep State Page Section
     final List<Widget> stateNotLossPages = [
       HomePage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, onCategorySelect: onCategorySelect),
-      Text('Index 1: Business'),
+      CartPage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory,),
+      LoginPage(onItemTapped: onItemTapped)
     ];
 
 
     // Pages where the state should remove
-    if (index == 2) {
-      return LoginPage(onItemTapped: onItemTapped);
-    } else if (index == 3) {
+    if (index == 3) {
       return RegisterPage(onItemTapped: onItemTapped);
     } else if (index == 4) {
       return ViewProductDetailsPage(Product: selectedProduct,);
     } else if (index == 5) {
       return Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory,);
+    } else if (index == 6) {
+      return CheckOutPage();
     } else if (index >= 0 && index < stateNotLossPages.length) {
       return IndexedStack(index: index, children: stateNotLossPages);
     } else {

@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:assignment/Lists/productsList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -25,6 +25,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
     if (_formKey.currentState?.validate() ?? false) {
       setState(() {
         _showMsg = true;
+        CartList = [];
       });
     }
 

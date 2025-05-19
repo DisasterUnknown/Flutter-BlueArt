@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:assignment/Lists/productsList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -14,7 +16,9 @@ class Viewcategoriespage extends StatelessWidget {
     } else if (selectedProductCategory == 'figure') {
       return figureProductList;
     } else {
-      return [];
+      List<Item> productsList = [...artProductList, ...figureProductList];
+      productsList.shuffle(Random());
+      return productsList;
     }
   }
 

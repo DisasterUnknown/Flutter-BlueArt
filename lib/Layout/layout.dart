@@ -58,6 +58,7 @@ class _LayoutState extends State<Layout> {
           drawer: AppDrawer(
             selectedIndex: _selectedIndex,
             onItemTapped: _onItemTapped,
+            onCategorySelect: _onCategorySelect,
           ),
 
           // Page Connect Component

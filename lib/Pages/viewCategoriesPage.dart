@@ -29,7 +29,7 @@ class Viewcategoriespage extends StatelessWidget {
     } else if (selectedProductCategory == 'figure') {
       return 'Action Figures';
     } else {
-      return '';
+      return 'Products';
     }
   }
 

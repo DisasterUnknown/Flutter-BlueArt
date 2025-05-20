@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final int index;
   final Function(int) onItemTapped;
-  const TopAppBar({required this.onItemTapped});
+  const TopAppBar({required this.index, required this.onItemTapped});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +16,21 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       leading: Builder(
         builder: (BuildContext context) {
-          return IconButton(
-            icon: Icon(Icons.menu, color: Theme.of(context).colorScheme.onPrimary, size: 30,),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          );
+          if (index != 3 && index != 4) {
+            return IconButton(
+              icon: Icon(Icons.menu, color: Theme.of(context).colorScheme.onPrimary, size: 30,),
+              onPressed: () {
+                Scaffold.of(context).openDrawer();
+              },
+            );
+          } else {
+            return IconButton(
+              icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onPrimary, size: 30,),
+              onPressed: () {
+                onItemTapped(0);
+              },
+            );
+          }
         },
       ),
     );

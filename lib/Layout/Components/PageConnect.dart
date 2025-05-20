@@ -25,18 +25,18 @@ class PageContent extends StatelessWidget {
     final List<Widget> stateNotLossPages = [
       HomePage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, onCategorySelect: onCategorySelect),
       CartPage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory,),
-      LoginPage(onItemTapped: onItemTapped)
+      Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory,),
+      ViewProductDetailsPage(Product: selectedProduct,),
+      Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory,)
     ];
 
 
     // Pages where the state should remove
-    if (index == 3) {
+    if (index == 6) {
+      return LoginPage(onItemTapped: onItemTapped);
+    } else if (index == 7) {
       return RegisterPage(onItemTapped: onItemTapped);
-    } else if (index == 4) {
-      return ViewProductDetailsPage(Product: selectedProduct,);
-    } else if (index == 5) {
-      return Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory,);
-    } else if (index == 6) {
+    } else if (index == 8) {
       return CheckOutPage();
     } else if (index >= 0 && index < stateNotLossPages.length) {
       return IndexedStack(index: index, children: stateNotLossPages);

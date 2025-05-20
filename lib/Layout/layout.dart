@@ -15,7 +15,7 @@ class Layout extends StatefulWidget {
 
 class _LayoutState extends State<Layout> {
   int _selectedIndex = 0;
-  String _selectedProductCategory = 'art';
+  String _selectedProductCategory = '';
   Item _selectedProduct = artProductList[0];
 
   // Page Navigate index Store
@@ -29,7 +29,7 @@ class _LayoutState extends State<Layout> {
   void _onProductSelect(Item product) {
     setState(() {
       _selectedProduct = product;
-      _selectedIndex = 4;
+      _selectedIndex = 3;
     });
   }
 
@@ -37,7 +37,7 @@ class _LayoutState extends State<Layout> {
   void _onCategorySelect(String category) {
     setState(() {
       _selectedProductCategory = category;
-      _selectedIndex = 5;
+      _selectedIndex = 4;
     });
   }
 
@@ -52,7 +52,7 @@ class _LayoutState extends State<Layout> {
       home: SafeArea(
         child: Scaffold(
           // Top App Bar Component
-          appBar: TopAppBar(onItemTapped: _onItemTapped,),
+          appBar: TopAppBar(index: _selectedIndex, onItemTapped: _onItemTapped,),
 
           // AppDrawer component
           drawer: AppDrawer(
@@ -80,6 +80,7 @@ class _LayoutState extends State<Layout> {
                       ? _selectedIndex
                       : -1,
               onItemTapped: _onItemTapped,
+              onCategorySelect: _onCategorySelect,
           ),
         ),
       ),

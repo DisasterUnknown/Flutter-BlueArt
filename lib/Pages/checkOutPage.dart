@@ -40,6 +40,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
 
   @override
   void dispose() {
+    _addressIN.dispose();
+    _cardHolderNameIN.dispose();
+    _cardNumberIN.dispose();
+    _cvcIN.dispose();
+    _phoneIN.dispose();
+
     super.dispose();
   }
 

@@ -185,7 +185,7 @@ class _CartPageState extends State<CartPage> {
                                 ),
                               ),
                               onTap: () {
-                                widget.onItemTapped(6);
+                                widget.onItemTapped(8);
                               },
                             ),
                           ],

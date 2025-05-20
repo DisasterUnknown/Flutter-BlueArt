@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int selectedIndex;
+  final Function(String) onCategorySelect;
   final Function(int) onItemTapped;
-  const BottomNavBar({required this.selectedIndex, required this.onItemTapped});
+  const BottomNavBar({required this.selectedIndex, required this.onItemTapped, required this.onCategorySelect});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +23,15 @@ class BottomNavBar extends StatelessWidget {
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart',),
-        BottomNavigationBarItem(icon: Icon(Icons.login_outlined), label: 'Logout',),
+        BottomNavigationBarItem(icon: Icon(Icons.shop_2_outlined), label: 'Products',),
       ],
       currentIndex: isValidIndex ? selectedIndex : 0,
-      onTap: onItemTapped,
+      onTap: (int index) {
+        if (index == 2) {
+          onCategorySelect('');
+        }
+        onItemTapped(index);
+      },
     );
   }
 }

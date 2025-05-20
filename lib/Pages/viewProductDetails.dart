@@ -13,9 +13,19 @@ class ViewProductDetailsPage extends StatefulWidget {
 }
 
 class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
+  final ScrollController _scrollController = ScrollController();
   int _productQuantity = 1;
   bool _showMsg = false;
   String msgContent = "";
+
+  // Scroling to the top of the page when loaded
+  @override
+  void didUpdateWidget(covariant ViewProductDetailsPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.Product?.id != widget.Product?.id) {
+      _scrollController.jumpTo(0);
+    }
+  }
 
   // Setting the Quantity value to the value of the cart product if exist
   @override
@@ -60,6 +70,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
 
     return Center(
       child: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
             SizedBox(height: 60),

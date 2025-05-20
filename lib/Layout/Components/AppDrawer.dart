@@ -39,7 +39,7 @@ class AppDrawer extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 onCategorySelect('all');
-                onItemTapped(5); // Close the drawer
+                onItemTapped(2); // Close the drawer
               },
             ),
             ListTile(
@@ -53,7 +53,7 @@ class AppDrawer extends StatelessWidget {
               title: Text('Login'),
               onTap: () {
                 Navigator.pop(context);
-                onItemTapped(2); // Close the drawer
+                onItemTapped(6); // Close the drawer
               },
             ),
           ],

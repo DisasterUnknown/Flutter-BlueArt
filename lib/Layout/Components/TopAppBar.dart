@@ -16,7 +16,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       leading: Builder(
         builder: (BuildContext context) {
-          if (index != 3 && index != 4) {
+          if (index != 3 && index != 4 && index != 7 && index != 8) {
             return IconButton(
               icon: Icon(Icons.menu, color: Theme.of(context).colorScheme.onPrimary, size: 30,),
               onPressed: () {
@@ -27,7 +27,13 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
             return IconButton(
               icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onPrimary, size: 30,),
               onPressed: () {
-                onItemTapped(0);
+                if (index == 7) {
+                  onItemTapped(6);
+                } else if (index == 8) {
+                  onItemTapped(1);
+                } else {
+                  onItemTapped(0);
+                }
               },
             );
           }

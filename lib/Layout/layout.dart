@@ -56,7 +56,13 @@ class _LayoutState extends State<Layout> {
           onPopInvoked: (didpop) {
             if (!didpop && _selectedIndex != 0) {
               setState(() {
-                _selectedIndex = 0;
+                if (_selectedIndex == 7) {
+                  _selectedIndex = 6;
+                } else if (_selectedIndex == 8) {
+                  _selectedIndex = 1;
+                } else {
+                  _selectedIndex = 0;
+                }
               });
             }
           },

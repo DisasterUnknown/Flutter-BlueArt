@@ -126,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           labelText: 'Password',
                           labelStyle: Theme.of(context).textTheme.labelMedium,
                           suffixIcon: IconButton(
-                            icon: Icon(_showPassword ? Icons.visibility_off : Icons.visibility, color: Theme.of(context).colorScheme.onPrimary),
+                            icon: Icon(_showPassword ? Icons.visibility : Icons.visibility_off, color: Theme.of(context).colorScheme.onPrimary),
                             onPressed: () {
                               setState(() {
                                 _showPassword = !_showPassword;

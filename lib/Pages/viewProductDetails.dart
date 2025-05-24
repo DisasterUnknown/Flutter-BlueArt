@@ -20,11 +20,9 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
 
   // Scroling to the top of the page when loaded
   @override
-  void didUpdateWidget(covariant ViewProductDetailsPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.Product?.id != widget.Product?.id) {
+  void didUpdateWidget(covariant) {
+    super.didUpdateWidget(covariant);
       _scrollController.jumpTo(0);
-    }
   }
 
   // Setting the Quantity value to the value of the cart product if exist

@@ -119,7 +119,7 @@ class _CartPageState extends State<CartPage> {
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 1),
-                                            child: Text("Reomve"),
+                                            child: Text("Remove"),
                                           ),
                                         ),
                                         onTap: () {

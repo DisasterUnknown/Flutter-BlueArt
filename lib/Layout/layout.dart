@@ -50,37 +50,48 @@ class _LayoutState extends State<Layout> {
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
       home: SafeArea(
-        child: Scaffold(
-          // Top App Bar Component
-          appBar: TopAppBar(index: _selectedIndex, onItemTapped: _onItemTapped,),
-
-          // AppDrawer component
-          drawer: AppDrawer(
-            selectedIndex: _selectedIndex,
-            onItemTapped: _onItemTapped,
-            onCategorySelect: _onCategorySelect,
-          ),
-
-          // Page Connect Component
-          body: PageContent(
-            index: _selectedIndex,
-            onItemTapped: _onItemTapped,
-            selectedProduct: _selectedProduct,
-            onProductSelect: _onProductSelect,
-            selectedProductCategory: _selectedProductCategory,
-            onCategorySelect: _onCategorySelect,
-          ),
-
-          // Bottum Nav Bar Component
-          bottomNavigationBar: isLandScape
-            ? null
-            : BottomNavBar(
-              selectedIndex:
-                  _selectedIndex >= 0 && _selectedIndex <= 2
-                      ? _selectedIndex
-                      : -1,
+        // System back btn functionality
+        child: PopScope(
+          canPop: _selectedIndex == 0,
+          onPopInvoked: (didpop) {
+            if (!didpop && _selectedIndex != 0) {
+              setState(() {
+                _selectedIndex = 0;
+              });
+            }
+          },
+          child: Scaffold(
+            // Top App Bar Component
+            appBar: TopAppBar(index: _selectedIndex, onItemTapped: _onItemTapped,),
+          
+            // AppDrawer component
+            drawer: AppDrawer(
+              selectedIndex: _selectedIndex,
               onItemTapped: _onItemTapped,
               onCategorySelect: _onCategorySelect,
+            ),
+          
+            // Page Connect Component
+            body: PageContent(
+              index: _selectedIndex,
+              onItemTapped: _onItemTapped,
+              selectedProduct: _selectedProduct,
+              onProductSelect: _onProductSelect,
+              selectedProductCategory: _selectedProductCategory,
+              onCategorySelect: _onCategorySelect,
+            ),
+          
+            // Bottum Nav Bar Component
+            bottomNavigationBar: isLandScape
+              ? null
+              : BottomNavBar(
+                selectedIndex:
+                    _selectedIndex >= 0 && _selectedIndex <= 2
+                        ? _selectedIndex
+                        : -1,
+                onItemTapped: _onItemTapped,
+                onCategorySelect: _onCategorySelect,
+            ),
           ),
         ),
       ),

@@ -188,9 +188,9 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                                         child: Text(" < ", style: Theme.of(context).textTheme.bodyLarge,),
                                         onTap: () {
                                           setState(() {
-                                            _productQuantity++;
-                                            if (_productQuantity > 100) {
-                                              _productQuantity = 100;
+                                            _productQuantity--;
+                                            if (_productQuantity < 1) {
+                                              _productQuantity = 1;
                                             }
                                           });
                                         },
@@ -200,9 +200,9 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                                         child: Text(" > ", style: Theme.of(context).textTheme.bodyLarge,),
                                         onTap: () {
                                           setState(() {
-                                            _productQuantity--;
-                                            if (_productQuantity < 1) {
-                                              _productQuantity = 1;
+                                            _productQuantity++;
+                                            if (_productQuantity > 100) {
+                                              _productQuantity = 100;
                                             }
                                           });
                                         },  

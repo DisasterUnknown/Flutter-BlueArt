@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   final int index;
   final Function(int) onItemTapped;
-  const TopAppBar({required this.index, required this.onItemTapped});
+  final Function() onGoBack;
+  const TopAppBar({required this.index, required this.onItemTapped, required this.onGoBack});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
                 } else if (index == 8) {
                   onItemTapped(1);
                 } else {
-                  onItemTapped(0);
+                  onGoBack();
                 }
               },
             );

@@ -15,12 +15,14 @@ class Layout extends StatefulWidget {
 
 class _LayoutState extends State<Layout> {
   int _selectedIndex = 0;
+  int _oldSelectedIndex = 0;
   String _selectedProductCategory = '';
   Item _selectedProduct = artProductList[0];
 
   // Page Navigate index Store
   void _onItemTapped(int index) {
     setState(() {
+      _oldSelectedIndex = _selectedIndex;
       _selectedIndex = index;
     });
   }
@@ -28,6 +30,7 @@ class _LayoutState extends State<Layout> {
   // Details Page product ID Store
   void _onProductSelect(Item product) {
     setState(() {
+      _oldSelectedIndex = _selectedIndex;
       _selectedProduct = product;
       _selectedIndex = 3;
     });
@@ -36,8 +39,22 @@ class _LayoutState extends State<Layout> {
   // Getting the user Selected Category type
   void _onCategorySelect(String category) {
     setState(() {
+      _oldSelectedIndex = _selectedIndex;
       _selectedProductCategory = category;
       _selectedIndex = 4;
+    });
+  }
+
+  // Page Back navigation logic
+  void _onGoBack() {
+    setState(() {
+      print(_selectedIndex);
+      print(_oldSelectedIndex);
+      if (_selectedIndex == _oldSelectedIndex) {
+        _selectedIndex = 0;
+      } else {
+        _selectedIndex = _oldSelectedIndex;
+      }
     });
   }
 
@@ -56,19 +73,14 @@ class _LayoutState extends State<Layout> {
           onPopInvoked: (didpop) {
             if (!didpop && _selectedIndex != 0) {
               setState(() {
-                if (_selectedIndex == 7) {
-                  _selectedIndex = 6;
-                } else if (_selectedIndex == 8) {
-                  _selectedIndex = 1;
-                } else {
-                  _selectedIndex = 0;
-                }
+                _onGoBack();
               });
             }
           },
+
           child: Scaffold(
             // Top App Bar Component
-            appBar: TopAppBar(index: _selectedIndex, onItemTapped: _onItemTapped,),
+            appBar: TopAppBar(index: _selectedIndex, onItemTapped: _onItemTapped, onGoBack: _onGoBack),
           
             // AppDrawer component
             drawer: AppDrawer(

@@ -31,7 +31,7 @@ class _LayoutState extends State<Layout> {
   void _onProductSelect(Item product) {
     setState(() {
       _selectedProduct = product;
-      _selectedIndex = 3;
+      _selectedIndex = 4;
       _oldSelectedIndex.add(_selectedIndex);
     });
   }
@@ -40,7 +40,7 @@ class _LayoutState extends State<Layout> {
   void _onCategorySelect(String category) {
     setState(() {
       _selectedProductCategory = category;
-      _selectedIndex = 4;
+      _selectedIndex = 5;
       _oldSelectedIndex.add(_selectedIndex);
     });
   }
@@ -96,7 +96,7 @@ class _LayoutState extends State<Layout> {
 
             // Bottum Nav Bar Component
             bottomNavigationBar:
-                isLandScape ? null : BottomNavBar(selectedIndex: _selectedIndex >= 0 && _selectedIndex <= 2 ? _selectedIndex : -1, onItemTapped: _onItemTapped, onCategorySelect: _onCategorySelect),
+                isLandScape ? null : BottomNavBar(selectedIndex: _selectedIndex >= 0 && _selectedIndex <= 3 ? _selectedIndex : -1, onItemTapped: _onItemTapped, onCategorySelect: _onCategorySelect),
           ),
         ),
       ),

@@ -44,6 +44,13 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             ListTile(
+              title: Text('Favorites'),
+              onTap: () {
+                Navigator.pop(context);
+                onItemTapped(2); // Close the drawer
+              },
+            ),
+            ListTile(
               title: Text('Login'),
               onTap: () {
                 Navigator.pop(context);

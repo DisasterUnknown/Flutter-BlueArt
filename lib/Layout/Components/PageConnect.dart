@@ -6,6 +6,7 @@ import 'package:assignment/Pages/loginPage.dart';
 import 'package:assignment/Pages/registerPage.dart';
 import 'package:assignment/Pages/viewCategoriesPage.dart';
 import 'package:assignment/Pages/viewProductDetails.dart';
+import 'package:assignment/Pages/favoritesPage.dart';
 import 'package:flutter/material.dart';
 
 class PageContent extends StatelessWidget {
@@ -25,6 +26,7 @@ class PageContent extends StatelessWidget {
     final List<Widget> stateNotLossPages = [
       HomePage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, onCategorySelect: onCategorySelect),
       CartPage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory),
+      FavoritesPage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory),
       Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory),
       ViewProductDetailsPage(Product: selectedProduct),
       Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory),

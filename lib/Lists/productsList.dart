@@ -119,6 +119,9 @@ List<Item> figureProductList = [
 // Cart List
 List<Item> CartList = [];
 
+// Favorits List
+List<Item> FavoritList = [];
+
 // Items Class
 class Item {
   String id;

@@ -8,7 +8,8 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isValidIndex = selectedIndex >= 0 && selectedIndex <= 2;
+    bool isValidIndex = selectedIndex >= 0 && selectedIndex <= 3;
+    print(selectedIndex);
 
     return BottomNavigationBar(
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -21,6 +22,7 @@ class BottomNavBar extends StatelessWidget {
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+        BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorits'),
         BottomNavigationBarItem(icon: Icon(Icons.shop_2_outlined), label: 'Products'),
       ],
       currentIndex: isValidIndex ? selectedIndex : 0,

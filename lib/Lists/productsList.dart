@@ -7,7 +7,7 @@ List<Item> artProductList = [
     discount: '5%',
     discription:
         "Bleach Metal Poster A Fierce and Stunning Display of Soul Reapers Transform your space with this incredible Bleach Metal Poster, featuring vibrant artwork of your favorite characters from the iconic anime series. Printed on high-quality, durable metal, this poster brings the powerful essence of the Soul Society to life, showcasing characters like Ichigo Kurosaki, Rukia Kuchiki, and more in bold, eye-catching colors. Whether you're an avid collector or a passionate fan of the Bleach universe, this metal poster is a perfect way to show off your love for the series. Its premium material ensures it will last for years, maintaining its sharp details and striking design. Perfect for your bedroom, gaming room, or anime collection, this Bleach Metal Poster is more than just decoration—it's a tribute to the world of Soul Reapers, full of action, adventure, and unforgettable moments.",
-    imageURL: 'assets/Art/art1.webp',
+    imageURL: 'assets/Art/art1.jpg',
     quality: 1,
   ),
   Item(
@@ -17,7 +17,7 @@ List<Item> artProductList = [
     discount: '8%',
     discription:
         "Bring the raw power of the King of Curses to your space with this premium metal wall art featuring Ryomen Sukuna from Jujutsu Kaisen. Crafted with precision laser-cut detailing and finished in sleek matte black with crimson accents, this piece radiates intensity and style. Perfect for anime fans, collectors, or anyone looking to add a touch of dark elegance to their decor. 🔥 Material: High-quality stainless steel / alloy with anti-rust coating 📐 Size: 18 x 24 inches (custom sizes available) 🎨 Finish: Matte black base with optional red highlights 🧲 Mounting: Easy wall-mount setup included (magnet or screw mount) ✨ Vibe: Dark, powerful, aesthetic — a true centerpiece 💀 Unleash the curse. Hang the legend.",
-    imageURL: 'assets/Art/art2.webp',
+    imageURL: 'assets/Art/art2.jpg',
     quality: 1,
   ),
   Item(
@@ -27,7 +27,7 @@ List<Item> artProductList = [
     discount: '8%',
     discription:
         "Step into the limitless domain of style with this sleek metal wall art featuring Satoru Gojo, the most powerful sorcerer from Jujutsu Kaisen. Designed with high-precision laser cuts and a bold contrast finish, this piece captures Gojo’s iconic blindfolded stare and effortless confidence. Whether you’re building an anime-themed setup or just want that one eye-catching statement piece — this is it. ⚔️ Material: Durable stainless steel with protective matte coating 📏 Dimensions: 18 x 24 inches (custom sizes available) 🖤 Design: Infinity motif background with high contrast detailing 🛠️ Mounting: Wall-ready with secure hooks or magnet backing 💫 Aura: Minimalist, clean, and insanely cool — just like Gojo 👁 'Throughout Heaven and Earth, I alone am the honored one.'",
-    imageURL: 'assets/Art/art3.webp',
+    imageURL: 'assets/Art/art3.jpg',
     quality: 1,
   ),
   Item(
@@ -37,7 +37,7 @@ List<Item> artProductList = [
     discount: '1%',
     discription:
         "🔥 Metal Art – Kyojuro Rengoku (Demon Slayer) Bring the flame and passion of the Flame Hashira into your space with this stunning Metal Art of Kyojuro Rengoku. Crafted with precision and a deep respect for the iconic Demon Slayer character, this artwork showcases Rengoku’s fierce resolve and blazing spirit in intricate metal detailing. Material: High-quality durable metal Design: Laser-cut silhouette with fine detailing and fire-themed accents Size: [Insert size here] Perfect for: Anime fans, wall décor collectors, and Demon Slayer enthusiasts Placement: Ideal for living rooms, bedrooms, game rooms, or anime-themed corners Let Rengoku’s unwavering determination and legendary final stand inspire you every day. Whether you're a collector or a fan, this piece is a must-have tribute to one of anime’s most beloved heroes.",
-    imageURL: 'assets/Art/art4.webp',
+    imageURL: 'assets/Art/art4.jpg',
     quality: 1,
   ),
   // Item(
@@ -80,7 +80,7 @@ List<Item> figureProductList = [
     discount: '5%',
     discription:
         "Set sail on the Grand Line with the fearless captain of the Straw Hat Pirates, Monkey D. Luffy! This highly detailed action figure captures Luffy in all his glory — from his signature straw hat to his iconic “Gomu Gomu no” poses. Made for collectors and One Piece fans, this figure is ready to bring Luffy’s indomitable spirit straight into your collection. 🏴‍☠️ Height: 7 inches (scale varies based on pose) 🧑‍🍳 Details: Luffy’s authentic red vest, blue shorts, and straw hat 💪 Pose Options: Includes interchangeable hands for different iconic action poses (Gomu Gomu no Pistol, Gear Second, etc.) 🔥 Material: High-quality PVC with realistic details and shading 🧳 Packaging: Premium box featuring One Piece artwork and logo 🔄 Articulation: Fully articulated for dynamic posing ⚓ 'I'm gonna be King of the Pirates!'",
-    imageURL: 'assets/Figures/figur1.avif',
+    imageURL: 'assets/Figures/figur1.jpg',
     quality: 1,
   ),
   Item(
@@ -90,7 +90,7 @@ List<Item> figureProductList = [
     discount: '15%',
     discription:
         "Set sail on the Grand Line with the fearless captain of the Straw Hat Pirates, Monkey D. Luffy! This highly detailed action figure captures Luffy in all his glory — from his signature straw hat to his iconic “Gomu Gomu no” poses. Made for collectors and One Piece fans, this figure is ready to bring Luffy’s indomitable spirit straight into your collection. 🏴‍☠️ Height: 7 inches (scale varies based on pose) 🧑‍🍳 Details: Luffy’s authentic red vest, blue shorts, and straw hat 💪 Pose Options: Includes interchangeable hands for different iconic action poses (Gomu Gomu no Pistol, Gear Second, etc.) 🔥 Material: High-quality PVC with realistic details and shading 🧳 Packaging: Premium box featuring One Piece artwork and logo 🔄 Articulation: Fully articulated for dynamic posing ⚓ 'I'm gonna be King of the Pirates!'",
-    imageURL: 'assets/Figures/figur2.webp',
+    imageURL: 'assets/Figures/figur2.jpg',
     quality: 1,
   ),
   Item(
@@ -100,7 +100,7 @@ List<Item> figureProductList = [
     discount: '25%',
     discription:
         "Bring playful mischief and vibrant energy to your collection with this beautifully crafted Hu Tao Action Figure! Featuring detailed craftsmanship and her iconic Spirit Soother pose, this figure perfectly captures Hu Tao's charm and liveliness. A must-have for any Genshin Impact fan or figure collector! Edit",
-    imageURL: 'assets/Figures/figur3.jpeg',
+    imageURL: 'assets/Figures/figur3.jpg',
     quality: 1,
   ),
   Item(
@@ -110,7 +110,7 @@ List<Item> figureProductList = [
     discount: '8%',
     discription:
         "Bring playful mischief and vibrant energy to your collection with this beautifully crafted Hu Tao Action Figure! Featuring detailed craftsmanship and her iconic Spirit Soother pose, this figure perfectly captures Hu Tao's charm and liveliness. A must-have for any Genshin Impact fan or figure collector!",
-    imageURL: 'assets/Figures/figur4.webp',
+    imageURL: 'assets/Figures/figur4.jpg',
     quality: 1,
   ),
 ];

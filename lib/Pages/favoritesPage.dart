@@ -95,7 +95,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                         ),
                                         onTap: () {
                                           setState(() {
-                                            Item.removeProduct(FavoritList[index]);
+                                            Item.removeFavorit(FavoritList[index]);
                                           });
                                         },
                                       ),

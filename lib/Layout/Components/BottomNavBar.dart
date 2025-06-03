@@ -9,7 +9,6 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isValidIndex = selectedIndex >= 0 && selectedIndex <= 3;
-    print(selectedIndex);
 
     return BottomNavigationBar(
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -27,7 +26,7 @@ class BottomNavBar extends StatelessWidget {
       ],
       currentIndex: isValidIndex ? selectedIndex : 0,
       onTap: (int index) {
-        if (index == 2) {
+        if (index == 3) {
           onCategorySelect('');
         }
         onItemTapped(index);

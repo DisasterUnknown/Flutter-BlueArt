@@ -142,6 +142,16 @@ class Item {
     required this.quality,
   });
 
+  // Adding items to the FavoritList
+  static void addFavorite(Item item) {
+    FavoritList.add(item);
+  }
+
+  // Removing items from the FavoritList
+  static void removeFavorit(Item item) {
+    FavoritList.remove(item);
+  }
+
   // Adding items to the cartList
   static void addProduct(Item item, int quality) {
     item.quality = quality;

@@ -79,16 +79,44 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
             SizedBox(height: 60),
 
             // Page Img
-            Container(
-              height: 400,
-              width: 280,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Theme.of(context).colorScheme.onSurfaceVariant, width: 2),
+            Stack(
+              children: [
+                Container(
+                  height: 400,
+                  width: 280,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Theme.of(context).colorScheme.onSurfaceVariant, width: 2),
 
-                // Adding the img
-                image: DecorationImage(image: AssetImage(widget.Product!.imageURL), fit: BoxFit.cover, colorFilter: ColorFilter.mode(Colors.black.withAlpha(30), BlendMode.darken)),
-              ),
+                    // Adding the img
+                    image: DecorationImage(image: AssetImage(widget.Product!.imageURL), fit: BoxFit.cover, colorFilter: ColorFilter.mode(Colors.black.withAlpha(30), BlendMode.darken)),
+                  ),
+                ),
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: GestureDetector(
+                    child: Builder(
+                      builder: (context) {
+                        if (!FavoritList.any((item) => item.id == widget.Product!.id)) {
+                          return Icon(Icons.star, color: Colors.white, size: 34);
+                        } else {
+                          return Icon(Icons.star, color: Colors.yellowAccent, size: 34);
+                        }
+                      },
+                    ),
+                    onTap: () {
+                      setState(() {
+                        if (!FavoritList.any((item) => item.id == widget.Product!.id)) {
+                          Item.addFavorite(widget.Product!);
+                        } else {
+                          Item.removeFavorit(widget.Product!);
+                        }
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
 
             SizedBox(height: 60),

@@ -51,6 +51,8 @@ class _LayoutState extends State<Layout> {
       if (_selectedIndex == 0) {
         _selectedIndex = 0;
       } else {
+        print(_oldSelectedIndex);
+        print(_oldSelectedIndex[_oldSelectedIndex.length - 2]);
         _selectedIndex = _oldSelectedIndex[_oldSelectedIndex.length - 2];
         _oldSelectedIndex.removeLast();
       }

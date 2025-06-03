@@ -14,8 +14,8 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> {
+  final List<int> _oldSelectedIndex = [0];
   int _selectedIndex = 0;
-  List<int> _oldSelectedIndex = [0];
   String _selectedProductCategory = '';
   Item _selectedProduct = artProductList[0];
 
@@ -48,15 +48,11 @@ class _LayoutState extends State<Layout> {
   // Page Back navigation logic
   void _onGoBack() {
     setState(() {
-      print(_selectedIndex);
       if (_selectedIndex == 0) {
         _selectedIndex = 0;
       } else {
-        print(_oldSelectedIndex);
-        print(_oldSelectedIndex[_oldSelectedIndex.length - 2]);
         _selectedIndex = _oldSelectedIndex[_oldSelectedIndex.length - 2];
         _oldSelectedIndex.removeLast();
-        print(_oldSelectedIndex);
       }
     });
   }

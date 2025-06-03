@@ -15,33 +15,33 @@ class Layout extends StatefulWidget {
 
 class _LayoutState extends State<Layout> {
   int _selectedIndex = 0;
-  int _oldSelectedIndex = 0;
+  List<int> _oldSelectedIndex = [0];
   String _selectedProductCategory = '';
   Item _selectedProduct = artProductList[0];
 
   // Page Navigate index Store
   void _onItemTapped(int index) {
     setState(() {
-      _oldSelectedIndex = _selectedIndex;
       _selectedIndex = index;
+      _oldSelectedIndex.add(_selectedIndex);
     });
   }
 
   // Details Page product ID Store
   void _onProductSelect(Item product) {
     setState(() {
-      _oldSelectedIndex = _selectedIndex;
       _selectedProduct = product;
       _selectedIndex = 3;
+      _oldSelectedIndex.add(_selectedIndex);
     });
   }
 
   // Getting the user Selected Category type
   void _onCategorySelect(String category) {
     setState(() {
-      _oldSelectedIndex = _selectedIndex;
       _selectedProductCategory = category;
       _selectedIndex = 4;
+      _oldSelectedIndex.add(_selectedIndex);
     });
   }
 
@@ -49,11 +49,14 @@ class _LayoutState extends State<Layout> {
   void _onGoBack() {
     setState(() {
       print(_selectedIndex);
-      print(_oldSelectedIndex);
-      if (_selectedIndex == _oldSelectedIndex) {
+      if (_selectedIndex == 0) {
         _selectedIndex = 0;
       } else {
-        _selectedIndex = _oldSelectedIndex;
+        print(_oldSelectedIndex);
+        print(_oldSelectedIndex[_oldSelectedIndex.length - 2]);
+        _selectedIndex = _oldSelectedIndex[_oldSelectedIndex.length - 2];
+        _oldSelectedIndex.removeLast();
+        print(_oldSelectedIndex);
       }
     });
   }

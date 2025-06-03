@@ -19,14 +19,14 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         builder: (BuildContext context) {
           if (index != 3 && index != 4 && index != 7 && index != 8) {
             return IconButton(
-              icon: Icon(Icons.menu, color: Theme.of(context).colorScheme.onPrimary, size: 30,),
+              icon: Icon(Icons.menu, color: Theme.of(context).colorScheme.onPrimary, size: 30),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
             );
           } else {
             return IconButton(
-              icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onPrimary, size: 30,),
+              icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onPrimary, size: 30),
               onPressed: () {
                 if (index == 7) {
                   onItemTapped(6);

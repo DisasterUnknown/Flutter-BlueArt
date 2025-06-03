@@ -24,12 +24,11 @@ class PageContent extends StatelessWidget {
     // Keep State Page Section
     final List<Widget> stateNotLossPages = [
       HomePage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, onCategorySelect: onCategorySelect),
-      CartPage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory,),
-      Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory,),
-      ViewProductDetailsPage(Product: selectedProduct,),
-      Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory,)
+      CartPage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory),
+      Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory),
+      ViewProductDetailsPage(Product: selectedProduct),
+      Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory),
     ];
-
 
     // Pages where the state should remove
     if (index == 6) {

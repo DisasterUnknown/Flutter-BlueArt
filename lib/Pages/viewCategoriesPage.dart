@@ -35,16 +35,16 @@ class Viewcategoriespage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayProductList = _displayProductList(); 
-    final pageTitle = _pageTitle(); 
+    final displayProductList = _displayProductList();
+    final pageTitle = _pageTitle();
 
     // return Text("${displayProductList[0].title}");
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: 30,),
+          SizedBox(height: 30),
           Text(pageTitle, style: Theme.of(context).textTheme.titleLarge),
-          SizedBox(height: 15,),
+          SizedBox(height: 15),
           Center(
             child: Wrap(
               spacing: 10,
@@ -56,15 +56,9 @@ class Viewcategoriespage extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 4,
-                        offset: Offset(2, 2),
-                      ),
-                    ],
+                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(2, 2))],
                   ),
-            
+
                   // Product Card
                   child: LayoutBuilder(
                     builder: (context, constraints) {
@@ -74,35 +68,22 @@ class Viewcategoriespage extends StatelessWidget {
                             Container(
                               height: 230,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(12),
-                                  topRight: Radius.circular(12),
-                                ),
-            
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+
                                 // Adding the img
                                 image: DecorationImage(
-                                  image: AssetImage(
-                                    displayProductList[index].imageURL,
-                                  ),
+                                  image: AssetImage(displayProductList[index].imageURL),
                                   fit: BoxFit.cover,
-                                  colorFilter: ColorFilter.mode(
-                                    Colors.black.withAlpha(30),
-                                    BlendMode.darken,
-                                  ),
+                                  colorFilter: ColorFilter.mode(Colors.black.withAlpha(30), BlendMode.darken),
                                 ),
                               ),
                             ),
-            
+
                             // Product Details Section
                             Container(
                               height: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(12),
-                                  bottomRight: Radius.circular(12),
-                                ),
-                              ),
-            
+                              decoration: BoxDecoration(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12))),
+
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -119,14 +100,14 @@ class Viewcategoriespage extends StatelessWidget {
                                   SizedBox(height: 5),
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 1.0),
-                                    child: Text("LRK ${displayProductList[index].price}", style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),),
-                                  )
+                                    child: Text("LRK ${displayProductList[index].price}", style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
+                                  ),
                                 ],
                               ),
                             ),
                           ],
                         ),
-            
+
                         // Navigating to the View Product Details Page
                         onTap: () {
                           onProductSelect!(displayProductList[index]);
@@ -135,11 +116,10 @@ class Viewcategoriespage extends StatelessWidget {
                     },
                   ),
                 );
-              },
+              }),
             ),
-                    ),
           ),
-        SizedBox(height: 30),
+          SizedBox(height: 30),
         ],
       ),
     );

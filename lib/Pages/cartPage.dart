@@ -18,9 +18,9 @@ class _CartPageState extends State<CartPage> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          SizedBox(height: 30,),
+          SizedBox(height: 30),
           Text("Shopping Cart", style: Theme.of(context).textTheme.titleLarge),
-          SizedBox(height: 15,),
+          SizedBox(height: 15),
           Center(
             child: Column(
               children: [
@@ -34,13 +34,7 @@ class _CartPageState extends State<CartPage> {
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.surfaceContainerHighest,
                         borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4,
-                            offset: Offset(2, 2),
-                          ),
-                        ],
+                        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(2, 2))],
                       ),
 
                       // Product Card
@@ -52,34 +46,17 @@ class _CartPageState extends State<CartPage> {
                                 Container(
                                   height: 230,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(12),
-                                      topRight: Radius.circular(12),
-                                    ),
+                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
 
                                     // Adding the img
-                                    image: DecorationImage(
-                                      image: AssetImage(
-                                        CartList[index].imageURL,
-                                      ),
-                                      fit: BoxFit.cover,
-                                      colorFilter: ColorFilter.mode(
-                                        Colors.black.withAlpha(30),
-                                        BlendMode.darken,
-                                      ),
-                                    ),
+                                    image: DecorationImage(image: AssetImage(CartList[index].imageURL), fit: BoxFit.cover, colorFilter: ColorFilter.mode(Colors.black.withAlpha(30), BlendMode.darken)),
                                   ),
                                 ),
 
                                 // Product Details Section
                                 Container(
                                   height: 120,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(12),
-                                      bottomRight: Radius.circular(12),
-                                    ),
-                                  ),
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12))),
 
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -100,27 +77,21 @@ class _CartPageState extends State<CartPage> {
                                         child: Builder(
                                           builder: (context) {
                                             final formatter = NumberFormat("#,##0.0", "en_US");
-                                            final itemPrice = CartList[index].price.splitMapJoin(',',onMatch: (_) => '',);
+                                            final itemPrice = CartList[index].price.splitMapJoin(',', onMatch: (_) => '');
                                             final itemDiscount = CartList[index].discount.splitMapJoin('%', onMatch: (_) => '');
                                             final discount = int.parse(itemDiscount);
                                             final price = int.parse(itemPrice);
-                                            final quantityPrice = (price - ((price/100)*discount)) * CartList[index].quality;
-                                            return Text("LRK ${formatter.format(quantityPrice)}", style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500),);
-                                          },                                    
+                                            final quantityPrice = (price - ((price / 100) * discount)) * CartList[index].quality;
+                                            return Text("LRK ${formatter.format(quantityPrice)}", style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500));
+                                          },
                                         ),
                                       ),
                                       SizedBox(height: 10),
                                       GestureDetector(
                                         behavior: HitTestBehavior.translucent,
                                         child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(16),
-                                            color: Theme.of(context).colorScheme.onTertiary,
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 1),
-                                            child: Text("Remove"),
-                                          ),
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Theme.of(context).colorScheme.onTertiary),
+                                          child: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 1), child: Text("Remove")),
                                         ),
                                         onTap: () {
                                           setState(() {
@@ -143,12 +114,11 @@ class _CartPageState extends State<CartPage> {
                         },
                       ),
                     );
-                  },
-                ),
+                  }),
                 ),
 
                 // User Price Display Section
-                SizedBox(height: 100,),
+                SizedBox(height: 100),
                 Builder(
                   builder: (context) {
                     if (!CartList.isEmpty) {
@@ -162,27 +132,21 @@ class _CartPageState extends State<CartPage> {
                                 double quantityPrice = 0;
 
                                 for (int i = 0; i < CartList.length; i++) {
-                                  final itemPrice = CartList[i].price.splitMapJoin(',',onMatch: (_) => '',);
+                                  final itemPrice = CartList[i].price.splitMapJoin(',', onMatch: (_) => '');
                                   final itemDiscount = CartList[i].discount.splitMapJoin('%', onMatch: (_) => '');
                                   final discount = int.parse(itemDiscount);
                                   final price = int.parse(itemPrice);
-                                  quantityPrice += (price - ((price/100)*discount)) * CartList[i].quality;
+                                  quantityPrice += (price - ((price / 100) * discount)) * CartList[i].quality;
                                 }
                                 return Text("LRK ${formatter.format(quantityPrice)}");
                               },
                             ),
-                            SizedBox(height: 10,),
+                            SizedBox(height: 10),
                             GestureDetector(
                               behavior: HitTestBehavior.translucent,
                               child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                  color: Theme.of(context).colorScheme.tertiary,
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 5),
-                                  child: Text("Check Out!"),
-                                ),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Theme.of(context).colorScheme.tertiary),
+                                child: Padding(padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 5), child: Text("Check Out!")),
                               ),
                               onTap: () {
                                 widget.onItemTapped(8);
@@ -195,11 +159,11 @@ class _CartPageState extends State<CartPage> {
                       return Text('');
                     }
                   },
-                ) 
-              ]
+                ),
+              ],
             ),
           ),
-        SizedBox(height: 30),
+          SizedBox(height: 30),
         ],
       ),
     );

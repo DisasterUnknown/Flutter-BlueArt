@@ -18,13 +18,7 @@ class AppDrawer extends StatelessWidget {
               height: 100,
               color: Theme.of(context).colorScheme.primary,
               padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Menu', style: Theme.of(context).textTheme.bodyLarge),
-                ],
-              ),
+              child: Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [Text('Menu', style: Theme.of(context).textTheme.bodyLarge)]),
             ),
 
             ListTile(

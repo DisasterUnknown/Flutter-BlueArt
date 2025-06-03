@@ -39,9 +39,7 @@ class _LoginPageState extends State<LoginPage> {
     return Stack(
       children: [
         // Adding the Background img
-        SizedBox.expand(
-          child: Image.asset('assets/loginPageBg.gif', fit: BoxFit.cover),
-        ),
+        SizedBox.expand(child: Image.asset('assets/loginPageBg.gif', fit: BoxFit.cover)),
 
         Container(color: Colors.black.withOpacity(0.5)),
 
@@ -53,10 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: loginFormWidth,
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                    width: 1.5,
-                  ),
+                  border: Border.all(color: Theme.of(context).colorScheme.surfaceContainerHighest, width: 1.5),
                   borderRadius: BorderRadius.circular(12),
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   boxShadow: [BoxShadow(blurRadius: 6, offset: Offset(0, 3))],
@@ -67,19 +62,13 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Login",
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
+                      Text("Login", style: Theme.of(context).textTheme.titleLarge),
                       SizedBox(height: 30),
-                  
+
                       // Getting the user Email and the validator
                       TextFormField(
                         controller: _emailIN,
-                        decoration: InputDecoration(
-                          labelText: "Email",
-                          labelStyle: Theme.of(context).textTheme.labelMedium,
-                        ),
+                        decoration: InputDecoration(labelText: "Email", labelStyle: Theme.of(context).textTheme.labelMedium),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return "Please Enter Email!!";
@@ -90,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                       SizedBox(height: 16),
-                  
+
                       // Getting the user pass and the validator
                       TextFormField(
                         controller: _passIN,
@@ -104,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                               setState(() {
                                 _showPassword = !_showPassword;
                               });
-                            }
+                            },
                           ),
                         ),
                         validator: (value) {
@@ -117,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                       SizedBox(height: 16),
-                  
+
                       // User Register Page Nav (Link)
                       RichText(
                         text: TextSpan(
@@ -126,10 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                             const TextSpan(text: "No Account? "),
                             TextSpan(
                               text: "Register!",
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                                decoration: TextDecoration.underline,
-                              ),
+                              style: const TextStyle(fontWeight: FontWeight.w600, decoration: TextDecoration.underline),
                               recognizer:
                                   TapGestureRecognizer()
                                     ..onTap = () {
@@ -140,14 +126,11 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       SizedBox(height: 20),
-                  
+
                       // Login Btn
                       ElevatedButton(
                         onPressed: _login,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.primary,
-                          foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                        ),
+                        style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, foregroundColor: Theme.of(context).colorScheme.onPrimary),
                         child: Text('Login'),
                       ),
                     ],

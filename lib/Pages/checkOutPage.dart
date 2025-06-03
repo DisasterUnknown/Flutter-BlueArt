@@ -62,10 +62,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
             width: checkOutFormWidth,
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
-              border: Border.all(
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                width: 1.5,
-              ),
+              border: Border.all(color: Theme.of(context).colorScheme.surfaceContainerHighest, width: 1.5),
               borderRadius: BorderRadius.circular(12),
               color: Theme.of(context).colorScheme.surfaceContainerHighest,
               boxShadow: [BoxShadow(blurRadius: 6, offset: Offset(0, 3))],
@@ -76,9 +73,9 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Complete Purchase", style: Theme.of(context).textTheme.titleLarge,),
+                  Text("Complete Purchase", style: Theme.of(context).textTheme.titleLarge),
 
-                  SizedBox(height: 30,), 
+                  SizedBox(height: 30),
 
                   // Phone Number
                   TextFormField(
@@ -95,18 +92,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           buffer.write(digitsOnly[i]);
                         }
 
-                        return TextEditingValue(
-                          text: buffer.toString(),
-                          selection: TextSelection.collapsed(
-                            offset: buffer.length,
-                          ),
-                        );
-                      })
+                        return TextEditingValue(text: buffer.toString(), selection: TextSelection.collapsed(offset: buffer.length));
+                      }),
                     ],
-                    decoration: InputDecoration(
-                      labelText: "Phone Number",
-                      labelStyle: Theme.of(context).textTheme.labelMedium,
-                    ),
+                    decoration: InputDecoration(labelText: "Phone Number", labelStyle: Theme.of(context).textTheme.labelMedium),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter your Contact Number!!';
@@ -117,15 +106,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     },
                   ),
 
-                  SizedBox(height: 16,),
+                  SizedBox(height: 16),
 
                   // Address
                   TextFormField(
                     controller: _addressIN,
-                    decoration: InputDecoration(
-                      labelText: "Address",
-                      labelStyle: Theme.of(context).textTheme.labelMedium,
-                    ),
+                    decoration: InputDecoration(labelText: "Address", labelStyle: Theme.of(context).textTheme.labelMedium),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter Your Address!!';
@@ -136,21 +122,16 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     },
                   ),
 
-                  SizedBox(height: 16,),
+                  SizedBox(height: 16),
 
                   // Selection
                   DropdownButtonFormField(
                     value: _selectedShippingMethod,
-                    decoration: InputDecoration(
-                      labelText: 'Shipping Method',
-                      labelStyle: Theme.of(context).textTheme.labelMedium,
-                    ),
-                    items: ['Standard', 'Express', 'Next-Day'].map((method) {
-                      return DropdownMenuItem(
-                        value: method,
-                        child: Text(method, style: Theme.of(context).textTheme.bodyLarge,),
-                      );
-                    }).toList(),
+                    decoration: InputDecoration(labelText: 'Shipping Method', labelStyle: Theme.of(context).textTheme.labelMedium),
+                    items:
+                        ['Standard', 'Express', 'Next-Day'].map((method) {
+                          return DropdownMenuItem(value: method, child: Text(method, style: Theme.of(context).textTheme.bodyLarge));
+                        }).toList(),
                     onChanged: (value) {
                       setState(() {
                         _selectedShippingMethod = value!;
@@ -158,15 +139,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     },
                   ),
 
-                  SizedBox(height: 50,),
+                  SizedBox(height: 50),
 
                   // Cardholder Name
                   TextFormField(
                     controller: _cardHolderNameIN,
-                    decoration: InputDecoration(
-                      labelText: 'Cardholder Name',
-                      labelStyle: Theme.of(context).textTheme.labelMedium,
-                    ),
+                    decoration: InputDecoration(labelText: 'Cardholder Name', labelStyle: Theme.of(context).textTheme.labelMedium),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter Your Username!!';
@@ -177,7 +155,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     },
                   ),
 
-                  SizedBox(height: 16,),
+                  SizedBox(height: 16),
 
                   // Card Number
                   TextFormField(
@@ -194,18 +172,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           buffer.write(digitsOnly[i]);
                         }
 
-                        return TextEditingValue(
-                          text: buffer.toString(),
-                          selection: TextSelection.collapsed(
-                            offset: buffer.length,
-                          ),
-                        );
-                      })
+                        return TextEditingValue(text: buffer.toString(), selection: TextSelection.collapsed(offset: buffer.length));
+                      }),
                     ],
-                    decoration: InputDecoration(
-                      labelText: 'Card Number',
-                      labelStyle: Theme.of(context).textTheme.labelMedium,
-                    ),
+                    decoration: InputDecoration(labelText: 'Card Number', labelStyle: Theme.of(context).textTheme.labelMedium),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter your Card Number!!';
@@ -216,7 +186,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     },
                   ),
 
-                  SizedBox(height: 16,),
+                  SizedBox(height: 16),
 
                   // CVC
                   TextFormField(
@@ -232,18 +202,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           buffer.write(digitsOnly[i]);
                         }
 
-                        return TextEditingValue(
-                          text: buffer.toString(),
-                          selection: TextSelection.collapsed(
-                            offset: buffer.length,
-                          ),
-                        );
-                      })
+                        return TextEditingValue(text: buffer.toString(), selection: TextSelection.collapsed(offset: buffer.length));
+                      }),
                     ],
-                    decoration: InputDecoration(
-                      labelText: 'CVC',
-                      labelStyle: Theme.of(context).textTheme.labelMedium,
-                    ),
+                    decoration: InputDecoration(labelText: 'CVC', labelStyle: Theme.of(context).textTheme.labelMedium),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter Your CVC!!';
@@ -254,19 +216,12 @@ class _CheckOutPageState extends State<CheckOutPage> {
                     },
                   ),
 
-                  SizedBox(height: 30,),
+                  SizedBox(height: 30),
 
-                  AnimatedOpacity(
-                    duration: Duration(milliseconds: 500),
-                    opacity: _showMsg ? 1.0 : 0.0,
-                    child: Text('Successfully Purchase Completed', style: Theme.of(context).textTheme.labelSmall,),
-                  ),
+                  AnimatedOpacity(duration: Duration(milliseconds: 500), opacity: _showMsg ? 1.0 : 0.0, child: Text('Successfully Purchase Completed', style: Theme.of(context).textTheme.labelSmall)),
                   ElevatedButton(
                     onPressed: _checkOut,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                    ),
+                    style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, foregroundColor: Theme.of(context).colorScheme.onPrimary),
                     child: Text('Check Out'),
                   ),
                 ],

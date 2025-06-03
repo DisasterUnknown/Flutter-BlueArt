@@ -50,9 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Stack(
       children: [
         // Adding the Background img
-        SizedBox.expand(
-          child: Image.asset('assets/loginPageBg.gif', fit: BoxFit.cover),
-        ),
+        SizedBox.expand(child: Image.asset('assets/loginPageBg.gif', fit: BoxFit.cover)),
 
         Container(color: Colors.black.withOpacity(0.5)),
 
@@ -64,10 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 width: registerFormWidth,
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                    width: 1.5,
-                  ),
+                  border: Border.all(color: Theme.of(context).colorScheme.surfaceContainerHighest, width: 1.5),
                   borderRadius: BorderRadius.circular(12),
                   color: Theme.of(context).colorScheme.surfaceContainerHighest,
                   boxShadow: [BoxShadow(blurRadius: 6, offset: Offset(0, 3))],
@@ -78,19 +73,13 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       // Register Page Title
-                      Text(
-                        "Register",
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
+                      Text("Register", style: Theme.of(context).textTheme.headlineSmall),
                       SizedBox(height: 20),
-                  
+
                       // Username input field
                       TextFormField(
                         controller: _unameIN,
-                        decoration: InputDecoration(
-                          labelText: 'Username',
-                          labelStyle: Theme.of(context).textTheme.labelMedium,
-                        ),
+                        decoration: InputDecoration(labelText: 'Username', labelStyle: Theme.of(context).textTheme.labelMedium),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please Enter Your Username!!';
@@ -100,14 +89,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           return null;
                         },
                       ),
-                  
+
                       // Email input field
                       TextFormField(
                         controller: _emailIN,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          labelStyle: Theme.of(context).textTheme.labelMedium,
-                        ),
+                        decoration: InputDecoration(labelText: 'Email', labelStyle: Theme.of(context).textTheme.labelMedium),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please Enter Your Email!!';
@@ -117,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           return null;
                         },
                       ),
-                  
+
                       // Password input field
                       TextFormField(
                         controller: _passIN,
@@ -143,7 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           return null;
                         },
                       ),
-                  
+
                       // Contact Number input field
                       if (_selectedRole == 'Seller') ...[
                         TextFormField(
@@ -151,34 +137,19 @@ class _RegisterPageState extends State<RegisterPage> {
                           keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
-                            TextInputFormatter.withFunction((oldValue, newValue,) {
-                              final disgitsOnly = newValue.text.replaceAll(
-                                RegExp(r'[^0-9]'),
-                                '',
-                              );
+                            TextInputFormatter.withFunction((oldValue, newValue) {
+                              final disgitsOnly = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
                               final buffer = StringBuffer();
-                  
-                              for (
-                                int i = 0;
-                                i < disgitsOnly.length && i < 10;
-                                i++
-                              ) {
+
+                              for (int i = 0; i < disgitsOnly.length && i < 10; i++) {
                                 if (i == 3 || i == 6) buffer.write(' ');
                                 buffer.write(disgitsOnly[i]);
                               }
-                  
-                              return TextEditingValue(
-                                text: buffer.toString(),
-                                selection: TextSelection.collapsed(
-                                  offset: buffer.length,
-                                ),
-                              );
+
+                              return TextEditingValue(text: buffer.toString(), selection: TextSelection.collapsed(offset: buffer.length));
                             }),
                           ],
-                          decoration: InputDecoration(
-                            labelText: 'Contact Number',
-                            labelStyle: Theme.of(context).textTheme.labelMedium,
-                          ),
+                          decoration: InputDecoration(labelText: 'Contact Number', labelStyle: Theme.of(context).textTheme.labelMedium),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please Enter your Contact Number!!';
@@ -189,15 +160,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                         ),
                       ],
-                  
+
                       // Address input field
                       if (_selectedRole == 'Seller') ...[
                         TextFormField(
                           controller: _addressIN,
-                          decoration: InputDecoration(
-                            labelText: 'Address',
-                            labelStyle: Theme.of(context).textTheme.labelMedium,
-                          ),
+                          decoration: InputDecoration(labelText: 'Address', labelStyle: Theme.of(context).textTheme.labelMedium),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please Enter Your Address!!';
@@ -208,20 +176,14 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                         ),
                       ],
-                  
+
                       // Role Selection Dropdown
                       DropdownButtonFormField(
                         value: _selectedRole,
-                        decoration: InputDecoration(
-                          labelText: 'Select Role',
-                          labelStyle: Theme.of(context).textTheme.labelMedium,
-                        ),
+                        decoration: InputDecoration(labelText: 'Select Role', labelStyle: Theme.of(context).textTheme.labelMedium),
                         items:
                             ['Customer', 'Seller'].map((role) {
-                              return DropdownMenuItem(
-                                value: role,
-                                child: Text(role, style: Theme.of(context).textTheme.bodyLarge,),
-                              );
+                              return DropdownMenuItem(value: role, child: Text(role, style: Theme.of(context).textTheme.bodyLarge));
                             }).toList(),
                         onChanged: (value) {
                           setState(() {
@@ -236,16 +198,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         },
                       ),
                       SizedBox(height: 20),
-                  
+
                       // User Register Page Nav (Link)
                       ElevatedButton(
                         onPressed: _register,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.primary,
-                          foregroundColor:
-                              Theme.of(context).colorScheme.onPrimary,
-                        ),
+                        style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, foregroundColor: Theme.of(context).colorScheme.onPrimary),
                         child: Text('Register'),
                       ),
                     ],

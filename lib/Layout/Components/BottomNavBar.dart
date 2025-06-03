@@ -14,16 +14,14 @@ class BottomNavBar extends StatelessWidget {
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
 
       // If the nav is in the nav list!!
-      selectedItemColor: isValidIndex 
-        ? Theme.of(context).colorScheme.onPrimaryContainer
-        : Theme.of(context).colorScheme.surface,
+      selectedItemColor: isValidIndex ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.surface,
       unselectedItemColor: Theme.of(context).colorScheme.surface,
       type: BottomNavigationBarType.fixed,
       // Page Bottom Navigation
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart',),
-        BottomNavigationBarItem(icon: Icon(Icons.shop_2_outlined), label: 'Products',),
+        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+        BottomNavigationBarItem(icon: Icon(Icons.shop_2_outlined), label: 'Products'),
       ],
       currentIndex: isValidIndex ? selectedIndex : 0,
       onTap: (int index) {

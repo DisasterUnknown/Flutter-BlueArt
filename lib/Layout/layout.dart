@@ -48,12 +48,8 @@ class _LayoutState extends State<Layout> {
   // Page Back navigation logic
   void _onGoBack() {
     setState(() {
-      if (_selectedIndex == 0) {
-        _selectedIndex = 0;
-      } else {
-        _selectedIndex = _oldSelectedIndex[_oldSelectedIndex.length - 2];
-        _oldSelectedIndex.removeLast();
-      }
+      _selectedIndex = _oldSelectedIndex[_oldSelectedIndex.length - 2];
+      _oldSelectedIndex.removeLast();
     });
   }
 
@@ -69,9 +65,9 @@ class _LayoutState extends State<Layout> {
       home: SafeArea(
         // System back btn functionality
         child: PopScope(
-          canPop: _selectedIndex == 0,
+          canPop: _oldSelectedIndex.length == 1,
           onPopInvoked: (didpop) {
-            if (!didpop && _selectedIndex != 0) {
+            if (!didpop && _oldSelectedIndex.length != 1) {
               setState(() {
                 _onGoBack();
               });

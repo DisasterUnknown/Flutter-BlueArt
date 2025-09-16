@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppDrawer extends StatelessWidget {
-  final int selectedIndex;
-  final Function(int) onItemTapped;
-  final Function(String) onCategorySelect;
-  const AppDrawer({required this.selectedIndex, required this.onItemTapped, required this.onCategorySelect});
+  const AppDrawer();
 
   @override
   Widget build(BuildContext context) {
@@ -25,36 +22,36 @@ class AppDrawer extends StatelessWidget {
               title: Text('Home'),
               onTap: () {
                 Navigator.pop(context);
-                onItemTapped(0); // Close the drawer
+                 // Close the drawer
               },
             ),
             ListTile(
               title: Text('Products'),
               onTap: () {
                 Navigator.pop(context);
-                onCategorySelect('all');
-                onItemTapped(2); // Close the drawer
+                // onCategorySelect('all');
+                // onItemTapped(2); // Close the drawer
               },
             ),
             ListTile(
               title: Text('Cart'),
               onTap: () {
                 Navigator.pop(context);
-                onItemTapped(1); // Close the drawer
+                // onItemTapped(1); // Close the drawer
               },
             ),
             ListTile(
               title: Text('Favorites'),
               onTap: () {
                 Navigator.pop(context);
-                onItemTapped(2); // Close the drawer
+                // onItemTapped(2); // Close the drawer
               },
             ),
             ListTile(
               title: Text('Login'),
               onTap: () {
                 Navigator.pop(context);
-                onItemTapped(6); // Close the drawer
+                // onItemTapped(6); // Close the drawer
               },
             ),
           ],

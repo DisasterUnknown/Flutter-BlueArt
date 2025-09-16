@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:assignment/Lists/productsList.dart';
+import 'package:blue_art_mad2/lists/productsList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

@@ -1,10 +1,12 @@
-import 'package:assignment/theme.dart';
+import 'package:blue_art_mad2/Pages/cartPage.dart';
+import 'package:blue_art_mad2/Pages/favoritesPage.dart';
+import 'package:blue_art_mad2/Pages/homePage.dart';
+import 'package:blue_art_mad2/Pages/viewCategoriesPage.dart';
+import 'package:blue_art_mad2/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:assignment/Layout/Components/TopAppBar.dart';
-import 'package:assignment/Layout/Components/BottomNavBar.dart';
-import 'package:assignment/Layout/Components/PageConnect.dart';
-import 'package:assignment/Layout/Components/AppDrawer.dart';
-import 'package:assignment/Lists/productsList.dart';
+import 'package:blue_art_mad2/layout/Components/TopAppBar.dart';
+import 'package:blue_art_mad2/layout/Components/BottomNavBar.dart';
+import 'package:blue_art_mad2/layout/Components/AppDrawer.dart';
 
 class Layout extends StatefulWidget {
   const Layout({super.key});
@@ -15,47 +17,41 @@ class Layout extends StatefulWidget {
 
 class _LayoutState extends State<Layout> {
   final List<int> _oldSelectedIndex = [0];
-  int _selectedIndex = 0;
-  String _selectedProductCategory = '';
-  Item _selectedProduct = artProductList[0];
+  int _currentIndex = 0;
 
-  // Page Navigate index Store
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      _oldSelectedIndex.add(_selectedIndex);
-    });
+  List<Widget> get _screens {
+    return [
+      const HomePage(),
+      const CartPage(),
+      const FavoritesPage(),
+      const Viewcategoriespage(),
+    ];
   }
 
-  // Details Page product ID Store
-  void _onProductSelect(Item product) {
-    setState(() {
-      _selectedProduct = product;
-      _selectedIndex = 4;
-      _oldSelectedIndex.add(_selectedIndex);
-    });
+  @override
+  void initState() {
+    super.initState();
   }
 
-  // Getting the user Selected Category type
-  void _onCategorySelect(String category) {
+  // Recording the page navigation
+  void _onPageNav(int index) {
     setState(() {
-      _selectedProductCategory = category;
-      _selectedIndex = 5;
-      _oldSelectedIndex.add(_selectedIndex);
+      _oldSelectedIndex.add(index);
     });
   }
 
   // Page Back navigation logic
   void _onGoBack() {
     setState(() {
-      _selectedIndex = _oldSelectedIndex[_oldSelectedIndex.length - 2];
+      _currentIndex = _oldSelectedIndex[_oldSelectedIndex.length - 2];
       _oldSelectedIndex.removeLast();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final isLandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     return MaterialApp(
       theme: AppTheme.lightTheme,
@@ -63,9 +59,9 @@ class _LayoutState extends State<Layout> {
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       home: SafeArea(
-        // System back btn functionality
         child: PopScope(
           canPop: _oldSelectedIndex.length == 1,
+          // ignore: deprecated_member_use
           onPopInvoked: (didpop) {
             if (!didpop && _oldSelectedIndex.length != 1) {
               setState(() {
@@ -75,25 +71,21 @@ class _LayoutState extends State<Layout> {
           },
 
           child: Scaffold(
-            // Top App Bar Component
-            appBar: TopAppBar(index: _selectedIndex, onItemTapped: _onItemTapped, onGoBack: _onGoBack),
-
-            // AppDrawer component
-            drawer: AppDrawer(selectedIndex: _selectedIndex, onItemTapped: _onItemTapped, onCategorySelect: _onCategorySelect),
-
-            // Page Connect Component
-            body: PageContent(
-              index: _selectedIndex,
-              onItemTapped: _onItemTapped,
-              selectedProduct: _selectedProduct,
-              onProductSelect: _onProductSelect,
-              selectedProductCategory: _selectedProductCategory,
-              onCategorySelect: _onCategorySelect,
-            ),
-
+            appBar: TopAppBar(),
+            drawer: AppDrawer(),
+            body: _screens[_currentIndex],
             // Bottum Nav Bar Component
-            bottomNavigationBar:
-                isLandScape ? null : BottomNavBar(selectedIndex: _selectedIndex >= 0 && _selectedIndex <= 3 ? _selectedIndex : -1, onItemTapped: _onItemTapped, onCategorySelect: _onCategorySelect),
+            bottomNavigationBar: isLandScape
+                ? null
+                : CustomBottomNavBar(
+                    currentIndex: _currentIndex,
+                    onTap: (index) => {
+                      setState(() {
+                        _currentIndex = index;
+                        _onPageNav(index);
+                      }),
+                    },
+                  ),
           ),
         ),
       ),

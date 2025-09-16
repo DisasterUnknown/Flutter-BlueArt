@@ -1,12 +1,9 @@
-import 'package:assignment/Lists/productsList.dart';
+import 'package:blue_art_mad2/lists/productsList.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class FavoritesPage extends StatefulWidget {
-  final Function(int) onItemTapped;
-  final Function(Item)? onProductSelect;
-  final String? selectedProductCategory;
-  const FavoritesPage({super.key, required this.onItemTapped, required this.onProductSelect, required this.selectedProductCategory});
+  const FavoritesPage({super.key});
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();
@@ -108,7 +105,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
                             // Navigating to the View Product Details Page
                             onTap: () {
-                              widget.onProductSelect!(FavoritList[index]);
+                              
                             },
                           );
                         },

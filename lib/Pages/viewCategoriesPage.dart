@@ -1,19 +1,17 @@
 import 'dart:math';
 
-import 'package:assignment/Lists/productsList.dart';
+import 'package:blue_art_mad2/lists/productsList.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class Viewcategoriespage extends StatelessWidget {
-  final Function(Item)? onProductSelect;
-  final String? selectedProductCategory;
-  const Viewcategoriespage({super.key, required this.onProductSelect, required this.selectedProductCategory});
+  const Viewcategoriespage({super.key});
 
   // Checking what products to show?
   List<Item> _displayProductList() {
-    if (selectedProductCategory == 'art') {
+    if ("TODO" == 'art') {
       return artProductList;
-    } else if (selectedProductCategory == 'figure') {
+    } else if ("TODO" == 'figure') {
       return figureProductList;
     } else {
       List<Item> productsList = [...artProductList, ...figureProductList];
@@ -24,9 +22,9 @@ class Viewcategoriespage extends StatelessWidget {
 
   // Checking the Page Topic Name
   String _pageTitle() {
-    if (selectedProductCategory == 'art') {
+    if ("TODO" == 'art') {
       return 'Art';
-    } else if (selectedProductCategory == 'figure') {
+    } else if ("TODO" == 'figure') {
       return 'Action Figures';
     } else {
       return 'Products';
@@ -110,7 +108,7 @@ class Viewcategoriespage extends StatelessWidget {
 
                         // Navigating to the View Product Details Page
                         onTap: () {
-                          onProductSelect!(displayProductList[index]);
+                          
                         },
                       );
                     },

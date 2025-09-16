@@ -1,36 +1,86 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
-class BottomNavBar extends StatelessWidget {
-  final int selectedIndex;
-  final Function(String) onCategorySelect;
-  final Function(int) onItemTapped;
-  const BottomNavBar({required this.selectedIndex, required this.onItemTapped, required this.onCategorySelect});
+class CustomBottomNavBar extends StatelessWidget {
+  final int currentIndex;
+  final ValueChanged<int> onTap;
+
+  const CustomBottomNavBar({
+    super.key,
+    required this.currentIndex,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    bool isValidIndex = selectedIndex >= 0 && selectedIndex <= 3;
-
-    return BottomNavigationBar(
-      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-
-      // If the nav is in the nav list!!
-      selectedItemColor: isValidIndex ? Theme.of(context).colorScheme.onPrimaryContainer : Theme.of(context).colorScheme.surface,
-      unselectedItemColor: Theme.of(context).colorScheme.surface,
-      type: BottomNavigationBarType.fixed,
-      // Page Bottom Navigation
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-        BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Favorits'),
-        BottomNavigationBarItem(icon: Icon(Icons.shop_2_outlined), label: 'Products'),
-      ],
-      currentIndex: isValidIndex ? selectedIndex : 0,
-      onTap: (int index) {
-        if (index == 3) {
-          onCategorySelect('');
-        }
-        onItemTapped(index);
-      },
+    return SafeArea(
+      // Ensures the nav bar is not obscured by system UI (e.g., notches)
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          // Main navigation bar container
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.08),
+                    borderRadius: BorderRadius.circular(24),
+                    border: Border.all(color: Colors.white.withOpacity(0.18)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.20),
+                        blurRadius: 24,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
+                    // Google Nav Bar widget
+                    child: GNav(
+                      selectedIndex:
+                          currentIndex, // Currently selected tab index
+                      onTabChange: onTap, // Callback when a tab is selected
+                      gap: 6, // Gap between icon and text
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 10,
+                      ),
+                      tabBackgroundGradient: const LinearGradient(
+                        colors: [Color(0xFFFF7E5F), Color(0xFFFEB47B)],
+                      ),
+                      backgroundColor: Colors.transparent, // Nav bar background
+                      activeColor:
+                          Colors.white, // Icon/text color for selected tab
+                      color:
+                          Colors.white70, // Icon/text color for unselected tabs
+                      iconSize: 24, // Icon size
+                      curve: Curves.easeInOut, // Animation curve
+                      tabs: [
+                        // Define each tab with icon and label
+                        GButton(icon: Icons.home, text: 'Home'),
+                        GButton(icon: Icons.map, text: 'Map'),
+                        GButton(icon: Icons.card_giftcard, text: 'Rewards'),
+                        GButton(icon: Icons.emoji_events, text: 'Leaderboard'),
+                        // Uncomment below to add a Settings tab
+                        // GButton(icon: Icons.settings, text: 'Settings'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

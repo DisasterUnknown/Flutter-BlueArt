@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "988732238017",
+    "project_id": "blueart-14b4b",
+    "storage_bucket": "blueart-14b4b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988732238017:android:c74e1c86ded9f759ff0c40",
+        "android_client_info": {
+          "package_name": "com.example.blue_art_mad2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "988732238017-abrmi3bveqkrrb61q1f1tdetovo0ve0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBMkHGERz-8ULcHjj2TZjm2qWiwvnPJIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "988732238017-abrmi3bveqkrrb61q1f1tdetovo0ve0v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "988732238017-nbhptji92f1i7ti2bbh5tqf9evl4lh9f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.blueArtMad2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

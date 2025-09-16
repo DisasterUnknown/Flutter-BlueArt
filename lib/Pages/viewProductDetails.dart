@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:intl/intl.dart';
-import 'package:assignment/Lists/productsList.dart';
+import 'package:blue_art_mad2/lists/productsList.dart';
 import 'package:flutter/material.dart';
 
 class ViewProductDetailsPage extends StatefulWidget {
-  final Item? Product;
-  const ViewProductDetailsPage({super.key, required this.Product});
+  const ViewProductDetailsPage({super.key});
 
   @override
   State<ViewProductDetailsPage> createState() => _ViewProductDetailsPageState();
@@ -17,6 +16,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
   int _productQuantity = 1;
   bool _showMsg = false;
   String msgContent = "";
+  Item? Product;
 
   // Scroling to the top of the page when loaded
   @override
@@ -30,7 +30,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
   void initState() {
     super.initState();
     for (int i = 0; i < CartList.length; i++) {
-      if (CartList[i].id == widget.Product?.id) {
+      if (CartList[i].id == Product?.id) {
         _productQuantity = CartList[i].quality;
         break;
       }
@@ -74,7 +74,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
             SizedBox(height: 60),
 
             // Page Title (product name)
-            Text(widget.Product!.title, style: Theme.of(context).textTheme.titleLarge),
+            Text(Product!.title, style: Theme.of(context).textTheme.titleLarge),
 
             SizedBox(height: 60),
 
@@ -89,7 +89,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                     border: Border.all(color: Theme.of(context).colorScheme.onSurfaceVariant, width: 2),
 
                     // Adding the img
-                    image: DecorationImage(image: AssetImage(widget.Product!.imageURL), fit: BoxFit.cover, colorFilter: ColorFilter.mode(Colors.black.withAlpha(30), BlendMode.darken)),
+                    image: DecorationImage(image: AssetImage(Product!.imageURL), fit: BoxFit.cover, colorFilter: ColorFilter.mode(Colors.black.withAlpha(30), BlendMode.darken)),
                   ),
                 ),
                 Positioned(
@@ -98,7 +98,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                   child: GestureDetector(
                     child: Builder(
                       builder: (context) {
-                        if (!FavoritList.any((item) => item.id == widget.Product!.id)) {
+                        if (!FavoritList.any((item) => item.id == Product!.id)) {
                           return Icon(Icons.star, color: Colors.white, size: 34);
                         } else {
                           return Icon(Icons.star, color: Colors.yellowAccent, size: 34);
@@ -107,10 +107,10 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                     ),
                     onTap: () {
                       setState(() {
-                        if (!FavoritList.any((item) => item.id == widget.Product!.id)) {
-                          Item.addFavorite(widget.Product!);
+                        if (!FavoritList.any((item) => item.id == Product!.id)) {
+                          Item.addFavorite(Product!);
                         } else {
-                          Item.removeFavorit(widget.Product!);
+                          Item.removeFavorit(Product!);
                         }
                       });
                     },
@@ -138,12 +138,12 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Text("Product Price: ", style: Theme.of(context).textTheme.bodyLarge), Text("LKR ${widget.Product!.price}", style: Theme.of(context).textTheme.bodyLarge)],
+                      children: [Text("Product Price: ", style: Theme.of(context).textTheme.bodyLarge), Text("LKR ${Product!.price}", style: Theme.of(context).textTheme.bodyLarge)],
                     ),
                     SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Text("Discount: ", style: Theme.of(context).textTheme.bodyLarge), Text(widget.Product!.discount, style: Theme.of(context).textTheme.bodyLarge)],
+                      children: [Text("Discount: ", style: Theme.of(context).textTheme.bodyLarge), Text(Product!.discount, style: Theme.of(context).textTheme.bodyLarge)],
                     ),
                     SizedBox(height: 15),
                     Row(
@@ -153,8 +153,8 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                         Builder(
                           builder: (context) {
                             final formatter = NumberFormat("#,##0.0", "en_US");
-                            final itemPrice = widget.Product!.price.splitMapJoin(',', onMatch: (_) => '');
-                            final itemDiscount = widget.Product!.discount.splitMapJoin('%', onMatch: (_) => '');
+                            final itemPrice = Product!.price.splitMapJoin(',', onMatch: (_) => '');
+                            final itemDiscount = Product!.discount.splitMapJoin('%', onMatch: (_) => '');
                             final discount = int.parse(itemDiscount);
                             final price = int.parse(itemPrice);
                             final quantityPrice = (price - ((price / 100) * discount)) * _productQuantity;
@@ -221,11 +221,11 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                             child: Padding(padding: EdgeInsets.only(left: 15, right: 15, top: 12, bottom: 11), child: Center(child: Text("Add To Cart"))),
                           ),
                           onTap: () {
-                            if (!CartList.any((item) => item.id == widget.Product!.id)) {
-                              Item.addProduct(widget.Product!, _productQuantity);
+                            if (!CartList.any((item) => item.id == Product!.id)) {
+                              Item.addProduct(Product!, _productQuantity);
                               _handleMsgDisplay(1);
                             } else if (!CartList.any((item) => item.quality == _productQuantity)) {
-                              Item.updateProduct(widget.Product!, _productQuantity);
+                              Item.updateProduct(Product!, _productQuantity);
                               _handleMsgDisplay(2);
                             } else {
                               _handleMsgDisplay(3);
@@ -247,7 +247,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
               children: [
                 Text("Description", style: Theme.of(context).textTheme.titleLarge),
                 SizedBox(height: 30),
-                Container(width: productDescriptionFormWidth, child: Padding(padding: EdgeInsets.only(left: 20, right: 20), child: Text(widget.Product!.discription, textAlign: TextAlign.justify))),
+                Container(width: productDescriptionFormWidth, child: Padding(padding: EdgeInsets.only(left: 20, right: 20), child: Text(Product!.discription, textAlign: TextAlign.justify))),
               ],
             ),
 

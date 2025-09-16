@@ -1,9 +1,12 @@
+import 'dart:ui';
+import 'package:blue_art_mad2/network/auth/login.dart';
+import 'package:blue_art_mad2/components/dialog_box.dart';
+import 'package:blue_art_mad2/components/loading_box.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  final Function(int) onItemTapped;
-  const LoginPage({super.key, required this.onItemTapped});
+  const LoginPage({super.key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -13,14 +16,34 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailIN = TextEditingController();
   final TextEditingController _passIN = TextEditingController();
-
-  // State Values
   bool _showPassword = true;
 
-  void _login() {
-    if (_formKey.currentState!.validate()) {
-      // Navicating to the home page
-      widget.onItemTapped(0);
+  Future<void> _login() async {
+    if (!_formKey.currentState!.validate()) return;
+    final email = _emailIN.text.trim();
+    final password = _passIN.text.trim();
+
+    try {
+      showLoadingDialog(context, 'Signing in...');
+      final result = await AuthLogin().login(email, password);
+
+      if (!mounted) return;
+      Navigator.pop(context);
+
+      final statusCode = result['statusCode'];
+      final data = result['body'];
+
+      if (statusCode == 200) {
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);  
+      } else if (statusCode == 401) {
+        showCustomDialog(context, 'Error', data['message']);
+      } else if (statusCode == 403) {
+        showCustomDialog(context, 'Unauthorized', data['message']);
+      }
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      showCustomDialog(context, 'Network', 'Internal network error...');
     }
   }
 
@@ -34,113 +57,186 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final loginFormWidth = screenWidth > 600 ? 400.0 : screenWidth * 0.8;
+    final loginFormWidth = screenWidth > 600 ? 400.0 : screenWidth * 0.85;
 
-    return Stack(
-      children: [
-        // Adding the Background img
-        SizedBox.expand(child: Image.asset('assets/loginPageBg.gif', fit: BoxFit.cover)),
-
-        Container(color: Colors.black.withOpacity(0.5)),
-
-        Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Container(
-                width: loginFormWidth,
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Theme.of(context).colorScheme.surfaceContainerHighest, width: 1.5),
-                  borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  boxShadow: [BoxShadow(blurRadius: 6, offset: Offset(0, 3))],
-                ),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Login", style: Theme.of(context).textTheme.titleLarge),
-                      SizedBox(height: 30),
-
-                      // Getting the user Email and the validator
-                      TextFormField(
-                        controller: _emailIN,
-                        decoration: InputDecoration(labelText: "Email", labelStyle: Theme.of(context).textTheme.labelMedium),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please Enter Email!!";
-                          } else if (!value.contains('@')) {
-                            return "Enter a Valid Email!!";
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 16),
-
-                      // Getting the user pass and the validator
-                      TextFormField(
-                        controller: _passIN,
-                        obscureText: _showPassword,
-                        decoration: InputDecoration(
-                          labelText: "Password",
-                          labelStyle: Theme.of(context).textTheme.labelMedium,
-                          suffixIcon: IconButton(
-                            icon: Icon(_showPassword ? Icons.visibility_off : Icons.visibility, color: Theme.of(context).colorScheme.onPrimary),
-                            onPressed: () {
-                              setState(() {
-                                _showPassword = !_showPassword;
-                              });
-                            },
-                          ),
+    return Scaffold(
+      body: Stack(
+        children: [
+          SizedBox.expand(
+            child: Image.asset('assets/loginPageBg.gif', fit: BoxFit.cover),
+          ),
+          Container(color: Colors.black.withOpacity(0.4)),
+          Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                    child: Container(
+                      width: loginFormWidth,
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.3),
+                          width: 1.5,
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please Enter Password!!";
-                          } else if (value.length < 6) {
-                            return "Password should be atleast 6 characters!!";
-                          }
-                          return null;
-                        },
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 12,
+                            offset: const Offset(0, 6),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 16),
-
-                      // User Register Page Nav (Link)
-                      RichText(
-                        text: TextSpan(
-                          style: Theme.of(context).textTheme.bodySmall,
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            const TextSpan(text: "No Account? "),
-                            TextSpan(
-                              text: "Register!",
-                              style: const TextStyle(fontWeight: FontWeight.w600, decoration: TextDecoration.underline),
-                              recognizer:
-                                  TapGestureRecognizer()
-                                    ..onTap = () {
-                                      widget.onItemTapped(7);
-                                    },
+                            Text(
+                              "BlueArt Login",
+                              style: Theme.of(context).textTheme.headlineMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                            ),
+                            const SizedBox(height: 30),
+                            TextFormField(
+                              controller: _emailIN,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                labelText: "Email",
+                                labelStyle: const TextStyle(
+                                  color: Colors.white70,
+                                ),
+                                errorStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 255, 170, 170), 
+                                  fontSize: 13,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white.withOpacity(0.05),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter email";
+                                } else if (!value.contains('@')) {
+                                  return "Enter a valid email";
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 16),
+                            TextFormField(
+                              controller: _passIN,
+                              obscureText: _showPassword,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: InputDecoration(
+                                labelText: "Password",
+                                labelStyle: const TextStyle(
+                                  color: Colors.white70,
+                                ),
+                                errorStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 255, 170, 170), 
+                                  fontSize: 13,
+                                ),
+                                filled: true,
+                                fillColor: Colors.white.withOpacity(0.05),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide.none,
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _showPassword
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.white70,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _showPassword = !_showPassword;
+                                    });
+                                  },
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter password";
+                                } else if (value.length < 6) {
+                                  return "Password must be at least 6 characters";
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 20),
+                            RichText(
+                              text: TextSpan(
+                                style: const TextStyle(color: Colors.white70),
+                                children: [
+                                  const TextSpan(text: "No account? "),
+                                  TextSpan(
+                                    text: "Register!",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline,
+                                      color: Colors.white,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.pushReplacementNamed(
+                                          context,
+                                          '/register',
+                                        );
+                                      },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 25),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: _login,
+                                style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 14,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  backgroundColor: Colors.blueAccent
+                                      .withOpacity(0.9),
+                                  foregroundColor: Colors.white,
+                                ),
+                                child: const Text(
+                                  'Login',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(height: 20),
-
-                      // Login Btn
-                      ElevatedButton(
-                        onPressed: _login,
-                        style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, foregroundColor: Theme.of(context).colorScheme.onPrimary),
-                        child: Text('Login'),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -1,12 +1,12 @@
-import 'package:assignment/Lists/productsList.dart';
-import 'package:assignment/Pages/cartPage.dart';
-import 'package:assignment/Pages/checkOutPage.dart';
-import 'package:assignment/Pages/homePage.dart';
-import 'package:assignment/Pages/loginPage.dart';
-import 'package:assignment/Pages/registerPage.dart';
-import 'package:assignment/Pages/viewCategoriesPage.dart';
-import 'package:assignment/Pages/viewProductDetails.dart';
-import 'package:assignment/Pages/favoritesPage.dart';
+import 'package:blue_art_mad2/Lists/productsList.dart';
+import 'package:blue_art_mad2/Pages/cartPage.dart';
+import 'package:blue_art_mad2/Pages/checkOutPage.dart';
+import 'package:blue_art_mad2/Pages/homePage.dart';
+import 'package:blue_art_mad2/Pages/loginPage.dart';
+import 'package:blue_art_mad2/Pages/registerPage.dart';
+import 'package:blue_art_mad2/Pages/viewCategoriesPage.dart';
+import 'package:blue_art_mad2/Pages/viewProductDetails.dart';
+import 'package:blue_art_mad2/Pages/favoritesPage.dart';
 import 'package:flutter/material.dart';
 
 class PageContent extends StatelessWidget {
@@ -24,19 +24,19 @@ class PageContent extends StatelessWidget {
     // Page Content Section
     // Keep State Page Section
     final List<Widget> stateNotLossPages = [
-      HomePage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, onCategorySelect: onCategorySelect),
-      CartPage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory),
-      FavoritesPage(onItemTapped: onItemTapped, onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory),
-      Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory),
-      ViewProductDetailsPage(Product: selectedProduct),
-      Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory),
+      HomePage(),
+      CartPage(),
+      FavoritesPage(),
+      Viewcategoriespage(),
+      ViewProductDetailsPage(),
+      Viewcategoriespage(),
     ];
 
     // Pages where the state should remove
     if (index == 6) {
-      return LoginPage(onItemTapped: onItemTapped);
+      return LoginPage();
     } else if (index == 7) {
-      return RegisterPage(onItemTapped: onItemTapped);
+      return RegisterPage();
     } else if (index == 8) {
       return CheckOutPage();
     } else if (index >= 0 && index < stateNotLossPages.length) {

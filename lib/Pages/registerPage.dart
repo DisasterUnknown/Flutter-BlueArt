@@ -1,9 +1,12 @@
+import 'dart:ui';
+import 'package:blue_art_mad2/components/dialog_box.dart';
+import 'package:blue_art_mad2/components/loading_box.dart';
+import 'package:blue_art_mad2/network/auth/register.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class RegisterPage extends StatefulWidget {
-  final Function(int) onItemTapped;
-  const RegisterPage({super.key, required this.onItemTapped});
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -14,205 +17,272 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _unameIN = TextEditingController();
   final TextEditingController _emailIN = TextEditingController();
   final TextEditingController _passIN = TextEditingController();
+  final TextEditingController _confirmIN = TextEditingController();
 
-  final TextEditingController _contactIN = TextEditingController();
-  final TextEditingController _addressIN = TextEditingController();
-  final TextEditingController _roleSelect = TextEditingController();
+  bool _showPassword = true;
 
-  // State Values
-  String _selectedRole = 'Customer';
-  bool _showPassword = false;
+  Future<void> _register() async {
+    if (!_formKey.currentState!.validate()) return;
 
-  void _register() {
-    if (_formKey.currentState!.validate()) {
-      // Navicating to the home page
-      widget.onItemTapped(0);
+    final username = _unameIN.text.trim();
+    final email = _emailIN.text.trim();
+    final password = _passIN.text.trim();
+    final confirmPass = _confirmIN.text.trim();
+
+    try {
+      showLoadingDialog(context, 'Signing in...');
+      final result = await AuthRegister().register(username, email, password, confirmPass);
+
+      if (!mounted) return;
+      Navigator.pop(context);
+
+      final statusCode = result['statusCode'];
+      final data = result['body'];
+
+      if (statusCode == 200) {
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+      } else if (statusCode == 422) {
+        showCustomDialog(context, 'Error', 'Email already taken...');
+      } else {
+        showCustomDialog(context, 'Error', data['message']);
+      }
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.pop(context);
+      showCustomDialog(context, 'Network', '$e');
+      showCustomDialog(context, 'Network', 'Internal network error...');
     }
   }
 
-  // Cleaning the data from the memory
   @override
   void dispose() {
     _unameIN.dispose();
     _emailIN.dispose();
     _passIN.dispose();
-    _contactIN.dispose();
-    _addressIN.dispose();
-    _roleSelect.dispose();
+    _confirmIN.dispose();
     super.dispose();
+  }
+
+  InputDecoration _inputDecoration(String label, {Widget? suffixIcon}) {
+    return InputDecoration(
+      labelText: label,
+      labelStyle: const TextStyle(color: Colors.white70),
+      errorStyle: const TextStyle(
+        color: Color.fromARGB(255, 255, 170, 170),
+        fontSize: 13,
+      ),
+      filled: true,
+      fillColor: Colors.white.withOpacity(0.05),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
+      ),
+      suffixIcon: suffixIcon,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final registerFormWidth = screenWidth > 600 ? 400.0 : screenWidth * 0.8;
+    final formWidth = screenWidth > 600 ? 400.0 : screenWidth * 0.85;
 
-    return Stack(
-      children: [
-        // Adding the Background img
-        SizedBox.expand(child: Image.asset('assets/loginPageBg.gif', fit: BoxFit.cover)),
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Background
+          SizedBox.expand(
+            child: Image.asset('assets/loginPageBg.gif', fit: BoxFit.cover),
+          ),
+          Container(color: Colors.black.withOpacity(0.4)),
 
-        Container(color: Colors.black.withOpacity(0.5)),
-
-        Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Container(
-                width: registerFormWidth,
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Theme.of(context).colorScheme.surfaceContainerHighest, width: 1.5),
-                  borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  boxShadow: [BoxShadow(blurRadius: 6, offset: Offset(0, 3))],
-                ),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Register Page Title
-                      Text("Register", style: Theme.of(context).textTheme.headlineSmall),
-                      SizedBox(height: 20),
-
-                      // Username input field
-                      TextFormField(
-                        controller: _unameIN,
-                        decoration: InputDecoration(labelText: 'Username', labelStyle: Theme.of(context).textTheme.labelMedium),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Your Username!!';
-                          } else if (value.length < 3) {
-                            return 'Username Must be at Least 3 Characters Long!!';
-                          }
-                          return null;
-                        },
-                      ),
-
-                      // Email input field
-                      TextFormField(
-                        controller: _emailIN,
-                        decoration: InputDecoration(labelText: 'Email', labelStyle: Theme.of(context).textTheme.labelMedium),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Your Email!!';
-                          } else if (!value.contains('@')) {
-                            return 'Enter a Valid Email!!';
-                          }
-                          return null;
-                        },
-                      ),
-
-                      // Password input field
-                      TextFormField(
-                        controller: _passIN,
-                        obscureText: !_showPassword,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          labelStyle: Theme.of(context).textTheme.labelMedium,
-                          suffixIcon: IconButton(
-                            icon: Icon(_showPassword ? Icons.visibility : Icons.visibility_off, color: Theme.of(context).colorScheme.onPrimary),
-                            onPressed: () {
-                              setState(() {
-                                _showPassword = !_showPassword;
-                              });
-                            },
+          // Form
+          Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                    child: Container(
+                      width: formWidth,
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.3),
+                          width: 1.5,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 12,
+                            offset: const Offset(0, 6),
                           ),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Your Password!!';
-                          } else if (value.length < 6) {
-                            return 'Password Must be at Least 6 Characters Long!!';
-                          }
-                          return null;
-                        },
+                        ],
                       ),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Create Account",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                            ),
+                            const SizedBox(height: 30),
 
-                      // Contact Number input field
-                      if (_selectedRole == 'Seller') ...[
-                        TextFormField(
-                          controller: _contactIN,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly,
-                            TextInputFormatter.withFunction((oldValue, newValue) {
-                              final disgitsOnly = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
-                              final buffer = StringBuffer();
+                            // Username
+                            TextFormField(
+                              controller: _unameIN,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: _inputDecoration("Username"),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter username";
+                                } else if (value.length < 3) {
+                                  return "Username must be at least 3 characters";
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 16),
 
-                              for (int i = 0; i < disgitsOnly.length && i < 10; i++) {
-                                if (i == 3 || i == 6) buffer.write(' ');
-                                buffer.write(disgitsOnly[i]);
-                              }
+                            // Email
+                            TextFormField(
+                              controller: _emailIN,
+                              keyboardType: TextInputType.emailAddress,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: _inputDecoration("Email"),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter email";
+                                } else if (!value.contains('@')) {
+                                  return "Enter a valid email";
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 16),
 
-                              return TextEditingValue(text: buffer.toString(), selection: TextSelection.collapsed(offset: buffer.length));
-                            }),
+                            // Password
+                            TextFormField(
+                              controller: _passIN,
+                              obscureText: _showPassword,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: _inputDecoration(
+                                "Password",
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _showPassword
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.white70,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _showPassword = !_showPassword;
+                                    });
+                                  },
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please enter password";
+                                } else if (value.length < 6) {
+                                  return "Password must be at least 6 characters";
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 16),
+
+                            // Confirm Password
+                            TextFormField(
+                              controller: _confirmIN,
+                              obscureText: _showPassword,
+                              style: const TextStyle(color: Colors.white),
+                              decoration: _inputDecoration("Confirm Password"),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "Please confirm password";
+                                } else if (value != _passIN.text) {
+                                  return "Passwords do not match";
+                                }
+                                return null;
+                              },
+                            ),
+                            const SizedBox(height: 20),
+
+                            // Already have account? Login
+                            RichText(
+                              text: TextSpan(
+                                style: const TextStyle(color: Colors.white70),
+                                children: [
+                                  const TextSpan(text: "Already have an account? "),
+                                  TextSpan(
+                                    text: "Login!",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration.underline,
+                                      color: Colors.white,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.pushReplacementNamed(
+                                          context,
+                                          '/',
+                                        );
+                                      },
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 25),
+
+                            // Register Button
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: _register,
+                                style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 14,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  backgroundColor:
+                                      Colors.blueAccent.withOpacity(0.9),
+                                  foregroundColor: Colors.white,
+                                ),
+                                child: const Text(
+                                  'Register',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
-                          decoration: InputDecoration(labelText: 'Contact Number', labelStyle: Theme.of(context).textTheme.labelMedium),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please Enter your Contact Number!!';
-                            } else if (value.length < 12) {
-                              return 'Contact Number Must be at Least 10 Digits Long!!';
-                            }
-                            return null;
-                          },
                         ),
-                      ],
-
-                      // Address input field
-                      if (_selectedRole == 'Seller') ...[
-                        TextFormField(
-                          controller: _addressIN,
-                          decoration: InputDecoration(labelText: 'Address', labelStyle: Theme.of(context).textTheme.labelMedium),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please Enter Your Address!!';
-                            } else if (value.length < 5) {
-                              return 'Address Must be at Least 5 Characters Long!!';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-
-                      // Role Selection Dropdown
-                      DropdownButtonFormField(
-                        value: _selectedRole,
-                        decoration: InputDecoration(labelText: 'Select Role', labelStyle: Theme.of(context).textTheme.labelMedium),
-                        items:
-                            ['Customer', 'Seller'].map((role) {
-                              return DropdownMenuItem(value: role, child: Text(role, style: Theme.of(context).textTheme.bodyLarge));
-                            }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            _selectedRole = value!;
-                          });
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Select a Role!!';
-                          }
-                          return null;
-                        },
                       ),
-                      SizedBox(height: 20),
-
-                      // User Register Page Nav (Link)
-                      ElevatedButton(
-                        onPressed: _register,
-                        style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, foregroundColor: Theme.of(context).colorScheme.onPrimary),
-                        child: Text('Register'),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

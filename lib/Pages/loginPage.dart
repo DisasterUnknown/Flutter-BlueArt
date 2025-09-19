@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:blue_art_mad2/network/auth/login.dart';
 import 'package:blue_art_mad2/components/dialog_box.dart';
 import 'package:blue_art_mad2/components/loading_box.dart';
+import 'package:blue_art_mad2/routes/app_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
       final data = result['body'];
 
       if (statusCode == 200) {
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);  
+        Navigator.pushReplacementNamed(context, AppRoute.layout); 
       } else if (statusCode == 401) {
         showCustomDialog(context, 'Error', data['message']);
       } else if (statusCode == 403) {

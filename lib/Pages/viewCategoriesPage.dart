@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:blue_art_mad2/lists/productsList.dart';
+import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -41,7 +42,7 @@ class Viewcategoriespage extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 30),
-          Text(pageTitle, style: Theme.of(context).textTheme.titleLarge),
+          Text(pageTitle, style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.bold, fontSize: 30)),
           SizedBox(height: 15),
           Center(
             child: Wrap(
@@ -52,7 +53,7 @@ class Viewcategoriespage extends StatelessWidget {
                   width: 200,
                   margin: EdgeInsets.only(left: 10, right: 10, top: 10),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                    color: CustomColors.getThemeColor(context, 'surfaceContainerHighest'),
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(2, 2))],
                   ),
@@ -90,7 +91,7 @@ class Viewcategoriespage extends StatelessWidget {
                                     padding: EdgeInsets.symmetric(horizontal: 1.0),
                                     child: Text(
                                       displayProductList[index].title,
-                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                                      style: TextStyle(color: CustomColors.getThemeColor(context, 'titleMedium'), fontWeight: FontWeight.bold, fontSize: 16),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -98,7 +99,7 @@ class Viewcategoriespage extends StatelessWidget {
                                   SizedBox(height: 5),
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 1.0),
-                                    child: Text("LRK ${displayProductList[index].price}", style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500)),
+                                    child: Text("LRK ${displayProductList[index].price}", style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.w500, fontSize: 20)),
                                   ),
                                 ],
                               ),

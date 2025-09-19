@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:intl/intl.dart';
 import 'package:blue_art_mad2/lists/productsList.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
             SizedBox(height: 60),
 
             // Page Title (product name)
-            Text(Product!.title, style: Theme.of(context).textTheme.titleLarge),
+            Text(Product!.title, style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.bold, fontSize: 30)),
 
             SizedBox(height: 60),
 
@@ -86,7 +87,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                   width: 280,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Theme.of(context).colorScheme.onSurfaceVariant, width: 2),
+                    border: Border.all(color: CustomColors.getThemeColor(context, 'onSurfaceVariant'), width: 2),
 
                     // Adding the img
                     image: DecorationImage(image: AssetImage(Product!.imageURL), fit: BoxFit.cover, colorFilter: ColorFilter.mode(Colors.black.withAlpha(30), BlendMode.darken)),
@@ -126,9 +127,9 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
               width: productDetailsFormWidth,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
-                border: Border.all(color: Theme.of(context).colorScheme.surfaceContainerHighest, width: 1.5),
+                border: Border.all(color: CustomColors.getThemeColor(context, 'surfaceContainerHighest'), width: 1.5),
                 borderRadius: BorderRadius.circular(12),
-                color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                color: CustomColors.getThemeColor(context, 'surfaceContainerHighest'),
                 boxShadow: [BoxShadow(blurRadius: 6, offset: Offset(0, 3))],
               ),
               child: Padding(
@@ -138,18 +139,18 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Text("Product Price: ", style: Theme.of(context).textTheme.bodyLarge), Text("LKR ${Product!.price}", style: Theme.of(context).textTheme.bodyLarge)],
+                      children: [Text("Product Price: ", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyLarge'), fontWeight: FontWeight.bold, fontSize: 22)), Text("LKR ${Product!.price}", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyLarge'), fontWeight: FontWeight.bold, fontSize: 22))],
                     ),
                     SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [Text("Discount: ", style: Theme.of(context).textTheme.bodyLarge), Text(Product!.discount, style: Theme.of(context).textTheme.bodyLarge)],
+                      children: [Text("Discount: ", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyLarge'), fontWeight: FontWeight.bold, fontSize: 22)), Text(Product!.discount, style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyLarge'), fontWeight: FontWeight.bold, fontSize: 22))],
                     ),
                     SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Price: ", style: Theme.of(context).textTheme.bodyLarge),
+                        Text("Price: ", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyLarge'), fontWeight: FontWeight.bold, fontSize: 22)),
                         Builder(
                           builder: (context) {
                             final formatter = NumberFormat("#,##0.0", "en_US");
@@ -158,7 +159,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                             final discount = int.parse(itemDiscount);
                             final price = int.parse(itemPrice);
                             final quantityPrice = (price - ((price / 100) * discount)) * _productQuantity;
-                            return Text("LKR ${formatter.format(quantityPrice)}", style: Theme.of(context).textTheme.bodyLarge);
+                            return Text("LKR ${formatter.format(quantityPrice)}", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyLarge'), fontWeight: FontWeight.bold, fontSize: 22));
                           },
                         ),
                       ],
@@ -167,19 +168,19 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(children: [Text("Quantity: ", style: Theme.of(context).textTheme.bodyLarge)]),
+                        Column(children: [Text("Quantity: ", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyLarge'), fontWeight: FontWeight.bold, fontSize: 22))]),
                         Column(
                           children: [
                             Container(
                               width: 120,
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), border: Border.all(color: Theme.of(context).colorScheme.onPrimary, width: 2)),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), border: Border.all(color: CustomColors.getThemeColor(context, 'onPrimary'), width: 2)),
                               child: Padding(
                                 padding: EdgeInsets.only(left: 15, right: 15, top: 2, bottom: 1),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     GestureDetector(
-                                      child: Text(" < ", style: Theme.of(context).textTheme.bodyLarge),
+                                      child: Text(" < ", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyLarge'), fontWeight: FontWeight.bold, fontSize: 22)),
                                       onTap: () {
                                         setState(() {
                                           _productQuantity--;
@@ -189,9 +190,9 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                                         });
                                       },
                                     ),
-                                    Text("$_productQuantity", style: Theme.of(context).textTheme.bodyLarge),
+                                    Text("$_productQuantity", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyLarge'), fontWeight: FontWeight.bold, fontSize: 22)),
                                     GestureDetector(
-                                      child: Text(" > ", style: Theme.of(context).textTheme.bodyLarge),
+                                      child: Text(" > ", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyLarge'), fontWeight: FontWeight.bold, fontSize: 22)),
                                       onTap: () {
                                         setState(() {
                                           _productQuantity++;
@@ -213,11 +214,11 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AnimatedOpacity(duration: Duration(milliseconds: 500), opacity: _showMsg ? 1.0 : 0.0, child: Text(msgContent, style: Theme.of(context).textTheme.labelSmall)),
+                        AnimatedOpacity(duration: Duration(milliseconds: 500), opacity: _showMsg ? 1.0 : 0.0, child: Text(msgContent, style: TextStyle(color: CustomColors.getThemeColor(context, 'labelSmall'), fontWeight: FontWeight.bold, fontSize: 18))),
                         GestureDetector(
                           child: Container(
                             width: 250,
-                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Theme.of(context).colorScheme.tertiary),
+                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: CustomColors.getThemeColor(context, 'tertiary')),
                             child: Padding(padding: EdgeInsets.only(left: 15, right: 15, top: 12, bottom: 11), child: Center(child: Text("Add To Cart"))),
                           ),
                           onTap: () {
@@ -245,7 +246,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("Description", style: Theme.of(context).textTheme.titleLarge),
+                Text("Description", style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.bold, fontSize: 30)),
                 SizedBox(height: 30),
                 Container(width: productDescriptionFormWidth, child: Padding(padding: EdgeInsets.only(left: 20, right: 20), child: Text(Product!.discription, textAlign: TextAlign.justify))),
               ],

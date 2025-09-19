@@ -1,3 +1,4 @@
+import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 
 class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -6,11 +7,18 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: CustomColors.getThemeColor(context, 'primary'), 
+      foregroundColor: CustomColors.getThemeColor(context, 'onPrimary'),
       title: GestureDetector(
-        child: Text('BlueArt', style: Theme.of(context).textTheme.bodyLarge),
-        onTap: () {
-          
-        },
+        child: Text(
+          'BlueArt',
+          style: TextStyle(
+            color: CustomColors.getThemeColor(context, 'bodyLarge'),
+            fontWeight: FontWeight.bold,
+            fontSize: 22.0,
+          ),
+        ),
+        onTap: () {},
       ),
     );
   }

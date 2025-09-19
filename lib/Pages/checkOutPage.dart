@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:blue_art_mad2/lists/productsList.dart';
+import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -62,9 +63,9 @@ class _CheckOutPageState extends State<CheckOutPage> {
             width: checkOutFormWidth,
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).colorScheme.surfaceContainerHighest, width: 1.5),
+              border: Border.all(color: CustomColors.getThemeColor(context, 'surfaceContainerHighest'), width: 1.5),
               borderRadius: BorderRadius.circular(12),
-              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              color: CustomColors.getThemeColor(context, 'surfaceContainerHighest'),
               boxShadow: [BoxShadow(blurRadius: 6, offset: Offset(0, 3))],
             ),
             child: Form(
@@ -73,7 +74,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Complete Purchase", style: Theme.of(context).textTheme.titleLarge),
+                  Text("Complete Purchase", style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.bold, fontSize: 30)),
 
                   SizedBox(height: 30),
 
@@ -95,7 +96,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         return TextEditingValue(text: buffer.toString(), selection: TextSelection.collapsed(offset: buffer.length));
                       }),
                     ],
-                    decoration: InputDecoration(labelText: "Phone Number", labelStyle: Theme.of(context).textTheme.labelMedium),
+                    decoration: InputDecoration(labelText: "Phone Number", labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20)),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter your Contact Number!!';
@@ -111,7 +112,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   // Address
                   TextFormField(
                     controller: _addressIN,
-                    decoration: InputDecoration(labelText: "Address", labelStyle: Theme.of(context).textTheme.labelMedium),
+                    decoration: InputDecoration(labelText: "Address", labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20)),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter Your Address!!';
@@ -127,10 +128,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   // Selection
                   DropdownButtonFormField(
                     value: _selectedShippingMethod,
-                    decoration: InputDecoration(labelText: 'Shipping Method', labelStyle: Theme.of(context).textTheme.labelMedium),
+                    decoration: InputDecoration(labelText: 'Shipping Method', labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20)),
                     items:
                         ['Standard', 'Express', 'Next-Day'].map((method) {
-                          return DropdownMenuItem(value: method, child: Text(method, style: Theme.of(context).textTheme.bodyLarge));
+                          return DropdownMenuItem(value: method, child: Text(method, style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyLarge'), fontWeight: FontWeight.bold, fontSize: 22)));
                         }).toList(),
                     onChanged: (value) {
                       setState(() {
@@ -144,7 +145,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   // Cardholder Name
                   TextFormField(
                     controller: _cardHolderNameIN,
-                    decoration: InputDecoration(labelText: 'Cardholder Name', labelStyle: Theme.of(context).textTheme.labelMedium),
+                    decoration: InputDecoration(labelText: 'Cardholder Name', labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20)),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter Your Username!!';
@@ -175,7 +176,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         return TextEditingValue(text: buffer.toString(), selection: TextSelection.collapsed(offset: buffer.length));
                       }),
                     ],
-                    decoration: InputDecoration(labelText: 'Card Number', labelStyle: Theme.of(context).textTheme.labelMedium),
+                    decoration: InputDecoration(labelText: 'Card Number', labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20)),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter your Card Number!!';
@@ -205,7 +206,7 @@ class _CheckOutPageState extends State<CheckOutPage> {
                         return TextEditingValue(text: buffer.toString(), selection: TextSelection.collapsed(offset: buffer.length));
                       }),
                     ],
-                    decoration: InputDecoration(labelText: 'CVC', labelStyle: Theme.of(context).textTheme.labelMedium),
+                    decoration: InputDecoration(labelText: 'CVC', labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20)),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter Your CVC!!';
@@ -218,10 +219,10 @@ class _CheckOutPageState extends State<CheckOutPage> {
 
                   SizedBox(height: 30),
 
-                  AnimatedOpacity(duration: Duration(milliseconds: 500), opacity: _showMsg ? 1.0 : 0.0, child: Text('Successfully Purchase Completed', style: Theme.of(context).textTheme.labelSmall)),
+                  AnimatedOpacity(duration: Duration(milliseconds: 500), opacity: _showMsg ? 1.0 : 0.0, child: Text('Successfully Purchase Completed', style: TextStyle(color: CustomColors.getThemeColor(context, 'labelSmall'), fontWeight: FontWeight.bold, fontSize: 18))),
                   ElevatedButton(
                     onPressed: _checkOut,
-                    style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, foregroundColor: Theme.of(context).colorScheme.onPrimary),
+                    style: ElevatedButton.styleFrom(backgroundColor: CustomColors.getThemeColor(context, 'primary'), foregroundColor: CustomColors.getThemeColor(context, 'onPrimary')),
                     child: Text('Check Out'),
                   ),
                 ],

@@ -2,7 +2,7 @@ import 'package:blue_art_mad2/Pages/cartPage.dart';
 import 'package:blue_art_mad2/Pages/favoritesPage.dart';
 import 'package:blue_art_mad2/Pages/homePage.dart';
 import 'package:blue_art_mad2/Pages/viewCategoriesPage.dart';
-import 'package:blue_art_mad2/theme.dart';
+import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:blue_art_mad2/layout/Components/TopAppBar.dart';
 import 'package:blue_art_mad2/layout/Components/BottomNavBar.dart';
@@ -50,13 +50,9 @@ class _LayoutState extends State<Layout> {
 
   @override
   Widget build(BuildContext context) {
-    final isLandScape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
 
     return MaterialApp(
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       home: SafeArea(
         child: PopScope(
@@ -71,11 +67,12 @@ class _LayoutState extends State<Layout> {
           },
 
           child: Scaffold(
+            backgroundColor: CustomColors.getThemeColor(context, 'surface'),
             appBar: TopAppBar(),
             drawer: AppDrawer(),
             body: _screens[_currentIndex],
             // Bottum Nav Bar Component
-            bottomNavigationBar: isLandScape
+            bottomNavigationBar: isLandscape
                 ? null
                 : CustomBottomNavBar(
                     currentIndex: _currentIndex,

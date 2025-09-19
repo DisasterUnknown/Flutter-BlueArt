@@ -66,12 +66,10 @@ class CustomBottomNavBar extends StatelessWidget {
                       curve: Curves.easeInOut, // Animation curve
                       tabs: [
                         // Define each tab with icon and label
-                        GButton(icon: Icons.home, text: 'Home'),
-                        GButton(icon: Icons.map, text: 'Map'),
-                        GButton(icon: Icons.card_giftcard, text: 'Rewards'),
-                        GButton(icon: Icons.emoji_events, text: 'Leaderboard'),
-                        // Uncomment below to add a Settings tab
-                        // GButton(icon: Icons.settings, text: 'Settings'),
+                        GButton(icon: Icons.home_outlined, text: 'Home'),
+                        GButton(icon: Icons.shopping_cart_outlined, text: 'Cart'),
+                        GButton(icon: Icons.favorite_outline, text: 'Favorites'),
+                        GButton(icon: Icons.category_outlined, text: 'Products'),
                       ],
                     ),
                   ),

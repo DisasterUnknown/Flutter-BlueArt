@@ -1,4 +1,5 @@
 import 'package:blue_art_mad2/lists/productsList.dart';
+import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,7 +17,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
       child: Column(
         children: [
           SizedBox(height: 30),
-          Text("Favorite Products", style: Theme.of(context).textTheme.titleLarge),
+          Text("Favorite Products", style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.bold, fontSize: 30)),
           SizedBox(height: 15),
           Center(
             child: Column(
@@ -29,7 +30,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       width: 200,
                       margin: EdgeInsets.only(left: 10, right: 10, top: 10),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                        color: CustomColors.getThemeColor(context, 'surfaceContainerHighest'),
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(2, 2))],
                       ),
@@ -63,7 +64,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                         padding: EdgeInsets.symmetric(horizontal: 1.0),
                                         child: Text(
                                           FavoritList[index].title,
-                                          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                                          style: TextStyle(color: CustomColors.getThemeColor(context, 'titleMedium'), fontWeight: FontWeight.bold, fontSize: 16),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -79,7 +80,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                             final discount = int.parse(itemDiscount);
                                             final price = int.parse(itemPrice);
                                             final quantityPrice = (price - ((price / 100) * discount)) * FavoritList[index].quality;
-                                            return Text("LRK ${formatter.format(quantityPrice)}", style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w500));
+                                            return Text("LRK ${formatter.format(quantityPrice)}", style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.w500, fontSize: 20));
                                           },
                                         ),
                                       ),
@@ -87,7 +88,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                       GestureDetector(
                                         behavior: HitTestBehavior.translucent,
                                         child: Container(
-                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: Theme.of(context).colorScheme.onTertiary),
+                                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: CustomColors.getThemeColor(context, 'onTertiary')),
                                           child: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 1), child: Text("Remove")),
                                         ),
                                         onTap: () {

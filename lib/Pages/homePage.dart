@@ -1,4 +1,5 @@
 import 'package:blue_art_mad2/lists/productsList.dart';
+import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -26,9 +27,29 @@ class HomePage extends StatelessWidget {
                     children: [
                       Text(
                         "Art",
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: TextStyle(
+                          color: CustomColors.getThemeColor(
+                            context,
+                            'titleLarge',
+                          ),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
                       ),
-                      GestureDetector(child: Text("See More > "), onTap: () {}),
+                      GestureDetector(
+                        child: Text(
+                          "See More > ",
+                          style: TextStyle(
+                            color: CustomColors.getThemeColor(
+                              context,
+                              'bodySmall',
+                            ),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        onTap: () {},
+                      ),
                     ],
                   ),
                 ),
@@ -47,9 +68,7 @@ class HomePage extends StatelessWidget {
                         width: 250,
                         margin: EdgeInsets.only(left: 10, right: 10, top: 10),
                         decoration: BoxDecoration(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.surfaceContainerHighest,
+                          color: CustomColors.getThemeColor(context, 'surfaceContainerHighest'),
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -110,12 +129,14 @@ class HomePage extends StatelessWidget {
                                           ),
                                           child: Text(
                                             artProductList[index].title,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.copyWith(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                            style: TextStyle(
+                                              color: CustomColors.getThemeColor(
+                                                context,
+                                                'bodyMedium',
+                                              ),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20,
+                                            ),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                           ),
@@ -127,12 +148,14 @@ class HomePage extends StatelessWidget {
                                           ),
                                           child: Text(
                                             "LKR ${artProductList[index].price}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium
-                                                ?.copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                            style: TextStyle(
+                                              color: CustomColors.getThemeColor(
+                                                context,
+                                                'bodyMedium',
+                                              ),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -177,9 +200,29 @@ class HomePage extends StatelessWidget {
                     children: [
                       Text(
                         "Collectables",
-                        style: Theme.of(context).textTheme.titleLarge,
+                        style: TextStyle(
+                          color: CustomColors.getThemeColor(
+                            context,
+                            'titleLarge',
+                          ),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
                       ),
-                      GestureDetector(child: Text("See More > "), onTap: () {}),
+                      GestureDetector(
+                        child: Text(
+                          "See More > ",
+                          style: TextStyle(
+                            color: CustomColors.getThemeColor(
+                              context,
+                              'bodySmall',
+                            ),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        onTap: () {},
+                      ),
                     ],
                   ),
                 ),
@@ -198,9 +241,7 @@ class HomePage extends StatelessWidget {
                         width: 250,
                         margin: EdgeInsets.only(left: 10, right: 10, top: 10),
                         decoration: BoxDecoration(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.surfaceContainerHighest,
+                          color: CustomColors.getThemeColor(context, 'surfaceContainerHighest'),
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -261,12 +302,14 @@ class HomePage extends StatelessWidget {
                                           ),
                                           child: Text(
                                             figureProductList[index].title,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.copyWith(
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                            style: TextStyle(
+                                              color: CustomColors.getThemeColor(
+                                                context,
+                                                'bodyMedium',
+                                              ),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20,
+                                            ),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                           ),
@@ -278,12 +321,14 @@ class HomePage extends StatelessWidget {
                                           ),
                                           child: Text(
                                             "LKR ${figureProductList[index].price}",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium
-                                                ?.copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                            style: TextStyle(
+                                              color: CustomColors.getThemeColor(
+                                                context,
+                                                'bodyMedium',
+                                              ),
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20,
+                                            ),
                                           ),
                                         ),
                                       ],

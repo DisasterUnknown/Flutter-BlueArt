@@ -1,0 +1,19 @@
+const List<Map<String, dynamic>> lightThemeColors = [
+  {'name': 'primary', 'value': 0xFF90CAF9},
+  {'name': 'onPrimaryContainer', 'value': 0xFF232EFF},
+  {'name': 'surface', 'value': 0xFFFFFFFF},
+  {'name': 'surfaceContainerHighest', 'value': 0xFFE0E0E0},
+  {'name': 'onPrimary', 'value': 0xFF000000},
+  {'name': 'onSurfaceVariant', 'value': 0xFFFFFFFF},
+  {'name': 'tertiary', 'value': 0xFF00B93E},
+  {'name': 'onTertiary', 'value': 0xFFFF6C6C},
+  
+  // Text colors
+  {'name': 'titleLarge', 'value': 0xFF000000},
+  {'name': 'titleMedium', 'value': 0xDD000000},
+  {'name': 'bodyLarge', 'value': 0xFF000000},
+  {'name': 'bodyMedium', 'value': 0xFF000000},
+  {'name': 'bodySmall', 'value': 0xFF000000},
+  {'name': 'labelMedium', 'value': 0xFF656565},
+  {'name': 'labelSmall', 'value': 0xFF00DF4A},
+];

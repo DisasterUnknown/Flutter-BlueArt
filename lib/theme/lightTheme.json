@@ -1,0 +1,24 @@
+[
+  {"name": "primary", "value": "0xFF90CAF9"},
+  {"name": "onPrimaryContainer", "value": "0xFF232EFF"},
+  {"name": "surface", "value": "0xFFFFFFFF"},
+  {"name": "surfaceContainerHighest", "value": "0xFFE0E0E0"},
+  {"name": "onPrimary", "value": "0xFF000000"},
+  {"name": "onSurfaceVariant", "value": "0xFFFFFFFF"},
+  {"name": "tertiary", "value": "0xFF00B93E"},
+  {"name": "onTertiary", "value": "0xFFFF6C6C"},
+
+  {"name": "titleLarge", "value": "0xFF000000"},
+  {"name": "titleMedium", "value": "0xDD000000"},
+  {"name": "bodyLarge", "value": "0xFF000000"},
+  {"name": "bodyMedium", "value": "0xFF000000"},
+  {"name": "bodySmall", "value": "0xFF000000"},
+  {"name": "labelMedium", "value": "0xFF656565"},
+  {"name": "labelSmall", "value": "0xFF00DF4A"},
+  
+  {"name": "bottomNavigationBar", "value": "0xFF90CAF9"},
+  {"name": "bottomNavigationBarSelectedGradient1", "value": "0xFF42AEFF"},
+  {"name": "bottomNavigationBarSelectedGradient2", "value": "0xFF64B5F6"},
+  {"name": "bottomNavigationBarSelected", "value": "0xFFFFFFFF"},
+  {"name": "bottomNavigationBarUnselected", "value": "0xFFFFFFFF"}
+]

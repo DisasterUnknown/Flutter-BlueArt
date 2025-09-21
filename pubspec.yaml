@@ -79,6 +79,8 @@ flutter:
     - assets/Figures/figur2.jpg
     - assets/Figures/figur3.jpg
     - assets/Figures/figur4.jpg
+    - lib/theme/darkTheme.json
+    - lib/theme/lightTheme.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

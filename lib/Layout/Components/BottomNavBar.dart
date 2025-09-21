@@ -4,22 +4,22 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
-  final ValueChanged<int> onTap;
+  final Function(String) onCategorySelect;
+  final Function(int) onPageNav;
 
   const CustomBottomNavBar({
     super.key,
     required this.currentIndex,
-    required this.onTap,
+    required this.onPageNav,
+    required this.onCategorySelect,
   });
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      // Ensures the nav bar is not obscured by system UI (e.g., notches)
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          // Main navigation bar container
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             child: ClipRRect(
@@ -44,12 +44,15 @@ class CustomBottomNavBar extends StatelessWidget {
                       horizontal: 10,
                       vertical: 6,
                     ),
-                    // Google Nav Bar widget
                     child: GNav(
-                      selectedIndex:
-                          currentIndex, // Currently selected tab index
-                      onTabChange: onTap, // Callback when a tab is selected
-                      gap: 6, // Gap between icon and text
+                      selectedIndex: currentIndex,
+                      onTabChange: (index) {
+                        if (index == 3) {
+                          onCategorySelect('');
+                        }
+                        onPageNav(index);
+                      },
+                      gap: 6,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 10,
@@ -57,19 +60,25 @@ class CustomBottomNavBar extends StatelessWidget {
                       tabBackgroundGradient: const LinearGradient(
                         colors: [Color(0xFFFF7E5F), Color(0xFFFEB47B)],
                       ),
-                      backgroundColor: Colors.transparent, // Nav bar background
-                      activeColor:
-                          Colors.white, // Icon/text color for selected tab
-                      color:
-                          Colors.white70, // Icon/text color for unselected tabs
-                      iconSize: 24, // Icon size
-                      curve: Curves.easeInOut, // Animation curve
-                      tabs: [
-                        // Define each tab with icon and label
+                      backgroundColor: Colors.transparent,
+                      activeColor: Colors.white,
+                      color: Colors.white70,
+                      iconSize: 24,
+                      curve: Curves.easeInOut,
+                      tabs: const [
                         GButton(icon: Icons.home_outlined, text: 'Home'),
-                        GButton(icon: Icons.shopping_cart_outlined, text: 'Cart'),
-                        GButton(icon: Icons.favorite_outline, text: 'Favorites'),
-                        GButton(icon: Icons.category_outlined, text: 'Products'),
+                        GButton(
+                          icon: Icons.shopping_cart_outlined,
+                          text: 'Cart',
+                        ),
+                        GButton(
+                          icon: Icons.favorite_outline,
+                          text: 'Favorites',
+                        ),
+                        GButton(
+                          icon: Icons.category_outlined,
+                          text: 'Products',
+                        ),
                       ],
                     ),
                   ),

@@ -3,7 +3,10 @@ import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final Function(int) onPageNav;
+  final Function(Item)? onProductSelect;
+  final Function(String)? onCategorySelect;
+  const HomePage({super.key, required this.onPageNav, required this.onProductSelect, required this.onCategorySelect});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,9 @@ class HomePage extends StatelessWidget {
                             fontSize: 18.0,
                           ),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          onCategorySelect!('art');
+                        },
                       ),
                     ],
                   ),
@@ -165,7 +170,8 @@ class HomePage extends StatelessWidget {
                               ),
 
                               // Navigating to the View Product Details Page
-                              onTap: () {},
+                              onTap: () {
+                                onProductSelect!(artProductList[index]);},
                             );
                           },
                         ),
@@ -221,7 +227,9 @@ class HomePage extends StatelessWidget {
                             fontSize: 18.0,
                           ),
                         ),
-                        onTap: () {},
+                        onTap: () {
+                          onCategorySelect!('figure');
+                        },
                       ),
                     ],
                   ),
@@ -338,7 +346,8 @@ class HomePage extends StatelessWidget {
                               ),
 
                               // Navigating to the View Product Details Page
-                              onTap: () {},
+                              onTap: () {
+                                onProductSelect!(figureProductList[index]);},
                             );
                           },
                         ),

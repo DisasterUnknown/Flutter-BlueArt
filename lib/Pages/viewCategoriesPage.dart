@@ -6,13 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class Viewcategoriespage extends StatelessWidget {
-  const Viewcategoriespage({super.key});
+  final Function(Item)? onProductSelect;
+  final String? selectedProductCategory;
+  const Viewcategoriespage({super.key, required this.onProductSelect, required this.selectedProductCategory});
 
   // Checking what products to show?
   List<Item> _displayProductList() {
-    if ("TODO" == 'art') {
+    if (selectedProductCategory == 'art') {
       return artProductList;
-    } else if ("TODO" == 'figure') {
+    } else if (selectedProductCategory == 'figure') {
       return figureProductList;
     } else {
       List<Item> productsList = [...artProductList, ...figureProductList];
@@ -23,9 +25,9 @@ class Viewcategoriespage extends StatelessWidget {
 
   // Checking the Page Topic Name
   String _pageTitle() {
-    if ("TODO" == 'art') {
+    if (selectedProductCategory == 'art') {
       return 'Art';
-    } else if ("TODO" == 'figure') {
+    } else if (selectedProductCategory == 'figure') {
       return 'Action Figures';
     } else {
       return 'Products';
@@ -109,7 +111,7 @@ class Viewcategoriespage extends StatelessWidget {
 
                         // Navigating to the View Product Details Page
                         onTap: () {
-                          
+                          onProductSelect!(displayProductList[index]);
                         },
                       );
                     },

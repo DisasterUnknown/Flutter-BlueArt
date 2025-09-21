@@ -1,8 +1,11 @@
+import 'package:blue_art_mad2/routes/app_route.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 
 class AppDrawer extends StatelessWidget {
-  const AppDrawer();
+  final void Function(int) onTabSelect;
+
+  const AppDrawer({required this.onTabSelect, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,22 +19,19 @@ class AppDrawer extends StatelessWidget {
               height: 100,
               color: CustomColors.getThemeColor(context, 'primary'),
               padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Menu',
-                    style: TextStyle(
-                      color: CustomColors.getThemeColor(context, 'bodyLarge'),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22.0,
-                    ),
+              child: Center(
+                child: Text(
+                  'Menu',
+                  style: TextStyle(
+                    color: CustomColors.getThemeColor(context, 'bodyLarge'),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22.0,
                   ),
-                ],
+                ),
               ),
             ),
 
+            // Home tab
             ListTile(
               title: Text(
                 'Home',
@@ -43,24 +43,11 @@ class AppDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.pop(context);
-                // Close the drawer
+                onTabSelect(0);
               },
             ),
-            ListTile(
-              title: Text(
-                'Products',
-                style: TextStyle(
-                  color: CustomColors.getThemeColor(context, 'bodyLarge'),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22.0,
-                ),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                // onCategorySelect('all');
-                // onItemTapped(2); // Close the drawer
-              },
-            ),
+
+            // Cart tab
             ListTile(
               title: Text(
                 'Cart',
@@ -72,9 +59,11 @@ class AppDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.pop(context);
-                // onItemTapped(1); // Close the drawer
+                onTabSelect(1);
               },
             ),
+
+            // Favorites tab
             ListTile(
               title: Text(
                 'Favorites',
@@ -86,9 +75,27 @@ class AppDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.pop(context);
-                // onItemTapped(2); // Close the drawer
+                onTabSelect(2);
               },
             ),
+
+            // Products tab
+            ListTile(
+              title: Text(
+                'Products',
+                style: TextStyle(
+                  color: CustomColors.getThemeColor(context, 'bodyLarge'),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22.0,
+                ),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                onTabSelect(3);
+              },
+            ),
+
+            // Login page (outside Layout)
             ListTile(
               title: Text(
                 'Login',
@@ -100,7 +107,7 @@ class AppDrawer extends StatelessWidget {
               ),
               onTap: () {
                 Navigator.pop(context);
-                // onItemTapped(6); // Close the drawer
+                Navigator.pushReplacementNamed(context, AppRoute.login);
               },
             ),
           ],

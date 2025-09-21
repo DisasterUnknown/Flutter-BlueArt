@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+  final Function(int) onPageNav;
+  final Function(Item)? onProductSelect;
+  final String? selectedProductCategory;
+  const CartPage({super.key, required this.onPageNav, required this.onProductSelect, required this.selectedProductCategory});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -106,7 +109,7 @@ class _CartPageState extends State<CartPage> {
 
                             // Navigating to the View Product Details Page
                             onTap: () {
-                              
+                              widget.onProductSelect!(CartList[index]);                              
                             },
                           );
                         },
@@ -147,7 +150,7 @@ class _CartPageState extends State<CartPage> {
                                 child: Padding(padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 5), child: Text("Check Out!")),
                               ),
                               onTap: () {
-                                
+                                widget.onPageNav(8);                                
                               },
                             ),
                           ],

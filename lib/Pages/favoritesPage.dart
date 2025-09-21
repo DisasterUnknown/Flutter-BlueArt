@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class FavoritesPage extends StatefulWidget {
-  const FavoritesPage({super.key});
+  final Function(int) onPageNav;
+  final Function(Item)? onProductSelect;
+  final String? selectedProductCategory;
+  const FavoritesPage({super.key, required this.onPageNav, required this.onProductSelect, required this.selectedProductCategory});
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();

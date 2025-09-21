@@ -1,7 +1,5 @@
-import 'package:blue_art_mad2/Pages/cartPage.dart';
-import 'package:blue_art_mad2/Pages/favoritesPage.dart';
-import 'package:blue_art_mad2/Pages/homePage.dart';
-import 'package:blue_art_mad2/Pages/viewCategoriesPage.dart';
+import 'package:blue_art_mad2/layout/Components/PageConnect.dart';
+import 'package:blue_art_mad2/lists/productsList.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:blue_art_mad2/layout/Components/TopAppBar.dart';
@@ -9,81 +7,83 @@ import 'package:blue_art_mad2/layout/Components/BottomNavBar.dart';
 import 'package:blue_art_mad2/layout/Components/AppDrawer.dart';
 
 class Layout extends StatefulWidget {
-  const Layout({super.key});
+  final int initialTabIndex;
+  const Layout({super.key, this.initialTabIndex = 0});
 
   @override
   State<Layout> createState() => _LayoutState();
 }
 
 class _LayoutState extends State<Layout> {
-  final List<int> _oldSelectedIndex = [0];
+  final List<int> _history = [];
   int _currentIndex = 0;
-
-  List<Widget> get _screens {
-    return [
-      const HomePage(),
-      const CartPage(),
-      const FavoritesPage(),
-      const Viewcategoriespage(),
-    ];
-  }
+  Item? _selectedProduct;
+  String _selectedProductCategory = '';
 
   @override
   void initState() {
     super.initState();
+    _currentIndex = widget.initialTabIndex;
+    _history.add(_currentIndex);
   }
 
-  // Recording the page navigation
+  void _onProductSelect(Item product) {
+    setState(() {
+      _selectedProduct = product;
+      _currentIndex = 4;
+    });
+  }
+
+  void _onCategorySelect(String category) {
+    setState(() {
+      _selectedProductCategory = category;
+      _currentIndex = 5;
+    });
+  }
+
   void _onPageNav(int index) {
-    setState(() {
-      _oldSelectedIndex.add(index);
-    });
+    if (_currentIndex != index) {
+      setState(() {
+        _currentIndex = index;
+        _history.add(index);
+      });
+    }
   }
 
-  // Page Back navigation logic
-  void _onGoBack() {
-    setState(() {
-      _currentIndex = _oldSelectedIndex[_oldSelectedIndex.length - 2];
-      _oldSelectedIndex.removeLast();
-    });
+  Future<bool> _onWillPop() async {
+    if (_history.length > 1) {
+      setState(() {
+        _history.removeLast();
+        _currentIndex = _history.last;
+      });
+      return false;
+    }
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SafeArea(
-        child: PopScope(
-          canPop: _oldSelectedIndex.length == 1,
-          // ignore: deprecated_member_use
-          onPopInvoked: (didpop) {
-            if (!didpop && _oldSelectedIndex.length != 1) {
-              setState(() {
-                _onGoBack();
-              });
-            }
-          },
-
-          child: Scaffold(
-            backgroundColor: CustomColors.getThemeColor(context, 'surface'),
-            appBar: TopAppBar(),
-            drawer: AppDrawer(),
-            body: _screens[_currentIndex],
-            // Bottum Nav Bar Component
-            bottomNavigationBar: isLandscape
-                ? null
-                : CustomBottomNavBar(
-                    currentIndex: _currentIndex,
-                    onTap: (index) => {
-                      setState(() {
-                        _currentIndex = index;
-                        _onPageNav(index);
-                      }),
-                    },
-                  ),
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: CustomColors.getThemeColor(context, 'surface'),
+          appBar: TopAppBar(),
+          drawer: AppDrawer(onTabSelect: _onPageNav),
+          body: PageContent(
+            index: _currentIndex,
+            onPageNav: _onPageNav,
+            selectedProduct: _selectedProduct,
+            onProductSelect: _onProductSelect,
+            selectedProductCategory: _selectedProductCategory,
+            onCategorySelect: _onCategorySelect,
           ),
+          bottomNavigationBar: isLandscape
+              ? null
+              : CustomBottomNavBar(currentIndex: _currentIndex >= 0 && _currentIndex <= 3 ? _currentIndex : -1, onPageNav: _onPageNav, onCategorySelect: _onCategorySelect),
         ),
       ),
     );

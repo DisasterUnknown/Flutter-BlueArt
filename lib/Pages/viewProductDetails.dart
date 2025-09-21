@@ -443,7 +443,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                                 top: 12,
                                 bottom: 11,
                               ),
-                              child: Center(child: Text("Add To Cart")),
+                              child: Center(child: Text("Add To Cart", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodySmall'), fontWeight: FontWeight.bold, fontSize: 20,))),
                             ),
                           ),
                           onTap: () {
@@ -491,6 +491,9 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                     child: Text(
                       Product!.discription,
                       textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        color: CustomColors.getThemeColor(context, "bodySmall")
+                      ),
                     ),
                   ),
                 ),

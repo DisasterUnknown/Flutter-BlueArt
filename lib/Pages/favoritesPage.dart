@@ -92,7 +92,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                         behavior: HitTestBehavior.translucent,
                                         child: Container(
                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: CustomColors.getThemeColor(context, 'onTertiary')),
-                                          child: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 1), child: Text("Remove")),
+                                          child: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 1), child: Text("Remove", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodySmall'), fontWeight: FontWeight.bold, fontSize: 16))),
                                         ),
                                         onTap: () {
                                           setState(() {

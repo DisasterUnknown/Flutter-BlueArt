@@ -92,7 +92,7 @@ class _CartPageState extends State<CartPage> {
                                         behavior: HitTestBehavior.translucent,
                                         child: Container(
                                           decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: CustomColors.getThemeColor(context, 'onTertiary')),
-                                          child: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 1), child: Text("Remove")),
+                                          child: Padding(padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 1), child: Text("Remove", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodySmall'), fontWeight: FontWeight.bold, fontSize: 16))),
                                         ),
                                         onTap: () {
                                           setState(() {
@@ -139,7 +139,7 @@ class _CartPageState extends State<CartPage> {
                                   final price = int.parse(itemPrice);
                                   quantityPrice += (price - ((price / 100) * discount)) * CartList[i].quality;
                                 }
-                                return Text("LRK ${formatter.format(quantityPrice)}");
+                                return Text("LRK ${formatter.format(quantityPrice)}", style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.w500, fontSize: 25));
                               },
                             ),
                             SizedBox(height: 10),
@@ -147,7 +147,7 @@ class _CartPageState extends State<CartPage> {
                               behavior: HitTestBehavior.translucent,
                               child: Container(
                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: CustomColors.getThemeColor(context, 'tertiary')),
-                                child: Padding(padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 5), child: Text("Check Out!")),
+                                child: Padding(padding: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 5), child: Text("Check Out!", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodySmall'), fontWeight: FontWeight.bold, fontSize: 20))),
                               ),
                               onTap: () {
                                 widget.onPageNav(8);                                

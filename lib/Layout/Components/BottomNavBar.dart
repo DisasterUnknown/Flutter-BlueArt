@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -28,7 +29,10 @@ class CustomBottomNavBar extends StatelessWidget {
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.08),
+                    color: CustomColors.getThemeColor(
+                      context,
+                      'bottomNavigationBar',
+                    ),
                     borderRadius: BorderRadius.circular(24),
                     border: Border.all(color: Colors.white.withOpacity(0.18)),
                     boxShadow: [
@@ -57,12 +61,15 @@ class CustomBottomNavBar extends StatelessWidget {
                         horizontal: 16,
                         vertical: 10,
                       ),
-                      tabBackgroundGradient: const LinearGradient(
-                        colors: [Color(0xFFFF7E5F), Color(0xFFFEB47B)],
+                      tabBackgroundGradient: LinearGradient(
+                        colors: [
+                          CustomColors.getThemeColor(context, 'bottomNavigationBarSelectedGradient1'),
+                          CustomColors.getThemeColor(context, 'bottomNavigationBarSelectedGradient2'),
+                        ],
                       ),
                       backgroundColor: Colors.transparent,
-                      activeColor: Colors.white,
-                      color: Colors.white70,
+                      activeColor: CustomColors.getThemeColor(context, 'bottomNavigationBarSelected'),
+                      color: CustomColors.getThemeColor(context, 'bottomNavigationBarUnselected'),
                       iconSize: 24,
                       curve: Curves.easeInOut,
                       tabs: const [

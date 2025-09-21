@@ -7,7 +7,7 @@ const List<Map<String, dynamic>> lightThemeColors = [
   {'name': 'onSurfaceVariant', 'value': 0xFFFFFFFF},
   {'name': 'tertiary', 'value': 0xFF00B93E},
   {'name': 'onTertiary', 'value': 0xFFFF6C6C},
-  
+
   // Text colors
   {'name': 'titleLarge', 'value': 0xFF000000},
   {'name': 'titleMedium', 'value': 0xDD000000},
@@ -16,4 +16,11 @@ const List<Map<String, dynamic>> lightThemeColors = [
   {'name': 'bodySmall', 'value': 0xFF000000},
   {'name': 'labelMedium', 'value': 0xFF656565},
   {'name': 'labelSmall', 'value': 0xFF00DF4A},
+
+  // Bottum Navigation Bar
+  {'name': 'bottomNavigationBar', 'value': 0xFF90CAF9},
+  {'name': 'bottomNavigationBarSelectedGradient1', 'value': 0xFF42AEFF},
+  {'name': 'bottomNavigationBarSelectedGradient2', 'value': 0xFF64B5F6},
+  {'name': 'bottomNavigationBarSelected', 'value': 0xFFFFFFFF},
+  {'name': 'bottomNavigationBarUnselected', 'value': 0xFFFFFFFF},
 ];

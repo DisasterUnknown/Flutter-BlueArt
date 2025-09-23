@@ -1,23 +1,24 @@
+import 'dart:convert';
 import 'dart:math';
 
-import 'package:blue_art_mad2/lists/productsList.dart';
+import 'package:blue_art_mad2/models/products.dart';
+import 'package:blue_art_mad2/store/liveStore/productLiveStore.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class Viewcategoriespage extends StatelessWidget {
-  final Function(Item)? onProductSelect;
+  final Function(Product)? onProductSelect;
   final String? selectedProductCategory;
   const Viewcategoriespage({super.key, required this.onProductSelect, required this.selectedProductCategory});
 
   // Checking what products to show?
-  List<Item> _displayProductList() {
+  List<Product> _displayProductList() {
     if (selectedProductCategory == 'art') {
-      return artProductList;
+      return ProductStore().artProducts;
     } else if (selectedProductCategory == 'figure') {
-      return figureProductList;
+      return ProductStore().collectiblesProducts;
     } else {
-      List<Item> productsList = [...artProductList, ...figureProductList];
+      List<Product> productsList = [...ProductStore().artProducts, ...ProductStore().collectiblesProducts];
       productsList.shuffle(Random());
       return productsList;
     }
@@ -73,7 +74,7 @@ class Viewcategoriespage extends StatelessWidget {
 
                                 // Adding the img
                                 image: DecorationImage(
-                                  image: AssetImage(displayProductList[index].imageURL),
+                                  image: MemoryImage(base64Decode(displayProductList[index].images[0].content.split(',').last)),
                                   fit: BoxFit.cover,
                                   colorFilter: ColorFilter.mode(Colors.black.withAlpha(30), BlendMode.darken),
                                 ),
@@ -92,7 +93,7 @@ class Viewcategoriespage extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 1.0),
                                     child: Text(
-                                      displayProductList[index].title,
+                                      displayProductList[index].name,
                                       style: TextStyle(color: CustomColors.getThemeColor(context, 'titleMedium'), fontWeight: FontWeight.bold, fontSize: 16),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,

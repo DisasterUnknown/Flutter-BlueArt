@@ -1,5 +1,5 @@
 import 'package:blue_art_mad2/layout/Components/PageConnect.dart';
-import 'package:blue_art_mad2/lists/productsList.dart';
+import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/network/product/product.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class Layout extends ConsumerStatefulWidget {
 class _LayoutState extends ConsumerState<Layout> {
   final List<int> _history = [];
   int _currentIndex = 0;
-  Item? _selectedProduct;
+  Product? _selectedProduct;
   String _selectedProductCategory = '';
 
   @override
@@ -34,11 +34,10 @@ class _LayoutState extends ConsumerState<Layout> {
   Future<void> _loadProducts() async {
     await NetworkProducts(ref).getArtProducts();
     await NetworkProducts(ref).getCollectiblesProducts();
-    print("Getting data!!");
     setState(() {});
   }
 
-  void _onProductSelect(Item product) {
+  void _onProductSelect(Product product) {
     setState(() {
       _selectedProduct = product;
       _currentIndex = 4;

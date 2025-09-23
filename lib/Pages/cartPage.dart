@@ -1,11 +1,12 @@
 import 'package:blue_art_mad2/lists/productsList.dart';
+import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CartPage extends StatefulWidget {
   final Function(int) onPageNav;
-  final Function(Item)? onProductSelect;
+  final Function(Product)? onProductSelect;
   final String? selectedProductCategory;
   const CartPage({super.key, required this.onPageNav, required this.onProductSelect, required this.selectedProductCategory});
 
@@ -109,7 +110,7 @@ class _CartPageState extends State<CartPage> {
 
                             // Navigating to the View Product Details Page
                             onTap: () {
-                              widget.onProductSelect!(CartList[index]);                              
+                              // widget.onProductSelect!(CartList[index]);                              
                             },
                           );
                         },

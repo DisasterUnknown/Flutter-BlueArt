@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:blue_art_mad2/lists/productsList.dart';
+import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/store/liveStore/productLiveStore.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   final Function(int) onPageNav;
-  final Function(Item)? onProductSelect;
+  final Function(Product)? onProductSelect;
   final Function(String)? onCategorySelect;
   const HomePage({
     super.key,
@@ -188,7 +188,7 @@ class _HomePageState extends State<HomePage> {
 
                               // Navigating to the View Product Details Page
                               onTap: () {
-                                // widget.onProductSelect!(ProductStore().artProducts[index]);
+                                widget.onProductSelect!(ProductStore().artProducts[index]);
                               },
                             );
                           },
@@ -365,10 +365,10 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ],
                               ),
-
+  
                               // Navigating to the View Product Details Page
                               onTap: () {
-                                // widget.onProductSelect!(ProductStore().collectiblesProducts[index]);
+                                widget.onProductSelect!(ProductStore().collectiblesProducts[index]);
                               },
                             );
                           },

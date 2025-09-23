@@ -1,12 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:intl/intl.dart';
 import 'package:blue_art_mad2/lists/productsList.dart';
 import 'package:flutter/material.dart';
 
 class ViewProductDetailsPage extends StatefulWidget {
-  final Item? selectedProduct;
+  final Product? selectedProduct;
   const ViewProductDetailsPage({super.key, required this.selectedProduct});
 
   @override
@@ -18,7 +20,8 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
   int _productQuantity = 1;
   bool _showMsg = false;
   String msgContent = "";
-  Item? Product;
+  Product? product;
+  MemoryImage? productImage;
 
   // Scroling to the top of the page when loaded
   @override
@@ -27,7 +30,8 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
 
     if (widget.selectedProduct != oldWidget.selectedProduct) {
       setState(() {
-        Product = widget.selectedProduct;
+        product = widget.selectedProduct;
+        productImage = MemoryImage(base64Decode(product!.images[0].content.split(',').last));
       });
     }
 
@@ -43,10 +47,10 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
   @override
   void initState() {
     super.initState();
-    Product = widget.selectedProduct;
+    product = widget.selectedProduct;
 
     for (int i = 0; i < CartList.length; i++) {
-      if (CartList[i].id == Product?.id) {
+      if (CartList[i].id == product?.id) {
         _productQuantity = CartList[i].quality;
         break;
       }
@@ -60,11 +64,11 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
     });
 
     if (opption == 1) {
-      msgContent = "Product Added To Cart!!";
+      msgContent = "product Added To Cart!!";
     } else if (opption == 2) {
-      msgContent = "Product Successfully Updated!!";
+      msgContent = "product Successfully Updated!!";
     } else if (opption == 3) {
-      msgContent = "Product Already Exist in Cart!!";
+      msgContent = "product Already Exist in Cart!!";
     }
 
     Timer(Duration(seconds: 3), () {
@@ -86,7 +90,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
         ? screenWidth * 0.75
         : screenWidth * 1.0;
 
-    if (Product == null) {
+    if (product == null) {
       return Center(child: Text("No product selected"));
     }
 
@@ -99,7 +103,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
 
             // Page Title (product name)
             Text(
-              Product!.title,
+              product!.name,
               style: TextStyle(
                 color: CustomColors.getThemeColor(context, 'titleLarge'),
                 fontWeight: FontWeight.bold,
@@ -127,7 +131,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
 
                     // Adding the img
                     image: DecorationImage(
-                      image: AssetImage(Product!.imageURL),
+                      image: productImage!,
                       fit: BoxFit.cover,
                       colorFilter: ColorFilter.mode(
                         Colors.black.withAlpha(30),
@@ -143,7 +147,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                     child: Builder(
                       builder: (context) {
                         if (!FavoritList.any(
-                          (item) => item.id == Product!.id,
+                          (item) => item.id == product!.id,
                         )) {
                           return Icon(
                             Icons.star,
@@ -162,11 +166,11 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                     onTap: () {
                       setState(() {
                         if (!FavoritList.any(
-                          (item) => item.id == Product!.id,
+                          (item) => item.id == product!.id,
                         )) {
-                          Item.addFavorite(Product!);
+                          // Item.addFavorite(product!);
                         } else {
-                          Item.removeFavorit(Product!);
+                          // Item.removeFavorit(product!);
                         }
                       });
                     },
@@ -177,7 +181,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
 
             SizedBox(height: 60),
 
-            // Product Details Section
+            // product Details Section
             Container(
               width: productDetailsFormWidth,
               padding: EdgeInsets.all(20),
@@ -215,16 +219,24 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                             fontSize: 22,
                           ),
                         ),
-                        Text(
-                          "LKR ${Product!.price}",
-                          style: TextStyle(
-                            color: CustomColors.getThemeColor(
-                              context,
-                              'bodyLarge',
-                            ),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
+                        Builder(
+                          builder: (context) {
+                            String cleaned = product!.price.replaceAll(RegExp(r'[^0-9.]'), '');
+                            double value = double.parse(cleaned);
+
+                            final formatter = NumberFormat('#,###');
+                            return Text(
+                              "LKR ${formatter.format(value)}",
+                              style: TextStyle(
+                                color: CustomColors.getThemeColor(
+                                  context,
+                                  'bodyLarge',
+                                ),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            );
+                          }
                         ),
                       ],
                     ),
@@ -243,16 +255,23 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                             fontSize: 22,
                           ),
                         ),
-                        Text(
-                          Product!.discount,
-                          style: TextStyle(
-                            color: CustomColors.getThemeColor(
-                              context,
-                              'bodyLarge',
-                            ),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
+                        Builder(
+                          builder: (context) {
+                            String cleaned = product!.discount.replaceAll(RegExp(r'[^0-9.]'), '');
+                            double value = double.parse(cleaned);
+
+                            return Text(
+                              "${value.toInt()}%",
+                              style: TextStyle(
+                                color: CustomColors.getThemeColor(
+                                  context,
+                                  'bodyLarge',
+                                ),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                              ),
+                            );
+                          }
                         ),
                       ],
                     ),
@@ -274,16 +293,16 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                         Builder(
                           builder: (context) {
                             final formatter = NumberFormat("#,##0.0", "en_US");
-                            final itemPrice = Product!.price.splitMapJoin(
+                            final itemPrice = product!.price.splitMapJoin(
                               ',',
                               onMatch: (_) => '',
                             );
-                            final itemDiscount = Product!.discount.splitMapJoin(
+                            final itemDiscount = product!.discount.splitMapJoin(
                               '%',
                               onMatch: (_) => '',
                             );
-                            final discount = int.parse(itemDiscount);
-                            final price = int.parse(itemPrice);
+                            final discount = double.parse(itemDiscount);
+                            final price = double.parse(itemPrice);
                             final quantityPrice =
                                 (price - ((price / 100) * discount)) *
                                 _productQuantity;
@@ -443,19 +462,31 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                                 top: 12,
                                 bottom: 11,
                               ),
-                              child: Center(child: Text("Add To Cart", style: TextStyle(color: CustomColors.getThemeColor(context, 'bodySmall'), fontWeight: FontWeight.bold, fontSize: 20,))),
+                              child: Center(
+                                child: Text(
+                                  "Add To Cart",
+                                  style: TextStyle(
+                                    color: CustomColors.getThemeColor(
+                                      context,
+                                      'bodySmall',
+                                    ),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                           onTap: () {
                             if (!CartList.any(
-                              (item) => item.id == Product!.id,
+                              (item) => item.id == product!.id,
                             )) {
-                              Item.addProduct(Product!, _productQuantity);
+                              // Item.addProduct(product!, _productQuantity);
                               _handleMsgDisplay(1);
                             } else if (!CartList.any(
                               (item) => item.quality == _productQuantity,
                             )) {
-                              Item.updateProduct(Product!, _productQuantity);
+                              // Item.updateProduct(product!, _productQuantity);
                               _handleMsgDisplay(2);
                             } else {
                               _handleMsgDisplay(3);
@@ -471,7 +502,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
 
             SizedBox(height: 60),
 
-            // Product Description Section
+            // product Description Section
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -489,10 +520,10 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                   child: Padding(
                     padding: EdgeInsets.only(left: 20, right: 20),
                     child: Text(
-                      Product!.discription,
+                      product!.description,
                       textAlign: TextAlign.justify,
                       style: TextStyle(
-                        color: CustomColors.getThemeColor(context, "bodySmall")
+                        color: CustomColors.getThemeColor(context, "bodySmall"),
                       ),
                     ),
                   ),

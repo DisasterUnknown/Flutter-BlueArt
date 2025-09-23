@@ -1,19 +1,18 @@
-
-import 'package:blue_art_mad2/lists/productsList.dart';
 import 'package:blue_art_mad2/Pages/cartPage.dart';
 import 'package:blue_art_mad2/Pages/checkOutPage.dart';
 import 'package:blue_art_mad2/Pages/favoritesPage.dart';
 import 'package:blue_art_mad2/Pages/homePage.dart';
 import 'package:blue_art_mad2/Pages/viewCategoriesPage.dart';
 import 'package:blue_art_mad2/Pages/viewProductDetails.dart';
+import 'package:blue_art_mad2/models/products.dart';
 import 'package:flutter/material.dart';
 
 class PageContent extends StatelessWidget {
   final int index;
   final Function(int) onPageNav;
-  final Function(Item)? onProductSelect;
+  final Function(Product)? onProductSelect;
   final Function(String)? onCategorySelect;
-  final Item? selectedProduct;
+  final Product? selectedProduct;
   final String? selectedProductCategory;
 
   const PageContent({required this.index, required this.onPageNav, this.selectedProduct, this.onProductSelect, this.selectedProductCategory, this.onCategorySelect});

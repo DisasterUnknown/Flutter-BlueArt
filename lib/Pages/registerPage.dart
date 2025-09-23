@@ -5,15 +5,16 @@ import 'package:blue_art_mad2/network/auth/register.dart';
 import 'package:blue_art_mad2/routes/app_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RegisterPage extends StatefulWidget {
+class RegisterPage extends ConsumerStatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  ConsumerState<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterPageState extends ConsumerState<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _unameIN = TextEditingController();
   final TextEditingController _emailIN = TextEditingController();
@@ -32,7 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     try {
       showLoadingDialog(context, 'Signing in...');
-      final result = await AuthRegister().register(username, email, password, confirmPass);
+      final result = await AuthRegister(ref).register(username, email, password, confirmPass);
 
       if (!mounted) return;
       Navigator.pop(context);

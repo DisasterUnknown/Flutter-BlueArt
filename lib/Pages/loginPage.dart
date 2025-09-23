@@ -5,15 +5,16 @@ import 'package:blue_art_mad2/components/loading_box.dart';
 import 'package:blue_art_mad2/routes/app_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget  {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailIN = TextEditingController();
   final TextEditingController _passIN = TextEditingController();
@@ -26,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       showLoadingDialog(context, 'Signing in...');
-      final result = await AuthLogin().login(email, password);
+      final result = await AuthLogin(ref).login(email, password);
 
       if (!mounted) return;
       Navigator.pop(context);

@@ -37,6 +37,19 @@ class AuthLogin {
 
   /// Logout user
   Future<void> logout() async {
-    await ref.read(userProvider.notifier).logout();
+    final user = ref.read(userProvider);
+    final token = user?.token;
+
+    final response = await client.post(
+      Uri.parse(Network.logout),
+      headers: <String, String>{
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      await ref.read(userProvider.notifier).logout();
+    }
   }
 }

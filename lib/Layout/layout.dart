@@ -1,20 +1,22 @@
 import 'package:blue_art_mad2/layout/Components/PageConnect.dart';
 import 'package:blue_art_mad2/lists/productsList.dart';
+import 'package:blue_art_mad2/network/product/product.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:blue_art_mad2/layout/Components/TopAppBar.dart';
 import 'package:blue_art_mad2/layout/Components/BottomNavBar.dart';
 import 'package:blue_art_mad2/layout/Components/AppDrawer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Layout extends StatefulWidget {
+class Layout extends ConsumerStatefulWidget {
   final int initialTabIndex;
   const Layout({super.key, this.initialTabIndex = 0});
 
   @override
-  State<Layout> createState() => _LayoutState();
+  ConsumerState<Layout> createState() => _LayoutState();
 }
 
-class _LayoutState extends State<Layout> {
+class _LayoutState extends ConsumerState<Layout> {
   final List<int> _history = [];
   int _currentIndex = 0;
   Item? _selectedProduct;
@@ -23,8 +25,17 @@ class _LayoutState extends State<Layout> {
   @override
   void initState() {
     super.initState();
+    _loadProducts();
+
     _currentIndex = widget.initialTabIndex;
     _history.add(_currentIndex);
+  }
+
+  Future<void> _loadProducts() async {
+    await NetworkProducts(ref).getArtProducts();
+    await NetworkProducts(ref).getCollectiblesProducts();
+    print("Getting data!!");
+    setState(() {});
   }
 
   void _onProductSelect(Item product) {
@@ -47,6 +58,10 @@ class _LayoutState extends State<Layout> {
         _currentIndex = index;
         _history.add(index);
       });
+
+      if (index == 0 || index == 3) {
+        _loadProducts();
+      }
     }
   }
 
@@ -83,7 +98,13 @@ class _LayoutState extends State<Layout> {
           ),
           bottomNavigationBar: isLandscape
               ? null
-              : CustomBottomNavBar(currentIndex: _currentIndex >= 0 && _currentIndex <= 3 ? _currentIndex : -1, onPageNav: _onPageNav, onCategorySelect: _onCategorySelect),
+              : CustomBottomNavBar(
+                  currentIndex: _currentIndex >= 0 && _currentIndex <= 3
+                      ? _currentIndex
+                      : -1,
+                  onPageNav: _onPageNav,
+                  onCategorySelect: _onCategorySelect,
+                ),
         ),
       ),
     );

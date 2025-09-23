@@ -10,7 +10,7 @@ class AppRoute {
   static const checkOutPage = '/checkOutPage';
   static const viewProductDetailsPage = '/ViewProductDetailsPage';
 
-  static final routes = {
+  static final Map<String, Widget Function(BuildContext)> routes = {
     // Pages outside Layout
     login: (context) => LoginPage(),
     register: (context) => RegisterPage(),

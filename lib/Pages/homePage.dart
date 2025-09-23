@@ -1,12 +1,26 @@
+import 'dart:convert';
+
 import 'package:blue_art_mad2/lists/productsList.dart';
+import 'package:blue_art_mad2/store/liveStore/productLiveStore.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final Function(int) onPageNav;
   final Function(Item)? onProductSelect;
   final Function(String)? onCategorySelect;
-  const HomePage({super.key, required this.onPageNav, required this.onProductSelect, required this.onCategorySelect});
+  const HomePage({
+    super.key,
+    required this.onPageNav,
+    required this.onProductSelect,
+    required this.onCategorySelect,
+  });
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +66,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          onCategorySelect!('art');
+                          widget.onCategorySelect!('art');
                         },
                       ),
                     ],
@@ -67,13 +81,16 @@ class HomePage extends StatelessWidget {
                   // Creating the x axis Scrole Products using the Products List
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: artProductList.length,
+                    itemCount: ProductStore().artProducts.length,
                     itemBuilder: (context, index) {
                       return Container(
                         width: 250,
                         margin: EdgeInsets.only(left: 10, right: 10, top: 10),
                         decoration: BoxDecoration(
-                          color: CustomColors.getThemeColor(context, 'surfaceContainerHighest'),
+                          color: CustomColors.getThemeColor(
+                            context,
+                            'surfaceContainerHighest',
+                          ),
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -100,8 +117,8 @@ class HomePage extends StatelessWidget {
 
                                       // Adding the img
                                       image: DecorationImage(
-                                        image: AssetImage(
-                                          artProductList[index].imageURL,
+                                        image: MemoryImage(
+                                          base64Decode(ProductStore().artProducts[index].images[0].content.split(',').last)
                                         ),
                                         fit: BoxFit.cover,
                                         colorFilter: ColorFilter.mode(
@@ -133,7 +150,7 @@ class HomePage extends StatelessWidget {
                                             horizontal: 1.0,
                                           ),
                                           child: Text(
-                                            artProductList[index].title,
+                                            ProductStore().artProducts[index].name,
                                             style: TextStyle(
                                               color: CustomColors.getThemeColor(
                                                 context,
@@ -152,7 +169,7 @@ class HomePage extends StatelessWidget {
                                             horizontal: 1.0,
                                           ),
                                           child: Text(
-                                            "LKR ${artProductList[index].price}",
+                                            "LKR ${ProductStore().artProducts[index].price}",
                                             style: TextStyle(
                                               color: CustomColors.getThemeColor(
                                                 context,
@@ -171,7 +188,8 @@ class HomePage extends StatelessWidget {
 
                               // Navigating to the View Product Details Page
                               onTap: () {
-                                onProductSelect!(artProductList[index]);},
+                                // widget.onProductSelect!(ProductStore().artProducts[index]);
+                              },
                             );
                           },
                         ),
@@ -228,7 +246,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         onTap: () {
-                          onCategorySelect!('figure');
+                          widget.onCategorySelect!('figure');
                         },
                       ),
                     ],
@@ -243,13 +261,16 @@ class HomePage extends StatelessWidget {
                   // Creating the x axis product list for Collectables
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: figureProductList.length,
+                    itemCount: ProductStore().collectiblesProducts.length,
                     itemBuilder: (context, index) {
                       return Container(
                         width: 250,
                         margin: EdgeInsets.only(left: 10, right: 10, top: 10),
                         decoration: BoxDecoration(
-                          color: CustomColors.getThemeColor(context, 'surfaceContainerHighest'),
+                          color: CustomColors.getThemeColor(
+                            context,
+                            'surfaceContainerHighest',
+                          ),
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -276,8 +297,8 @@ class HomePage extends StatelessWidget {
 
                                       // Adding the img
                                       image: DecorationImage(
-                                        image: AssetImage(
-                                          figureProductList[index].imageURL,
+                                        image: MemoryImage(
+                                          base64Decode(ProductStore().collectiblesProducts[index].images[0].content.split(',').last),
                                         ),
                                         fit: BoxFit.cover,
                                         colorFilter: ColorFilter.mode(
@@ -309,7 +330,7 @@ class HomePage extends StatelessWidget {
                                             horizontal: 1.0,
                                           ),
                                           child: Text(
-                                            figureProductList[index].title,
+                                            ProductStore().collectiblesProducts[index].name,
                                             style: TextStyle(
                                               color: CustomColors.getThemeColor(
                                                 context,
@@ -328,7 +349,7 @@ class HomePage extends StatelessWidget {
                                             horizontal: 1.0,
                                           ),
                                           child: Text(
-                                            "LKR ${figureProductList[index].price}",
+                                            "LKR ${ProductStore().collectiblesProducts[index].price}",
                                             style: TextStyle(
                                               color: CustomColors.getThemeColor(
                                                 context,
@@ -347,7 +368,8 @@ class HomePage extends StatelessWidget {
 
                               // Navigating to the View Product Details Page
                               onTap: () {
-                                onProductSelect!(figureProductList[index]);},
+                                // widget.onProductSelect!(ProductStore().collectiblesProducts[index]);
+                              },
                             );
                           },
                         ),

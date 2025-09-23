@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:blue_art_mad2/models/products.dart';
+import 'package:blue_art_mad2/store/deviceStore/userCartManagement.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:intl/intl.dart';
 import 'package:blue_art_mad2/lists/productsList.dart';
@@ -27,6 +28,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
   @override
   void didUpdateWidget(covariant ViewProductDetailsPage oldWidget) {
     super.didUpdateWidget(oldWidget);
+    _loadProductQuantity();
 
     if (widget.selectedProduct != oldWidget.selectedProduct) {
       setState(() {
@@ -43,33 +45,27 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
     });
   }
 
-  // Setting the Quantity value to the value of the cart product if exist
-  @override
-  void initState() {
-    super.initState();
-    product = widget.selectedProduct;
+  Future<void> _loadProductQuantity() async {
+    if (product == null) return;
+    final cartDataList = await CartManager().getCart();
 
-    for (int i = 0; i < CartList.length; i++) {
-      if (CartList[i].id == product?.id) {
-        _productQuantity = CartList[i].quality;
+    for (var item in cartDataList) {
+      if (item['id'] == product!.id) {
+        setState(() {
+          _productQuantity = item['quantity'];
+        });
         break;
       }
     }
   }
 
   // Display Msg
-  void _handleMsgDisplay(int opption) {
+  void _handleMsgDisplay() {
     setState(() {
       _showMsg = true;
     });
 
-    if (opption == 1) {
-      msgContent = "product Added To Cart!!";
-    } else if (opption == 2) {
-      msgContent = "product Successfully Updated!!";
-    } else if (opption == 3) {
-      msgContent = "product Already Exist in Cart!!";
-    }
+    msgContent = "Product Added To Cart!!";
 
     Timer(Duration(seconds: 3), () {
       if (mounted) {
@@ -478,19 +474,8 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                             ),
                           ),
                           onTap: () {
-                            if (!CartList.any(
-                              (item) => item.id == product!.id,
-                            )) {
-                              // Item.addProduct(product!, _productQuantity);
-                              _handleMsgDisplay(1);
-                            } else if (!CartList.any(
-                              (item) => item.quality == _productQuantity,
-                            )) {
-                              // Item.updateProduct(product!, _productQuantity);
-                              _handleMsgDisplay(2);
-                            } else {
-                              _handleMsgDisplay(3);
-                            }
+                            CartManager().addAndUpdateCart(product!, _productQuantity);
+                            _handleMsgDisplay();
                           },
                         ),
                       ],

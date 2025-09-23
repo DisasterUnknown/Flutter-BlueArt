@@ -21,6 +21,7 @@ class _LayoutState extends ConsumerState<Layout> {
   int _currentIndex = 0;
   Product? _selectedProduct;
   String _selectedProductCategory = '';
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -32,9 +33,11 @@ class _LayoutState extends ConsumerState<Layout> {
   }
 
   Future<void> _loadProducts() async {
+    setState(() => _isLoading = true);
     await NetworkProducts(ref).getArtProducts();
     await NetworkProducts(ref).getCollectiblesProducts();
-    setState(() {});
+    if (!mounted) return;
+    setState(() => _isLoading = false);
   }
 
   void _onProductSelect(Product product) {
@@ -87,14 +90,49 @@ class _LayoutState extends ConsumerState<Layout> {
           backgroundColor: CustomColors.getThemeColor(context, 'surface'),
           appBar: TopAppBar(),
           drawer: AppDrawer(onTabSelect: _onPageNav),
-          body: PageContent(
-            index: _currentIndex,
-            onPageNav: _onPageNav,
-            selectedProduct: _selectedProduct,
-            onProductSelect: _onProductSelect,
-            selectedProductCategory: _selectedProductCategory,
-            onCategorySelect: _onCategorySelect,
-          ),
+          body: _isLoading
+              ? Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Spinner
+                      SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 6,
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            CustomColors.getThemeColor(context, 'onPrimary'),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      // Loading text
+                      Text(
+                        "Loading products...",
+                        style: TextStyle(
+                          color: CustomColors.getThemeColor(
+                            context,
+                            'onPrimary',
+                          ),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : PageContent(
+                  index: _currentIndex,
+                  onPageNav: _onPageNav,
+                  selectedProduct: _selectedProduct,
+                  onProductSelect: _onProductSelect,
+                  selectedProductCategory: _selectedProductCategory,
+                  onCategorySelect: _onCategorySelect,
+                ),
           bottomNavigationBar: isLandscape
               ? null
               : CustomBottomNavBar(

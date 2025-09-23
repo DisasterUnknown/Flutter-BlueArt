@@ -1,14 +1,16 @@
+import 'package:blue_art_mad2/network/auth/login.dart';
 import 'package:blue_art_mad2/routes/app_route.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends ConsumerWidget  {
   final void Function(int) onTabSelect;
 
   const AppDrawer({required this.onTabSelect, super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Drawer(
       child: Container(
         color: CustomColors.getThemeColor(context, 'onSurfaceVariant'),
@@ -98,16 +100,17 @@ class AppDrawer extends StatelessWidget {
             // Login page (outside Layout)
             ListTile(
               title: Text(
-                'Login',
+                'Logout',
                 style: TextStyle(
                   color: CustomColors.getThemeColor(context, 'bodyLarge'),
                   fontWeight: FontWeight.bold,
                   fontSize: 22.0,
                 ),
               ),
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(context);
                 Navigator.pushReplacementNamed(context, AppRoute.login);
+                await AuthLogin(ref).logout();
               },
             ),
           ],

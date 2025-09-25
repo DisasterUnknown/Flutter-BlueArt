@@ -32,15 +32,15 @@ class FirebaseDBService {
     if (!snapshot.exists) return [];
 
     final value = snapshot.value;
-    final data = <String, dynamic>{};
 
     if (value is Map) {
-      data.addAll(Map<String, dynamic>.from(value));
-    } else {
-      return [];
+      final data = Map<String, dynamic>.from(value);
+      return data.values.map((e) => (e as Map)["productId"].toString()).toList();
+    } else if (value is List) {
+      return value.where((e) => e != null).map((e) => (e as Map)["productId"].toString()).toList();
     }
 
-    return data.values.map((e) => (e as Map)["productId"].toString()).toList();
+    return [];
   }
 
   // Realtime listener for favorites

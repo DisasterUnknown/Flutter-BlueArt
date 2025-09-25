@@ -3,10 +3,10 @@ import 'dart:convert';
 
 import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/store/deviceStore/userCartManagement.dart';
+import 'package:blue_art_mad2/store/firebaseStore/firebaseDB.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:blue_art_mad2/lists/productsList.dart';
 import 'package:flutter/material.dart';
 
 class ViewProductDetailsPage extends ConsumerStatefulWidget {
@@ -24,17 +24,21 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
   String msgContent = "";
   Product? product;
   MemoryImage? productImage;
+  List<String> favorites = [];
 
   // Scroling to the top of the page when loaded
   @override
   void didUpdateWidget(covariant ViewProductDetailsPage oldWidget) {
     super.didUpdateWidget(oldWidget);
     _loadProductQuantity();
+    _loadFavorites();
 
     if (widget.selectedProduct != oldWidget.selectedProduct) {
       setState(() {
         product = widget.selectedProduct;
-        productImage = MemoryImage(base64Decode(product!.images[0].content.split(',').last));
+        productImage = MemoryImage(
+          base64Decode(product!.images[0].content.split(',').last),
+        );
       });
     }
 
@@ -44,6 +48,12 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
         _productQuantity = 1;
       }
     });
+  }
+
+  Future<void> _loadFavorites() async {
+    final firebaseDB = FirebaseDBService(ref);
+    final favs = await firebaseDB.getFavorites();
+    setState(() => favorites = favs);
   }
 
   Future<void> _loadProductQuantity() async {
@@ -80,12 +90,8 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final productDetailsFormWidth = screenWidth > 600
-        ? 500.0
-        : screenWidth * 0.8;
-    final productDescriptionFormWidth = screenWidth > 600
-        ? screenWidth * 0.75
-        : screenWidth * 1.0;
+    final productDetailsFormWidth = screenWidth > 600 ? 500.0 : screenWidth * 0.8;
+    final productDescriptionFormWidth = screenWidth > 600 ? screenWidth * 0.75 : screenWidth * 1.0;
 
     if (product == null) {
       return Center(child: Text("No product selected"));
@@ -143,32 +149,29 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                   child: GestureDetector(
                     child: Builder(
                       builder: (context) {
-                        if (!FavoritList.any(
-                          (item) => item.id == product!.id,
-                        )) {
-                          return Icon(
-                            Icons.star,
-                            color: Colors.white,
-                            size: 34,
-                          );
-                        } else {
-                          return Icon(
-                            Icons.star,
-                            color: Colors.yellowAccent,
-                            size: 34,
-                          );
-                        }
+                        final isFavorite = favorites.contains((product!.id).toString());
+
+                        return Icon(
+                          Icons.star,
+                          color: isFavorite ? Colors.yellowAccent : Colors.white,
+                          size: 34,
+                        );
                       },
                     ),
-                    onTap: () {
+                    onTap: () async {
+                      final firebaseDB = FirebaseDBService(ref);
+
+                      final favorites = await firebaseDB.getFavorites();
+                      final isFavorite = favorites.contains((product!.id).toString());
+
+                      if (!isFavorite) {
+                        firebaseDB.addFavorite((product!.id).toString());
+                      } else {
+                        firebaseDB.removeFavorite((product!.id).toString());
+                      }
+
                       setState(() {
-                        if (!FavoritList.any(
-                          (item) => item.id == product!.id,
-                        )) {
-                          // Item.addFavorite(product!);
-                        } else {
-                          // Item.removeFavorit(product!);
-                        }
+                        _loadFavorites();
                       });
                     },
                   ),
@@ -218,7 +221,10 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                         ),
                         Builder(
                           builder: (context) {
-                            String cleaned = product!.price.replaceAll(RegExp(r'[^0-9.]'), '');
+                            String cleaned = product!.price.replaceAll(
+                              RegExp(r'[^0-9.]'),
+                              '',
+                            );
                             double value = double.parse(cleaned);
 
                             final formatter = NumberFormat('#,###');
@@ -233,7 +239,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                                 fontSize: 22,
                               ),
                             );
-                          }
+                          },
                         ),
                       ],
                     ),
@@ -254,7 +260,10 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                         ),
                         Builder(
                           builder: (context) {
-                            String cleaned = product!.discount.replaceAll(RegExp(r'[^0-9.]'), '');
+                            String cleaned = product!.discount.replaceAll(
+                              RegExp(r'[^0-9.]'),
+                              '',
+                            );
                             double value = double.parse(cleaned);
 
                             return Text(
@@ -268,7 +277,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                                 fontSize: 22,
                               ),
                             );
-                          }
+                          },
                         ),
                       ],
                     ),
@@ -300,9 +309,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                             );
                             final discount = double.parse(itemDiscount);
                             final price = double.parse(itemPrice);
-                            final quantityPrice =
-                                (price - ((price / 100) * discount)) *
-                                _productQuantity;
+                            final quantityPrice = (price - ((price / 100) * discount)) * _productQuantity;
                             return Text(
                               "LKR ${formatter.format(quantityPrice)}",
                               style: TextStyle(
@@ -359,8 +366,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                                   bottom: 1,
                                 ),
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     GestureDetector(
                                       child: Text(
@@ -475,7 +481,9 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                             ),
                           ),
                           onTap: () {
-                            CartManager(ref).addAndUpdateCart(product!, _productQuantity);
+                            CartManager(
+                              ref,
+                            ).addAndUpdateCart(product!, _productQuantity);
                             _handleMsgDisplay();
                           },
                         ),

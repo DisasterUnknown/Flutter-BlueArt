@@ -1,5 +1,4 @@
 import 'package:blue_art_mad2/network/auth/login.dart';
-import 'package:blue_art_mad2/routes/app_route.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -108,9 +107,7 @@ class AppDrawer extends ConsumerWidget  {
                 ),
               ),
               onTap: () async {
-                Navigator.pop(context);
-                Navigator.pushReplacementNamed(context, AppRoute.login);
-                await AuthLogin(ref).logout();
+                await AuthLogin(ref).logout(context);
               },
             ),
           ],

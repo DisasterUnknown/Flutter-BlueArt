@@ -36,7 +36,7 @@ class AuthLogin {
   }
 
   /// Logout user
-  Future<void> logout() async {
+  Future<void> logout(context) async {
     final user = ref.read(userProvider);
     final token = user?.token;
 
@@ -49,7 +49,7 @@ class AuthLogin {
     );
 
     if (response.statusCode == 200) {
-      await ref.read(userProvider.notifier).logout();
+      await ref.read(userProvider.notifier).logout(context);
     }
   }
 }

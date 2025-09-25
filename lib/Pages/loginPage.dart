@@ -3,11 +3,13 @@ import 'package:blue_art_mad2/network/auth/login.dart';
 import 'package:blue_art_mad2/components/dialog_box.dart';
 import 'package:blue_art_mad2/components/loading_box.dart';
 import 'package:blue_art_mad2/routes/app_route.dart';
+import 'package:blue_art_mad2/services/localSharedPreferences.dart';
+import 'package:blue_art_mad2/services/sharedPrefValues.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginPage extends ConsumerStatefulWidget  {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
@@ -19,6 +21,22 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final TextEditingController _emailIN = TextEditingController();
   final TextEditingController _passIN = TextEditingController();
   bool _showPassword = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkUser();
+  }
+
+  // Checking if the user is already loged in 
+  Future<void> _checkUser() async {
+    final userId = await LocalSharedPreferences.getString(SharedPrefValues.userId);
+
+    if (!mounted) return;
+    if (userId != null) {
+      Navigator.pushReplacementNamed(context, AppRoute.layout);
+    }
+  }
 
   Future<void> _login() async {
     if (!_formKey.currentState!.validate()) return;
@@ -36,7 +54,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       final data = result['body'];
 
       if (statusCode == 200) {
-        Navigator.pushReplacementNamed(context, AppRoute.layout); 
+        Navigator.pushReplacementNamed(context, AppRoute.layout);
       } else if (statusCode == 401) {
         showCustomDialog(context, 'Error', data['message']);
       } else if (statusCode == 403) {
@@ -101,11 +119,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                           children: [
                             Text(
                               "BlueArt Login",
-                              style: Theme.of(context).textTheme.headlineMedium
-                                  ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
                             const SizedBox(height: 30),
                             TextFormField(
@@ -117,7 +134,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   color: Colors.white70,
                                 ),
                                 errorStyle: const TextStyle(
-                                  color: Color.fromARGB(255, 255, 170, 170), 
+                                  color: Color.fromARGB(255, 255, 170, 170),
                                   fontSize: 13,
                                 ),
                                 filled: true,
@@ -147,7 +164,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   color: Colors.white70,
                                 ),
                                 errorStyle: const TextStyle(
-                                  color: Color.fromARGB(255, 255, 170, 170), 
+                                  color: Color.fromARGB(255, 255, 170, 170),
                                   fontSize: 13,
                                 ),
                                 filled: true,
@@ -158,9 +175,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 ),
                                 suffixIcon: IconButton(
                                   icon: Icon(
-                                    _showPassword
-                                        ? Icons.visibility_off
-                                        : Icons.visibility,
+                                    _showPassword ? Icons.visibility_off : Icons.visibility,
                                     color: Colors.white70,
                                   ),
                                   onPressed: () {
@@ -215,8 +230,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  backgroundColor: Colors.blueAccent
-                                      .withOpacity(0.9),
+                                  backgroundColor: Colors.blueAccent.withOpacity(0.9),
                                   foregroundColor: Colors.white,
                                 ),
                                 child: const Text(

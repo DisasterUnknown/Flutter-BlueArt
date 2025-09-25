@@ -1,6 +1,8 @@
 import 'package:blue_art_mad2/models/user.dart';
+import 'package:blue_art_mad2/routes/app_route.dart';
 import 'package:blue_art_mad2/services/localSharedPreferences.dart';
 import 'package:blue_art_mad2/services/sharedPrefValues.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 class UserNotifier extends StateNotifier<User?> {
@@ -37,9 +39,9 @@ class UserNotifier extends StateNotifier<User?> {
     await LocalSharedPreferences.saveString(SharedPrefValues.userEmail, user.email!);
   }
 
-  Future<void> logout() async {
-    state = null;
+  Future<void> logout(context) async {
     await LocalSharedPreferences.clearAll();
+    Navigator.pushReplacementNamed(context, AppRoute.login);
   }
 }
 

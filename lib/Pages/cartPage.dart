@@ -6,9 +6,10 @@ import 'package:blue_art_mad2/store/deviceStore/userCartManagement.dart';
 import 'package:blue_art_mad2/store/liveStore/productLiveStore.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class CartPage extends StatefulWidget {
+class CartPage extends ConsumerStatefulWidget {
   final Function(int) onPageNav;
   final Function(Product)? onProductSelect;
   final String? selectedProductCategory;
@@ -20,10 +21,10 @@ class CartPage extends StatefulWidget {
   });
 
   @override
-  State<CartPage> createState() => _CartPageState();
+  ConsumerState<CartPage> createState() => _CartPageState();
 }
 
-class _CartPageState extends State<CartPage> {
+class _CartPageState extends ConsumerState<CartPage> {
   List<Map<String, dynamic>> _cartList = [];
 
   @override
@@ -33,7 +34,7 @@ class _CartPageState extends State<CartPage> {
   }
 
   Future<void> _loadCart() async {
-    final data = await CartManager().getCart();
+    final data = await CartManager(ref).getCart();
     setState(() {
       _cartList = data;
     });
@@ -216,7 +217,7 @@ class _CartPageState extends State<CartPage> {
                                         ),
                                         onTap: () {
                                           setState(() async {
-                                            await CartManager().removeFromCart(ProductStore().getProductById(_cartList[index]['id'])!);
+                                            await CartManager(ref).removeFromCart(ProductStore().getProductById(_cartList[index]['id'])!);
                                             await _loadCart();
                                           });
                                         },

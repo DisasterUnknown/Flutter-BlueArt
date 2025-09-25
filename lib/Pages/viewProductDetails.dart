@@ -4,19 +4,20 @@ import 'dart:convert';
 import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/store/deviceStore/userCartManagement.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:blue_art_mad2/lists/productsList.dart';
 import 'package:flutter/material.dart';
 
-class ViewProductDetailsPage extends StatefulWidget {
+class ViewProductDetailsPage extends ConsumerStatefulWidget {
   final Product? selectedProduct;
   const ViewProductDetailsPage({super.key, required this.selectedProduct});
 
   @override
-  State<ViewProductDetailsPage> createState() => _ViewProductDetailsPageState();
+  ConsumerState<ViewProductDetailsPage> createState() => _ViewProductDetailsPageState();
 }
 
-class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
+class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage> {
   final ScrollController _scrollController = ScrollController();
   int _productQuantity = 1;
   bool _showMsg = false;
@@ -47,7 +48,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
 
   Future<void> _loadProductQuantity() async {
     if (product == null) return;
-    final cartDataList = await CartManager().getCart();
+    final cartDataList = await CartManager(ref).getCart();
 
     for (var item in cartDataList) {
       if (item['id'] == product!.id) {
@@ -474,7 +475,7 @@ class _ViewProductDetailsPageState extends State<ViewProductDetailsPage> {
                             ),
                           ),
                           onTap: () {
-                            CartManager().addAndUpdateCart(product!, _productQuantity);
+                            CartManager(ref).addAndUpdateCart(product!, _productQuantity);
                             _handleMsgDisplay();
                           },
                         ),

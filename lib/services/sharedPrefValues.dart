@@ -5,4 +5,7 @@ class SharedPrefValues {
   static const String userEmail = 'userEmail';
   static const String userCart = 'userCart';
   static const String userPfp = 'userPfp';
+  static const String connection = 'connection';
+  static const String localIP = 'localIP';
+  static const String localPort = 'localPort';
 }

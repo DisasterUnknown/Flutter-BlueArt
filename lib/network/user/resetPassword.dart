@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 import 'package:blue_art_mad2/states/authStateManagement.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +12,7 @@ class ResetPassword {
 
   ResetPassword(this.ref, {http.Client? client}) : client = client ?? http.Client();
 
-  // Reset password 
+  // Reset password
   Future<Map<String, dynamic>> reset({
     required String oldPassword,
     required String newPassword,
@@ -24,10 +26,11 @@ class ResetPassword {
     }
 
     final response = await client.put(
-      Uri.parse(Network.resetPassword), 
+      Uri.parse(Network.resetPassword),
       headers: <String, String>{
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
       },
       body: jsonEncode({
         'old_password': oldPassword,

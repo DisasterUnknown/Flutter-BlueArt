@@ -13,13 +13,14 @@ class UserNotifier extends StateNotifier<User?> {
     final String? userEmail = await LocalSharedPreferences.getString(SharedPrefValues.userEmail);
     final String? userToken = await LocalSharedPreferences.getString(SharedPrefValues.userToken);
     final String? userId = await LocalSharedPreferences.getString(SharedPrefValues.userId);
+    final String? userPfp = await LocalSharedPreferences.getString(SharedPrefValues.userPfp);
 
     if (userId == null || userName == null || userEmail == null || userToken == null) {
       state = null;
       return;
     }
 
-    final user = User(id: userId, name: userName, email: userEmail, token: userToken);
+    final user = User(id: userId, name: userName, email: userEmail, token: userToken, pfp: userPfp);
     state = user;
   }
 
@@ -29,6 +30,7 @@ class UserNotifier extends StateNotifier<User?> {
     await LocalSharedPreferences.saveString(SharedPrefValues.userId, user.id!);
     await LocalSharedPreferences.saveString(SharedPrefValues.userName, user.name!);
     await LocalSharedPreferences.saveString(SharedPrefValues.userEmail, user.email!);
+    await LocalSharedPreferences.saveString(SharedPrefValues.userPfp, user.pfp!);
   }
 
   Future<void> register(User user) async {
@@ -37,6 +39,7 @@ class UserNotifier extends StateNotifier<User?> {
     await LocalSharedPreferences.saveString(SharedPrefValues.userId, user.id!);
     await LocalSharedPreferences.saveString(SharedPrefValues.userName, user.name!);
     await LocalSharedPreferences.saveString(SharedPrefValues.userEmail, user.email!);
+    await LocalSharedPreferences.saveString(SharedPrefValues.userPfp, user.pfp!);
   }
 
   Future<void> logout(context) async {

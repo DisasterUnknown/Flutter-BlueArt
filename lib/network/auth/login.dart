@@ -27,6 +27,7 @@ class AuthLogin {
         name: result['user']['name'],
         email: result['user']['email'],
         token: result['token'],
+        pfp: result['user']['pFPdata'],
       );
 
       await ref.read(userProvider.notifier).login(user);
@@ -40,7 +41,7 @@ class AuthLogin {
     final user = ref.read(userProvider);
     final token = user?.token;
 
-    final response = await client.post(
+    await client.post(
       Uri.parse(Network.logout),
       headers: <String, String>{
         'Authorization': 'Bearer $token',
@@ -48,8 +49,6 @@ class AuthLogin {
       },
     );
 
-    if (response.statusCode == 200) {
-      await ref.read(userProvider.notifier).logout(context);
-    }
+    await ref.read(userProvider.notifier).logout(context);
   }
 }

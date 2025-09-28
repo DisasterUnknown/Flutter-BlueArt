@@ -88,7 +88,7 @@ class _LayoutState extends ConsumerState<Layout> {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: CustomColors.getThemeColor(context, 'surface'),
-          appBar: TopAppBar(),
+          appBar: TopAppBar(onTabSelect: _onPageNav),
           drawer: AppDrawer(onTabSelect: _onPageNav),
           body: _isLoading
               ? Container(

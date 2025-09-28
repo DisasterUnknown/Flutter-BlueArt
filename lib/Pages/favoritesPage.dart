@@ -23,8 +23,8 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
   List<String> favorites = [];
 
   @override
-  void didUpdateWidget(covariant FavoritesPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _loadFavorites();
   }
 

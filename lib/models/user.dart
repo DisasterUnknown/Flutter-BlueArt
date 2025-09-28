@@ -3,12 +3,14 @@ class User {
   final String? name;
   final String? email;
   final String? token;
+  final String? pfp;
 
   User({
     required this.id,
     required this.name,
     required this.email,
     required this.token,
+    required this.pfp,
   });
 
   Map<String, dynamic> toJson() => {
@@ -16,6 +18,7 @@ class User {
     'name': name,
     'email': email,
     'token': token,
+    'pfp': pfp,
   };
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -24,6 +27,7 @@ class User {
       name: json['name'],
       email: json['email'],
       token: json['token'],
+      pfp: json['pfp'],
     );
   }
 }

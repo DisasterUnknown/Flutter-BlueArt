@@ -4,4 +4,5 @@ class SharedPrefValues {
   static const String userName = 'userName';
   static const String userEmail = 'userEmail';
   static const String userCart = 'userCart';
+  static const String userPfp = 'userPfp';
 }

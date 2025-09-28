@@ -1,6 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:blue_art_mad2/models/products.dart';
+import 'package:blue_art_mad2/network/auth/login.dart';
 import 'package:blue_art_mad2/network/core.dart';
 import 'package:blue_art_mad2/states/authStateManagement.dart';
 import 'package:blue_art_mad2/store/liveStore/productLiveStore.dart';
@@ -15,8 +18,7 @@ class NetworkProducts {
   List<Product> artProducts = [];
   List<Product> collectiblesProducts = [];
 
-  NetworkProducts(this.ref, {https.Client? client})
-    : client = client ?? http.Client();
+  NetworkProducts(this.ref, {https.Client? client}) : client = client ?? http.Client();
 
   Future<void> getArtProducts() async {
     final user = ref.read(userProvider);
@@ -24,19 +26,23 @@ class NetworkProducts {
 
     if (token == null) return;
 
-    final uri = Uri.https(Network.authority, Network.getArtProducts);
-    final response = await client.get(
-      uri,
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      },
-    );
+    try {
+      final uri = Uri.https(Network.authority, Network.getArtProducts);
+      final response = await client.get(
+        uri,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body)['data'] as List<dynamic>;
-      artProducts = data.map((e) => Product.fromJson(e)).toList();
-      ProductStore().setArtProducts(artProducts);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body)['data'] as List<dynamic>;
+        artProducts = data.map((e) => Product.fromJson(e)).toList();
+        ProductStore().setArtProducts(artProducts);
+      }
+    } catch (e) {
+      AuthLogin(ref).logout(ref.context);
     }
   }
 
@@ -46,19 +52,23 @@ class NetworkProducts {
 
     if (token == null) return;
 
-    final uri = Uri.https(Network.authority, Network.getColectablesProducts);
-    final response = await client.get(
-      uri,
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      },
-    );
+    try {
+      final uri = Uri.https(Network.authority, Network.getColectablesProducts);
+      final response = await client.get(
+        uri,
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body)['data'] as List<dynamic>;
-      collectiblesProducts = data.map((e) => Product.fromJson(e)).toList();
-      ProductStore().setCollectiblesProducts(collectiblesProducts);
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body)['data'] as List<dynamic>;
+        collectiblesProducts = data.map((e) => Product.fromJson(e)).toList();
+        ProductStore().setCollectiblesProducts(collectiblesProducts);
+      }
+    } catch (e) {
+      AuthLogin(ref).logout(ref.context);
     }
   }
 }

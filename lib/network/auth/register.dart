@@ -26,6 +26,7 @@ class AuthRegister {
         name: result['user']['name'],
         email: result['user']['email'],
         token: result['token'],
+        pfp: result['user']['pFPdata'],
       );
 
       await ref.read(userProvider.notifier).register(user);

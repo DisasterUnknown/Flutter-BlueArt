@@ -13,7 +13,7 @@ class AuthRegister {
 
   Future<Map<String, dynamic>> register(String username, String email, String password, String confirmPass) async {
     final response = await client.post(
-      Uri.parse(Network.register),
+      Uri.parse(await Network.registerUrl()),
       headers: <String, String>{'Content-Type': 'application/json'},
       body: jsonEncode(<String, String>{'name': username, 'email': email, 'password': password, 'password_confirmation': confirmPass}),
     );

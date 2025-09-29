@@ -26,7 +26,7 @@ class ResetPassword {
     }
 
     final response = await client.put(
-      Uri.parse(Network.resetPassword),
+      Uri.parse(await Network.resetPasswordUrl()),
       headers: <String, String>{
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',

@@ -14,7 +14,7 @@ class AuthLogin {
   // Login user
   Future<Map<String, dynamic>> login(String email, String password) async {
     final response = await client.post(
-      Uri.parse(Network.login),
+      Uri.parse(await Network.loginUrl()),
       headers: <String, String>{'Content-Type': 'application/json'},
       body: jsonEncode(<String, String>{'email': email, 'password': password}),
     );
@@ -42,7 +42,7 @@ class AuthLogin {
     final token = user?.token;
 
     await client.post(
-      Uri.parse(Network.logout),
+      Uri.parse(await Network.logoutUrl()),
       headers: <String, String>{
         'Authorization': 'Bearer $token',
         'Content-Type': 'application/json',

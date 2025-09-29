@@ -8,6 +8,7 @@ import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:vibration/vibration.dart';
 
 class CartPage extends ConsumerStatefulWidget {
   final Function(int) onPageNav;
@@ -121,8 +122,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                                   ),
 
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Padding(
@@ -151,13 +151,15 @@ class _CartPageState extends ConsumerState<CartPage> {
                                         child: Builder(
                                           builder: (context) {
                                             final formatter = NumberFormat("#,##0.0", "en_US");
-                                            final itemPrice = ProductStore().getProductById(_cartList[index]['id'])!
+                                            final itemPrice = ProductStore()
+                                                .getProductById(_cartList[index]['id'])!
                                                 .price
                                                 .splitMapJoin(
                                                   ',',
                                                   onMatch: (_) => '',
                                                 );
-                                            final itemDiscount = ProductStore().getProductById(_cartList[index]['id'])!
+                                            final itemDiscount = ProductStore()
+                                                .getProductById(_cartList[index]['id'])!
                                                 .discount
                                                 .splitMapJoin(
                                                   '%',
@@ -165,15 +167,14 @@ class _CartPageState extends ConsumerState<CartPage> {
                                                 );
                                             final discount = double.parse(itemDiscount);
                                             final price = double.parse(itemPrice);
-                                            final quantityPrice =(price - ((price / 100) * discount)) * _cartList[index]['quantity'].toInt();
+                                            final quantityPrice = (price - ((price / 100) * discount)) * _cartList[index]['quantity'].toInt();
                                             return Text(
                                               "LRK ${formatter.format(quantityPrice)}",
                                               style: TextStyle(
-                                                color:
-                                                    CustomColors.getThemeColor(
-                                                      context,
-                                                      'titleLarge',
-                                                    ),
+                                                color: CustomColors.getThemeColor(
+                                                  context,
+                                                  'titleLarge',
+                                                ),
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 20,
                                               ),
@@ -204,22 +205,27 @@ class _CartPageState extends ConsumerState<CartPage> {
                                             child: Text(
                                               "Remove",
                                               style: TextStyle(
-                                                color:
-                                                    CustomColors.getThemeColor(
-                                                      context,
-                                                      'bodySmall',
-                                                    ),
+                                                color: CustomColors.getThemeColor(
+                                                  context,
+                                                  'bodySmall',
+                                                ),
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
                                               ),
                                             ),
                                           ),
                                         ),
-                                        onTap: () {
-                                          setState(() async {
-                                            await CartManager(ref).removeFromCart(ProductStore().getProductById(_cartList[index]['id'])!);
-                                            await _loadCart();
-                                          });
+                                        onTap: () async {
+                                          await CartManager(ref).removeFromCart(
+                                            ProductStore().getProductById(_cartList[index]['id'])!,
+                                          );
+                                          await _loadCart();
+
+                                          setState(() {});
+
+                                          if (await Vibration.hasVibrator()) {
+                                            Vibration.vibrate(duration: 200);
+                                          }
                                         },
                                       ),
                                       SizedBox(height: 10),
@@ -272,9 +278,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                                   final itemDiscount = ProductStore().getProductById(_cartList[i]['id'])!.discount;
                                   final discount = double.parse(itemDiscount);
                                   final price = double.parse(itemPrice);
-                                  quantityPrice +=
-                                      (price - ((price / 100) * discount)) *
-                                      _cartList[i]['quantity'];
+                                  quantityPrice += (price - ((price / 100) * discount)) * _cartList[i]['quantity'];
                                 }
                                 return Text(
                                   "LRK ${formatter.format(quantityPrice)}",

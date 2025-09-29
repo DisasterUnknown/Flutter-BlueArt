@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:blue_art_mad2/Pages/cartPage.dart';
 import 'package:blue_art_mad2/Pages/checkOutPage.dart';
 import 'package:blue_art_mad2/Pages/favoritesPage.dart';
@@ -16,7 +18,7 @@ class PageContent extends StatelessWidget {
   final Product? selectedProduct;
   final String? selectedProductCategory;
 
-  const PageContent({required this.index, required this.onPageNav, this.selectedProduct, this.onProductSelect, this.selectedProductCategory, this.onCategorySelect});
+  const PageContent({super.key, required this.index, required this.onPageNav, this.selectedProduct, this.onProductSelect, this.selectedProductCategory, this.onCategorySelect});
 
   @override
   Widget build(BuildContext context) {

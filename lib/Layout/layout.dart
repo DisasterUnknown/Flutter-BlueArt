@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, sized_box_for_whitespace
+
 import 'package:blue_art_mad2/layout/Components/PageConnect.dart';
 import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/network/product/product.dart';

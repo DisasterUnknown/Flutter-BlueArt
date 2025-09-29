@@ -7,6 +7,7 @@ import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:vibration/vibration.dart' show Vibration;
 
 class FavoritesPage extends ConsumerStatefulWidget {
   final Function(int) onPageNav;
@@ -168,11 +169,15 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
                                               ),
                                             ),
                                           ),
-                                          onTap: () {
+                                          onTap: () async {
                                             setState(() {
                                               FirebaseDBService(ref).removeFavorite(favorites[index]);
                                               _loadFavorites();
                                             });
+
+                                            if (await Vibration.hasVibrator()) {
+                                              Vibration.vibrate(duration: 200);
+                                            }
                                           },
                                         ),
                                         SizedBox(height: 10),

@@ -22,7 +22,7 @@ class UpdateProfile {
     }
 
     final response = await client.put(
-      Uri.parse(Network.updateProfile),
+      Uri.parse(await Network.updateProfileUrl()),
       headers: <String, String>{
         'Authorization': 'Bearer ${user.token}',
         'Content-Type': 'application/json',

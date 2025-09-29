@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, deprecated_member_use
+
 import 'dart:ui';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';

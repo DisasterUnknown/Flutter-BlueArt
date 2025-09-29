@@ -3,6 +3,7 @@
 import 'dart:ui';
 import 'package:blue_art_mad2/services/sharedPrefValues.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:blue_art_mad2/services/localSharedPreferences.dart';
 
 class ConnectionSettingsPopup extends StatefulWidget {
@@ -16,6 +17,16 @@ class _ConnectionSettingsPopupState extends State<ConnectionSettingsPopup> {
   String selectedConnection = 'online';
   final ipController = TextEditingController();
   final portController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  // Regex for IP validation (1-256 range each octet)
+  final RegExp ipRegex = RegExp(
+    r'^(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.'
+    r'(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.'
+    r'(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)\.'
+    r'(25[0-5]|2[0-4]\d|1\d{2}|[1-9]?\d)$',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -39,85 +50,138 @@ class _ConnectionSettingsPopupState extends State<ConnectionSettingsPopup> {
                   color: Colors.black.withOpacity(0.3),
                   blurRadius: 12,
                   offset: const Offset(0, 6),
-                )
+                ),
               ],
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Connection Settings',
-                  style: TextStyle(
-                    color: Colors.orangeAccent,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 16),
-                RadioListTile<String>(
-                  title: const Text('Online (Railway)'),
-                  value: 'online',
-                  groupValue: selectedConnection,
-                  onChanged: (value) {
-                    setState(() => selectedConnection = value!);
-                  },
-                ),
-                RadioListTile<String>(
-                  title: const Text('Local'),
-                  value: 'local',
-                  groupValue: selectedConnection,
-                  onChanged: (value) {
-                    setState(() => selectedConnection = value!);
-                  },
-                ),
-                if (selectedConnection == 'local') ...[
-                  TextField(
-                    controller: ipController,
-                    decoration: const InputDecoration(
-                      labelText: 'Local IP',
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'Connection Settings',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  TextField(
-                    controller: portController,
-                    decoration: const InputDecoration(
-                      labelText: 'Local Port',
-                    ),
-                    keyboardType: TextInputType.number,
+                  const SizedBox(height: 16),
+
+                  // Radio buttons
+                  RadioListTile<String>(
+                    title: const Text('Online (Railway)', style: TextStyle(color: Colors.white)),
+                    value: 'online',
+                    groupValue: selectedConnection,
+                    activeColor: Colors.blue,
+                    onChanged: (value) {
+                      setState(() => selectedConnection = value!);
+                    },
                   ),
-                ],
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
-                    ),
-                    const SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (selectedConnection == 'online') {
-                          await LocalSharedPreferences.saveString(SharedPrefValues.connection, 'online');
-                        } else {
-                          final ip = ipController.text.trim();
-                          final port = portController.text.trim();
-                          if (ip.isEmpty || port.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('IP and Port cannot be empty')),
-                            );
-                            return;
-                          }
-                          await LocalSharedPreferences.saveString(SharedPrefValues.connection, 'local');
-                          await LocalSharedPreferences.saveString(SharedPrefValues.localIP, ip);
-                          await LocalSharedPreferences.saveString(SharedPrefValues.localPort, port);
+                  RadioListTile<String>(
+                    title: const Text('Local', style: TextStyle(color: Colors.white)),
+                    value: 'local',
+                    groupValue: selectedConnection,
+                    activeColor: Colors.blue,
+                    onChanged: (value) {
+                      setState(() => selectedConnection = value!);
+                    },
+                  ),
+
+                  // Local connection fields
+                  if (selectedConnection == 'local') ...[
+                    TextFormField(
+                      controller: ipController,
+                      style: const TextStyle(color: Colors.white),
+                      decoration: const InputDecoration(
+                        labelText: 'Local IP',
+                        labelStyle: TextStyle(color: Colors.grey),
+                        hintText: "Enter IP here",
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                        LengthLimitingTextInputFormatter(15),
+                      ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "IP cannot be empty";
                         }
-                        Navigator.pop(context);
+                        if (!ipRegex.hasMatch(value.trim())) {
+                          return "Enter a valid IP (e.g., 192.168.1.1)";
+                        }
+                        return null;
                       },
-                      child: const Text('Save'),
+                    ),
+                    TextFormField(
+                      controller: portController,
+                      style: const TextStyle(color: Colors.white),
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: 'Local Port',
+                        labelStyle: TextStyle(color: Colors.grey),
+                        hintText: "Enter local hosted port",
+                        hintStyle: TextStyle(color: Colors.grey),
+                      ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(5),
+                      ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Port cannot be empty";
+                        }
+                        final portNum = int.tryParse(value);
+                        if (portNum == null || portNum < 1 || portNum > 65535) {
+                          return "Port must be 1–65535";
+                        }
+                        return null;
+                      },
                     ),
                   ],
-                ),
-              ],
+
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Cancel', style: TextStyle(color: Colors.white)),
+                      ),
+                      const SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () async {
+                          if (selectedConnection == 'online') {
+                            await LocalSharedPreferences.saveString(SharedPrefValues.connection, 'online');
+                            await LocalSharedPreferences.saveString(SharedPrefValues.protocol, 'https');
+                            Navigator.pop(context);
+                          } else {
+                            if (_formKey.currentState!.validate()) {
+                              final ip = ipController.text.trim();
+                              final port = portController.text.trim();
+
+                              await LocalSharedPreferences.saveString(SharedPrefValues.connection, 'local');
+                              await LocalSharedPreferences.saveString(SharedPrefValues.protocol, 'http');
+                              await LocalSharedPreferences.saveString(SharedPrefValues.localIP, ip);
+                              await LocalSharedPreferences.saveString(SharedPrefValues.localPort, port);
+
+                              Navigator.pop(context);
+                            }
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: const Text('Save', style: TextStyle(color: Colors.white)),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

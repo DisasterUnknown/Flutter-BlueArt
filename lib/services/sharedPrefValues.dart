@@ -8,4 +8,5 @@ class SharedPrefValues {
   static const String connection = 'connection';
   static const String localIP = 'localIP';
   static const String localPort = 'localPort';
+  static const String protocol = 'protocol';
 }

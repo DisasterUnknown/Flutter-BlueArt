@@ -1,4 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:ui';
+import 'package:blue_art_mad2/components/connection_settings.dart';
 import 'package:blue_art_mad2/network/auth/login.dart';
 import 'package:blue_art_mad2/components/dialog_box.dart';
 import 'package:blue_art_mad2/components/loading_box.dart';
@@ -28,10 +31,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     _checkUser();
   }
 
-  // Checking if the user is already loged in 
   Future<void> _checkUser() async {
     final userId = await LocalSharedPreferences.getString(SharedPrefValues.userId);
-
     if (!mounted) return;
     if (userId != null) {
       Navigator.pushReplacementNamed(context, AppRoute.layout);
@@ -54,6 +55,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       final data = result['body'];
 
       if (statusCode == 200) {
+        await Future.delayed(const Duration(milliseconds: 200));
+        if (!mounted) return;
         Navigator.pushReplacementNamed(context, AppRoute.layout);
       } else if (statusCode == 401) {
         showCustomDialog(context, 'Error', data['message']);
@@ -117,12 +120,31 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              "BlueArt Login",
-                              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
+                            Stack(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    "BlueArt Login",
+                                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  top: -7,
+                                  child: IconButton(
+                                    icon: const Icon(Icons.settings, color: Colors.white),
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (_) => const ConnectionSettingsPopup(),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 30),
                             TextFormField(
@@ -130,9 +152,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 labelText: "Email",
-                                labelStyle: const TextStyle(
-                                  color: Colors.white70,
-                                ),
+                                labelStyle: const TextStyle(color: Colors.white70),
                                 errorStyle: const TextStyle(
                                   color: Color.fromARGB(255, 255, 170, 170),
                                   fontSize: 13,
@@ -160,9 +180,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
                                 labelText: "Password",
-                                labelStyle: const TextStyle(
-                                  color: Colors.white70,
-                                ),
+                                labelStyle: const TextStyle(color: Colors.white70),
                                 errorStyle: const TextStyle(
                                   color: Color.fromARGB(255, 255, 170, 170),
                                   fontSize: 13,
@@ -224,9 +242,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               child: ElevatedButton(
                                 onPressed: _login,
                                 style: ElevatedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 14,
-                                  ),
+                                  padding: const EdgeInsets.symmetric(vertical: 14),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
                                   ),

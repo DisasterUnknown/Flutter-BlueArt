@@ -8,6 +8,7 @@ import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:vibration/vibration.dart';
 
 class ViewProductDetailsPage extends ConsumerStatefulWidget {
   final Product? selectedProduct;
@@ -168,6 +169,10 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                         firebaseDB.addFavorite((product!.id).toString());
                       } else {
                         firebaseDB.removeFavorite((product!.id).toString());
+                      }
+
+                      if (await Vibration.hasVibrator()) {
+                        Vibration.vibrate(duration: 200);
                       }
 
                       setState(() {
@@ -480,11 +485,12 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                               ),
                             ),
                           ),
-                          onTap: () {
-                            CartManager(
-                              ref,
-                            ).addAndUpdateCart(product!, _productQuantity);
+                          onTap: () async {
+                            CartManager(ref).addAndUpdateCart(product!, _productQuantity);
                             _handleMsgDisplay();
+                            if (await Vibration.hasVibrator()) {
+                              Vibration.vibrate(duration: 200);
+                            }
                           },
                         ),
                       ],

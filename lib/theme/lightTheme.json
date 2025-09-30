@@ -10,9 +10,9 @@
 
   {"name": "titleLarge", "value": "0xFF000000"},
   {"name": "titleMedium", "value": "0xDD000000"},
-  {"name": "bodyLarge", "value": "0xFF000000"},
-  {"name": "bodyMedium", "value": "0xFF000000"},
-  {"name": "bodySmall", "value": "0xFF000000"},
+  // {"name": "bodyLarge", "value": "0xFF000000"},
+  // {"name": "bodyMedium", "value": "0xFF000000"},
+  // {"name": "bodySmall", "value": "0xFF000000"},
   {"name": "labelMedium", "value": "0xFF656565"},
   {"name": "labelSmall", "value": "0xFF00DF4A"},
   

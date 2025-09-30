@@ -41,6 +41,7 @@ class Network {
   static Future<String> userDetailsUrl() async => "${await getBaseUrl()}/api/user";
   static Future<String> updateProfileUrl() async => "${await getBaseUrl()}/api/updateUser";
   static Future<String> resetPasswordUrl() async => "${await getBaseUrl()}/api/resetPassword";
+  static Future<String> checkOutUrl() async => "${await getBaseUrl()}/api/checkOut";
 
   static const String artProducts = "/api/products/category/art";
   static const String collectiblesProducts = "/api/products/category/collectibles";

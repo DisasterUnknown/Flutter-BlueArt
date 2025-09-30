@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:blue_art_mad2/models/user.dart';
 import 'package:blue_art_mad2/routes/app_route.dart';
 import 'package:blue_art_mad2/services/localSharedPreferences.dart';

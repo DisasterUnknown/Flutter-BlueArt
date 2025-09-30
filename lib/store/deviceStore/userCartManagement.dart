@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/services/localSharedPreferences.dart';

@@ -8,7 +8,7 @@
   {"name": "tertiary", "value": "0xFF008A1E"},
   {"name": "onTertiary", "value": "0xFFFF0000"},
 
-  {"name": "titleLarge", "value": "0xFFFFFFFF"},
+  {"name": "textColor", "value": "0xFFFFFFFF"},
   {"name": "titleMedium", "value": "0xFFFFFFFF"},
   {"name": "labelMedium", "value": "0xFF6E6E6E"},
   {"name": "labelSmall", "value": "0xFF00CE45"},

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class SharedPrefValues {
   static const String userToken = 'userToken';
   static const String userId = 'userId';

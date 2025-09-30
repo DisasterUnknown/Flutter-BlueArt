@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:blue_art_mad2/states/authStateManagement.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

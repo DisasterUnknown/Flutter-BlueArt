@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 
 import 'package:blue_art_mad2/network/core.dart';
@@ -15,7 +17,7 @@ class Checkout {
 
   Checkout(this.ref, {required this.onPageNav, https.Client? client,}) : client = client ?? http.Client();
 
-  Future<String> userCheckOut(String phoneNumber, String address, String shippingMethod, String cardHolderName, String cardNumber, String CVC) async {
+  Future<String> userCheckOut(String phoneNumber, String address, String shippingMethod, String cardHolderName, String cardNumber, String cvc) async {
     final user = ref.read(userProvider);
     final cartJsonString = await LocalSharedPreferences.getString(SharedPrefValues.userCart);
 
@@ -43,7 +45,7 @@ class Checkout {
         'shippingMethod': shippingMethod,
         'cardHolderName': cardHolderName,
         'cardNumber': cardNumber,
-        'CVC': CVC,
+        'CVC': cvc,
         'cart': userCart,
       }),
     );
@@ -52,7 +54,7 @@ class Checkout {
 
     if (response.statusCode == 200) {
       await LocalSharedPreferences.removeKey(SharedPrefValues.userCart);
-      this.onPageNav(0);
+      onPageNav(0);
     }
 
     return result.message;

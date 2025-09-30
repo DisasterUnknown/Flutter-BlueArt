@@ -43,7 +43,9 @@ class UserNotifier extends StateNotifier<User?> {
   }
 
   Future<void> logout(context) async {
+    final cart = await LocalSharedPreferences.getString(SharedPrefValues.userCart);
     await LocalSharedPreferences.clearAll();
+    await LocalSharedPreferences.saveString(SharedPrefValues.userCart, cart ?? '');
     Navigator.pushReplacementNamed(context, AppRoute.login);
   }
 }

@@ -18,4 +18,12 @@ class ProductImage {
       content: json['content'],
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'product_id': productId,
+      'content': content,
+    };
+  }
 }

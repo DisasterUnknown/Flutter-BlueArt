@@ -134,7 +134,7 @@ class _ConnectionSettingsPopupState extends State<ConnectionSettingsPopup> {
                         }
                         final portNum = int.tryParse(value);
                         if (portNum == null || portNum < 1 || portNum > 65535) {
-                          return "Port must be 1–65535";
+                          return "Port must be 1-65535";
                         }
                         return null;
                       },

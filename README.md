@@ -4,7 +4,7 @@ A Flutter-based e-commerce application for art and collectible figures, featurin
 
 ## 📱 Download APK
 
-[![Download APK](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](./apk/app-release.apk)
+[![Download APK](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/DisasterUnknown/Flutter-BlueArt/raw/main/apk/app-release.apk)
 
 **Direct Download:** [app-release.apk](./apk/app-release.apk)
 

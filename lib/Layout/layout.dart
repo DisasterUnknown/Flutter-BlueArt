@@ -1,8 +1,11 @@
-// ignore_for_file: deprecated_member_use, sized_box_for_whitespace
-
+// ignore_for_file: deprecated_member_use, sized_box_for_whitespace, unrelated_type_equality_checks, use_build_context_synchronously
+import 'package:blue_art_mad2/services/shakeDectector.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:blue_art_mad2/layout/Components/PageConnect.dart';
 import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/network/product/product.dart';
+import 'package:blue_art_mad2/store/DBHelper.dart';
+import 'package:blue_art_mad2/store/liveStore/productLiveStore.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:blue_art_mad2/layout/Components/TopAppBar.dart';
@@ -24,6 +27,7 @@ class _LayoutState extends ConsumerState<Layout> {
   Product? _selectedProduct;
   String _selectedProductCategory = '';
   bool _isLoading = true;
+  ShakeDetector? _shakeDetector;
 
   @override
   void initState() {
@@ -32,14 +36,88 @@ class _LayoutState extends ConsumerState<Layout> {
 
     _currentIndex = widget.initialTabIndex;
     _history.add(_currentIndex);
+
+    _shakeDetector = ShakeDetector(
+      onShake: () async {
+        if (_currentIndex != 0) return;
+
+        // Check internet
+        var connectivityResult = await Connectivity().checkConnectivity();
+        if (connectivityResult == ConnectivityResult.none) {
+          debugPrint("No internet connection. Shake ignored.");
+          return;
+        }
+
+        debugPrint("Device shaken! Updating DB...");
+        _refreshProducts();
+      },
+    );
+  }
+
+  Future<void> _refreshProducts() async {
+    try {
+      // Fetch from API
+      setState(() => _isLoading = true);
+      await NetworkProducts(ref).getArtProducts();
+      await NetworkProducts(ref).getCollectiblesProducts();
+
+      // Update offline SQFlite DB
+      await ProductDBHelper.updateAllProducts(ProductStore().artProducts, 'art_products');
+      await ProductDBHelper.updateAllProducts(ProductStore().collectiblesProducts, 'collectibles_products');
+      setState(() => _isLoading = false);
+
+      debugPrint("DB & live store updated successfully!");
+    } catch (e) {
+      setState(() => _isLoading = false);
+      debugPrint("Refresh failed: $e");
+    }
+  }
+
+  @override
+  void dispose() {
+    _shakeDetector?.dispose();
+    super.dispose();
   }
 
   Future<void> _loadProducts() async {
     setState(() => _isLoading = true);
-    await NetworkProducts(ref).getArtProducts();
-    await NetworkProducts(ref).getCollectiblesProducts();
-    if (!mounted) return;
-    setState(() => _isLoading = false);
+
+    // Load DB first
+    final dbArt = await ProductDBHelper.getProducts('art_products');
+    final dbCollectibles = await ProductDBHelper.getProducts('collectibles_products');
+
+    // If DB is not empty
+    if (dbArt.isNotEmpty || dbCollectibles.isNotEmpty) {
+      ProductStore().setArtProducts(dbArt);
+      ProductStore().setCollectiblesProducts(dbCollectibles);
+      setState(() => _isLoading = false);
+      _fetchAndUpdateProducts();
+    } else {
+      // If DB is empty
+      await _fetchAndUpdateProducts();
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _fetchAndUpdateProducts() async {
+    try {
+      await NetworkProducts(ref).getArtProducts();
+      await NetworkProducts(ref).getCollectiblesProducts();
+
+      await ProductDBHelper.updateAllProducts(ProductStore().artProducts, 'art_products');
+      await ProductDBHelper.updateAllProducts(ProductStore().collectiblesProducts, 'collectibles_products');
+    } catch (e) {
+      debugPrint('API fetch failed: $e');
+
+      final artEmpty = (await ProductDBHelper.getProducts('art_products')).isEmpty;
+      final colEmpty = (await ProductDBHelper.getProducts('collectibles_products')).isEmpty;
+
+      if (artEmpty && colEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('No products available. Please try again later.')),
+        );
+      }
+    }
   }
 
   void _onProductSelect(Product product) {
@@ -62,10 +140,6 @@ class _LayoutState extends ConsumerState<Layout> {
         _currentIndex = index;
         _history.add(index);
       });
-
-      if (index == 0 || index == 3) {
-        _loadProducts();
-      }
     }
   }
 
@@ -82,8 +156,7 @@ class _LayoutState extends ConsumerState<Layout> {
 
   @override
   Widget build(BuildContext context) {
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
 
     return WillPopScope(
       onWillPop: _onWillPop,
@@ -138,9 +211,7 @@ class _LayoutState extends ConsumerState<Layout> {
           bottomNavigationBar: isLandscape
               ? null
               : CustomBottomNavBar(
-                  currentIndex: _currentIndex >= 0 && _currentIndex <= 3
-                      ? _currentIndex
-                      : -1,
+                  currentIndex: _currentIndex >= 0 && _currentIndex <= 3 ? _currentIndex : -1,
                   onPageNav: _onPageNav,
                   onCategorySelect: _onCategorySelect,
                 ),

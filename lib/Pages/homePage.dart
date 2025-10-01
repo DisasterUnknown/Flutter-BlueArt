@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 
 import 'package:blue_art_mad2/models/products.dart';
@@ -31,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 50),
 
           // Art Section
-          Container(
+          SizedBox(
             height: 400,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                           color: CustomColors.getThemeColor(
                             context,
-                            'titleLarge',
+                            'textColor',
                           ),
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
@@ -59,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                             color: CustomColors.getThemeColor(
                               context,
-                              'bodySmall',
+                              'textColor',
                             ),
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
@@ -154,7 +156,7 @@ class _HomePageState extends State<HomePage> {
                                             style: TextStyle(
                                               color: CustomColors.getThemeColor(
                                                 context,
-                                                'bodyMedium',
+                                                'textColor',
                                               ),
                                               fontWeight: FontWeight.w500,
                                               fontSize: 20,
@@ -173,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                                             style: TextStyle(
                                               color: CustomColors.getThemeColor(
                                                 context,
-                                                'bodyMedium',
+                                                'textColor',
                                               ),
                                               fontWeight: FontWeight.w500,
                                               fontSize: 20,
@@ -211,7 +213,7 @@ class _HomePageState extends State<HomePage> {
           // ===========================================================
 
           // Action Figure Section
-          Container(
+          SizedBox(
             height: 400,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -227,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                           color: CustomColors.getThemeColor(
                             context,
-                            'titleLarge',
+                            'textColor',
                           ),
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
@@ -239,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                             color: CustomColors.getThemeColor(
                               context,
-                              'bodySmall',
+                              'textColor',
                             ),
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
@@ -334,7 +336,7 @@ class _HomePageState extends State<HomePage> {
                                             style: TextStyle(
                                               color: CustomColors.getThemeColor(
                                                 context,
-                                                'bodyMedium',
+                                                'textColor',
                                               ),
                                               fontWeight: FontWeight.w500,
                                               fontSize: 20,
@@ -353,7 +355,7 @@ class _HomePageState extends State<HomePage> {
                                             style: TextStyle(
                                               color: CustomColors.getThemeColor(
                                                 context,
-                                                'bodyMedium',
+                                                'textColor',
                                               ),
                                               fontWeight: FontWeight.w500,
                                               fontSize: 20,

@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, file_names
 
 import 'dart:async';
 import 'dart:convert';
@@ -102,7 +102,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 leading: Icon(Icons.camera_alt, color: CustomColors.getThemeColor(context, 'primary')),
                 title: Text(
                   "Camera",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: CustomColors.getThemeColor(context, 'titleLarge')),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: CustomColors.getThemeColor(context, 'textColor')),
                 ),
                 onTap: () async {
                   bool granted = await _checkCameraPermission();
@@ -115,7 +115,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 leading: Icon(Icons.photo_library, color: CustomColors.getThemeColor(context, 'primary')),
                 title: Text(
                   "Gallery",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: CustomColors.getThemeColor(context, 'titleLarge')),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: CustomColors.getThemeColor(context, 'textColor')),
                 ),
                 onTap: () async {
                   bool granted = await _checkGalleryPermission();
@@ -222,7 +222,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 children: [
                   Text(
                     "Profile Settings",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: CustomColors.getThemeColor(context, 'titleLarge')),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: CustomColors.getThemeColor(context, 'textColor')),
                   ),
                   const SizedBox(height: 20),
                   Stack(
@@ -243,7 +243,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   const SizedBox(height: 20),
                   TextField(
                     controller: _usernameController,
-                    style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyMedium'), fontSize: 18),
+                    style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontSize: 18),
                     decoration: InputDecoration(labelText: "Username", errorText: _usernameError),
                   ),
                   const SizedBox(height: 20),
@@ -281,7 +281,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                 children: [
                   Text(
                     "Change Password",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: CustomColors.getThemeColor(context, 'titleLarge')),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: CustomColors.getThemeColor(context, 'textColor')),
                   ),
                   const SizedBox(height: 20),
                   _buildPasswordField(_oldPasswordController, "Old Password", _showOldPassword, (val) => setState(() => _showOldPassword = val)),
@@ -319,7 +319,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     return TextField(
       controller: controller,
       obscureText: !showPassword,
-      style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyMedium'), fontSize: 18),
+      style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontSize: 18),
       decoration: InputDecoration(
         labelText: label,
         errorText: _passwordError,

@@ -16,7 +16,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Text(
           'BlueArt',
           style: TextStyle(
-            color: CustomColors.getThemeColor(context, 'bodyLarge'),
+            color: CustomColors.getThemeColor(context, 'textColor'),
             fontWeight: FontWeight.bold,
             fontSize: 22.0,
           ),
@@ -31,7 +31,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: IconButton(
             icon: Icon(
               Icons.account_circle,
-              color: CustomColors.getThemeColor(context, 'bodyLarge'),
+              color: CustomColors.getThemeColor(context, 'textColor'),
               size: 30.0,
             ),
             onPressed: () {

@@ -26,7 +26,7 @@ class AppDrawer extends ConsumerWidget  {
                 child: Text(
                   'Menu',
                   style: TextStyle(
-                    color: CustomColors.getThemeColor(context, 'bodyLarge'),
+                    color: CustomColors.getThemeColor(context, 'textColor'),
                     fontWeight: FontWeight.bold,
                     fontSize: 22.0,
                   ),
@@ -39,7 +39,7 @@ class AppDrawer extends ConsumerWidget  {
               title: Text(
                 'Home',
                 style: TextStyle(
-                  color: CustomColors.getThemeColor(context, 'bodyLarge'),
+                  color: CustomColors.getThemeColor(context, 'textColor'),
                   fontWeight: FontWeight.bold,
                   fontSize: 22.0,
                 ),
@@ -55,7 +55,7 @@ class AppDrawer extends ConsumerWidget  {
               title: Text(
                 'Cart',
                 style: TextStyle(
-                  color: CustomColors.getThemeColor(context, 'bodyLarge'),
+                  color: CustomColors.getThemeColor(context, 'textColor'),
                   fontWeight: FontWeight.bold,
                   fontSize: 22.0,
                 ),
@@ -71,7 +71,7 @@ class AppDrawer extends ConsumerWidget  {
               title: Text(
                 'Favorites',
                 style: TextStyle(
-                  color: CustomColors.getThemeColor(context, 'bodyLarge'),
+                  color: CustomColors.getThemeColor(context, 'textColor'),
                   fontWeight: FontWeight.bold,
                   fontSize: 22.0,
                 ),
@@ -87,7 +87,7 @@ class AppDrawer extends ConsumerWidget  {
               title: Text(
                 'Products',
                 style: TextStyle(
-                  color: CustomColors.getThemeColor(context, 'bodyLarge'),
+                  color: CustomColors.getThemeColor(context, 'textColor'),
                   fontWeight: FontWeight.bold,
                   fontSize: 22.0,
                 ),
@@ -103,7 +103,7 @@ class AppDrawer extends ConsumerWidget  {
               title: Text(
                 'Logout',
                 style: TextStyle(
-                  color: CustomColors.getThemeColor(context, 'bodyLarge'),
+                  color: CustomColors.getThemeColor(context, 'textColor'),
                   fontWeight: FontWeight.bold,
                   fontSize: 22.0,
                 ),

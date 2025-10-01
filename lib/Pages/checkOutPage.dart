@@ -1,31 +1,47 @@
+// ignore_for_file: file_names
+
 import 'dart:async';
+import 'package:blue_art_mad2/network/product/checkOut.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CheckOutPage extends StatefulWidget {
-  const CheckOutPage({super.key});
+class CheckOutPage extends ConsumerStatefulWidget {
+  final Function(int) onPageNav;
+  const CheckOutPage({
+    super.key,
+    required this.onPageNav,
+  });
 
   @override
-  State<CheckOutPage> createState() => _CheckOutPageState();
+  ConsumerState<CheckOutPage> createState() => _CheckOutPageState();
 }
 
-class _CheckOutPageState extends State<CheckOutPage> {
+class _CheckOutPageState extends ConsumerState<CheckOutPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _phoneIN = TextEditingController();
   final TextEditingController _addressIN = TextEditingController();
   final TextEditingController _cardHolderNameIN = TextEditingController();
   final TextEditingController _cardNumberIN = TextEditingController();
   final TextEditingController _cvcIN = TextEditingController();
+  String? dbMessage = "";
   bool _showMsg = false;
   String _selectedShippingMethod = "Standard";
 
   // CheckOut Function
-  void _checkOut() {
+  void _checkOut() async {
     if (_formKey.currentState?.validate() ?? false) {
+      final msg =
+          await Checkout(
+                ref,
+                onPageNav: widget.onPageNav,
+              ).userCheckOut(_phoneIN.text, _addressIN.text, _selectedShippingMethod, _cardHolderNameIN.text, _cardNumberIN.text, _cvcIN.text)
+              as String?;
+
       setState(() {
+        dbMessage = msg;
         _showMsg = true;
-        // CartList = [];
       });
     }
 
@@ -73,13 +89,21 @@ class _CheckOutPageState extends State<CheckOutPage> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Complete Purchase", style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.bold, fontSize: 30)),
+                  Text(
+                    "Complete Purchase",
+                    style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontWeight: FontWeight.bold, fontSize: 30),
+                  ),
 
                   SizedBox(height: 30),
 
                   // Phone Number
                   TextFormField(
                     controller: _phoneIN,
+                    style: TextStyle(
+                      color: CustomColors.getThemeColor(context, 'textColor'),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -92,10 +116,16 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           buffer.write(digitsOnly[i]);
                         }
 
-                        return TextEditingValue(text: buffer.toString(), selection: TextSelection.collapsed(offset: buffer.length));
+                        return TextEditingValue(
+                          text: buffer.toString(),
+                          selection: TextSelection.collapsed(offset: buffer.length),
+                        );
                       }),
                     ],
-                    decoration: InputDecoration(labelText: "Phone Number", labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20)),
+                    decoration: InputDecoration(
+                      labelText: "Phone Number",
+                      labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter your Contact Number!!';
@@ -111,7 +141,15 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   // Address
                   TextFormField(
                     controller: _addressIN,
-                    decoration: InputDecoration(labelText: "Address", labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20)),
+                    style: TextStyle(
+                      color: CustomColors.getThemeColor(context, 'textColor'),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: "Address",
+                      labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter Your Address!!';
@@ -127,11 +165,20 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   // Selection
                   DropdownButtonFormField(
                     value: _selectedShippingMethod,
-                    decoration: InputDecoration(labelText: 'Shipping Method', labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20)),
-                    items:
-                        ['Standard', 'Express', 'Next-Day'].map((method) {
-                          return DropdownMenuItem(value: method, child: Text(method, style: TextStyle(color: CustomColors.getThemeColor(context, 'bodyLarge'), fontWeight: FontWeight.bold, fontSize: 22)));
-                        }).toList(),
+                    dropdownColor: CustomColors.getThemeColor(context, 'surfaceContainerHighest'),
+                    decoration: InputDecoration(
+                      labelText: 'Shipping Method',
+                      labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    items: ['Standard', 'Express', 'Next-Day'].map((method) {
+                      return DropdownMenuItem(
+                        value: method,
+                        child: Text(
+                          method,
+                          style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontWeight: FontWeight.bold, fontSize: 22),
+                        ),
+                      );
+                    }).toList(),
                     onChanged: (value) {
                       setState(() {
                         _selectedShippingMethod = value!;
@@ -144,7 +191,15 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   // Cardholder Name
                   TextFormField(
                     controller: _cardHolderNameIN,
-                    decoration: InputDecoration(labelText: 'Cardholder Name', labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20)),
+                    style: TextStyle(
+                      color: CustomColors.getThemeColor(context, 'textColor'),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Cardholder Name',
+                      labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter Your Username!!';
@@ -160,6 +215,11 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   // Card Number
                   TextFormField(
                     controller: _cardNumberIN,
+                    style: TextStyle(
+                      color: CustomColors.getThemeColor(context, 'textColor'),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -172,10 +232,16 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           buffer.write(digitsOnly[i]);
                         }
 
-                        return TextEditingValue(text: buffer.toString(), selection: TextSelection.collapsed(offset: buffer.length));
+                        return TextEditingValue(
+                          text: buffer.toString(),
+                          selection: TextSelection.collapsed(offset: buffer.length),
+                        );
                       }),
                     ],
-                    decoration: InputDecoration(labelText: 'Card Number', labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20)),
+                    decoration: InputDecoration(
+                      labelText: 'Card Number',
+                      labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter your Card Number!!';
@@ -191,6 +257,11 @@ class _CheckOutPageState extends State<CheckOutPage> {
                   // CVC
                   TextFormField(
                     controller: _cvcIN,
+                    style: TextStyle(
+                      color: CustomColors.getThemeColor(context, 'textColor'),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
                     keyboardType: TextInputType.number,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -202,10 +273,16 @@ class _CheckOutPageState extends State<CheckOutPage> {
                           buffer.write(digitsOnly[i]);
                         }
 
-                        return TextEditingValue(text: buffer.toString(), selection: TextSelection.collapsed(offset: buffer.length));
+                        return TextEditingValue(
+                          text: buffer.toString(),
+                          selection: TextSelection.collapsed(offset: buffer.length),
+                        );
                       }),
                     ],
-                    decoration: InputDecoration(labelText: 'CVC', labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20)),
+                    decoration: InputDecoration(
+                      labelText: 'CVC',
+                      labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter Your CVC!!';
@@ -218,7 +295,14 @@ class _CheckOutPageState extends State<CheckOutPage> {
 
                   SizedBox(height: 30),
 
-                  AnimatedOpacity(duration: Duration(milliseconds: 500), opacity: _showMsg ? 1.0 : 0.0, child: Text('Successfully Purchase Completed', style: TextStyle(color: CustomColors.getThemeColor(context, 'labelSmall'), fontWeight: FontWeight.bold, fontSize: 18))),
+                  AnimatedOpacity(
+                    duration: Duration(milliseconds: 500),
+                    opacity: _showMsg ? 1.0 : 0.0,
+                    child: Text(
+                      dbMessage!,
+                      style: TextStyle(color: CustomColors.getThemeColor(context, 'labelSmall'), fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                  ),
                   ElevatedButton(
                     onPressed: _checkOut,
                     style: ElevatedButton.styleFrom(backgroundColor: CustomColors.getThemeColor(context, 'primary'), foregroundColor: CustomColors.getThemeColor(context, 'onPrimary')),

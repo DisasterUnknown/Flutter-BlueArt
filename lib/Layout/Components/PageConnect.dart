@@ -33,7 +33,7 @@ class PageContent extends StatelessWidget {
 
     // Pages where the state should remove
     if (index == 8) {
-      return CheckOutPage();
+      return CheckOutPage(onPageNav: onPageNav);
     } else if (index == 9) {
       return ProfilePage();
     } else if (index >= 0 && index < stateNotLossPages.length) {

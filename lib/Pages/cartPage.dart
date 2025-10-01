@@ -1,4 +1,5 @@
-// import 'package:blue_art_mad2/lists/productsList.dart';
+// ignore_for_file: file_names
+
 import 'dart:convert';
 
 import 'package:blue_art_mad2/models/products.dart';
@@ -50,7 +51,7 @@ class _CartPageState extends ConsumerState<CartPage> {
           Text(
             "Shopping Cart",
             style: TextStyle(
-              color: CustomColors.getThemeColor(context, 'titleLarge'),
+              color: CustomColors.getThemeColor(context, 'textColor'),
               fontWeight: FontWeight.bold,
               fontSize: 30,
             ),
@@ -173,7 +174,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                                               style: TextStyle(
                                                 color: CustomColors.getThemeColor(
                                                   context,
-                                                  'titleLarge',
+                                                  'textColor',
                                                 ),
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 20,
@@ -207,7 +208,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                                               style: TextStyle(
                                                 color: CustomColors.getThemeColor(
                                                   context,
-                                                  'bodySmall',
+                                                  'textColor',
                                                 ),
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16,
@@ -259,7 +260,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                               style: TextStyle(
                                 color: CustomColors.getThemeColor(
                                   context,
-                                  'titleLarge',
+                                  'textColor',
                                 ),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 30,
@@ -285,7 +286,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                                   style: TextStyle(
                                     color: CustomColors.getThemeColor(
                                       context,
-                                      'titleLarge',
+                                      'textColor',
                                     ),
                                     fontWeight: FontWeight.w500,
                                     fontSize: 25,
@@ -316,7 +317,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                                     style: TextStyle(
                                       color: CustomColors.getThemeColor(
                                         context,
-                                        'bodySmall',
+                                        'textColor',
                                       ),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,

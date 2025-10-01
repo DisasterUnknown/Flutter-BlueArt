@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 
 import 'package:blue_art_mad2/models/products.dart';
@@ -53,7 +55,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
           child: Text(
             "You're currently offline. Please connect to the internet to view your favorite products.",
             style: TextStyle(
-              color: CustomColors.getThemeColor(context, 'titleLarge'),
+              color: CustomColors.getThemeColor(context, 'textColor'),
               fontSize: 20,
             ),
             textAlign: TextAlign.center,
@@ -66,7 +68,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
           padding: const EdgeInsets.all(16.0),
           child: Text(
             "You don't have any favorites yet. Add some to see them here.",
-            style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontSize: 20),
+            style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontSize: 20),
             textAlign: TextAlign.center,
           ),
         ),
@@ -78,7 +80,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
             SizedBox(height: 30),
             Text(
               "Favorite Products",
-              style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.bold, fontSize: 30),
+              style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontWeight: FontWeight.bold, fontSize: 30),
             ),
             SizedBox(height: 15),
             Center(
@@ -151,7 +153,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
                                               final realPrice = (price - ((price / 100) * discount));
                                               return Text(
                                                 "LRK ${formatter.format(realPrice)}",
-                                                style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.w500, fontSize: 20),
+                                                style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontWeight: FontWeight.w500, fontSize: 20),
                                               );
                                             },
                                           ),
@@ -165,7 +167,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
                                               padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 1),
                                               child: Text(
                                                 "Remove",
-                                                style: TextStyle(color: CustomColors.getThemeColor(context, 'bodySmall'), fontWeight: FontWeight.bold, fontSize: 16),
+                                                style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontWeight: FontWeight.bold, fontSize: 16),
                                               ),
                                             ),
                                           ),

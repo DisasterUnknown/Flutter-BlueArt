@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 import 'dart:math';
 
@@ -45,7 +47,7 @@ class Viewcategoriespage extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 30),
-          Text(pageTitle, style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.bold, fontSize: 30)),
+          Text(pageTitle, style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontWeight: FontWeight.bold, fontSize: 30)),
           SizedBox(height: 15),
           Center(
             child: Wrap(
@@ -102,7 +104,7 @@ class Viewcategoriespage extends StatelessWidget {
                                   SizedBox(height: 5),
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 1.0),
-                                    child: Text("LRK ${displayProductList[index].price}", style: TextStyle(color: CustomColors.getThemeColor(context, 'titleLarge'), fontWeight: FontWeight.w500, fontSize: 20)),
+                                    child: Text("LRK ${displayProductList[index].price}", style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontWeight: FontWeight.w500, fontSize: 20)),
                                   ),
                                 ],
                               ),

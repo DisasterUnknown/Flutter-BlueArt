@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:async';
 import 'dart:convert';
 
@@ -109,7 +111,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
             Text(
               product!.name,
               style: TextStyle(
-                color: CustomColors.getThemeColor(context, 'titleLarge'),
+                color: CustomColors.getThemeColor(context, 'textColor'),
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
               ),
@@ -218,7 +220,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                           style: TextStyle(
                             color: CustomColors.getThemeColor(
                               context,
-                              'bodyLarge',
+                              'textColor',
                             ),
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
@@ -238,7 +240,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                               style: TextStyle(
                                 color: CustomColors.getThemeColor(
                                   context,
-                                  'bodyLarge',
+                                  'textColor',
                                 ),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 22,
@@ -257,7 +259,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                           style: TextStyle(
                             color: CustomColors.getThemeColor(
                               context,
-                              'bodyLarge',
+                              'textColor',
                             ),
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
@@ -276,7 +278,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                               style: TextStyle(
                                 color: CustomColors.getThemeColor(
                                   context,
-                                  'bodyLarge',
+                                  'textColor',
                                 ),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 22,
@@ -295,7 +297,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                           style: TextStyle(
                             color: CustomColors.getThemeColor(
                               context,
-                              'bodyLarge',
+                              'textColor',
                             ),
                             fontWeight: FontWeight.bold,
                             fontSize: 22,
@@ -320,7 +322,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                               style: TextStyle(
                                 color: CustomColors.getThemeColor(
                                   context,
-                                  'bodyLarge',
+                                  'textColor',
                                 ),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 22,
@@ -341,7 +343,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                               style: TextStyle(
                                 color: CustomColors.getThemeColor(
                                   context,
-                                  'bodyLarge',
+                                  'textColor',
                                 ),
                                 fontWeight: FontWeight.bold,
                                 fontSize: 22,
@@ -379,7 +381,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                                         style: TextStyle(
                                           color: CustomColors.getThemeColor(
                                             context,
-                                            'bodyLarge',
+                                            'textColor',
                                           ),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 22,
@@ -399,7 +401,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                                       style: TextStyle(
                                         color: CustomColors.getThemeColor(
                                           context,
-                                          'bodyLarge',
+                                          'textColor',
                                         ),
                                         fontWeight: FontWeight.bold,
                                         fontSize: 22,
@@ -411,7 +413,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                                         style: TextStyle(
                                           color: CustomColors.getThemeColor(
                                             context,
-                                            'bodyLarge',
+                                            'textColor',
                                           ),
                                           fontWeight: FontWeight.bold,
                                           fontSize: 22,
@@ -476,7 +478,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                                   style: TextStyle(
                                     color: CustomColors.getThemeColor(
                                       context,
-                                      'bodySmall',
+                                      'textColor',
                                     ),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -509,13 +511,13 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                 Text(
                   "Description",
                   style: TextStyle(
-                    color: CustomColors.getThemeColor(context, 'titleLarge'),
+                    color: CustomColors.getThemeColor(context, 'textColor'),
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
                   ),
                 ),
                 SizedBox(height: 30),
-                Container(
+                SizedBox(
                   width: productDescriptionFormWidth,
                   child: Padding(
                     padding: EdgeInsets.only(left: 20, right: 20),
@@ -523,7 +525,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                       product!.description,
                       textAlign: TextAlign.justify,
                       style: TextStyle(
-                        color: CustomColors.getThemeColor(context, "bodySmall"),
+                        color: CustomColors.getThemeColor(context, "textColor"),
                       ),
                     ),
                   ),

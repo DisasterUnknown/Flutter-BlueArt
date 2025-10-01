@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, deprecated_member_use
+
 import 'dart:ui';
 import 'package:blue_art_mad2/components/dialog_box.dart';
 import 'package:blue_art_mad2/components/loading_box.dart';

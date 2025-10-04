@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:network_info_plus/network_info_plus.dart';
-import 'package:http/http.dart' as http;
 
 class MovableNetworkPopup extends StatefulWidget {
   const MovableNetworkPopup({super.key});
@@ -13,8 +12,7 @@ class MovableNetworkPopup extends StatefulWidget {
   State<MovableNetworkPopup> createState() => _MovableNetworkPopupState();
 }
 
-class _MovableNetworkPopupState extends State<MovableNetworkPopup>
-    with SingleTickerProviderStateMixin {
+class _MovableNetworkPopupState extends State<MovableNetworkPopup> with SingleTickerProviderStateMixin {
   Offset position = const Offset(50, 100);
   String ipAddress = "-";
   String speed = "-";
@@ -54,46 +52,25 @@ class _MovableNetworkPopupState extends State<MovableNetworkPopup>
     String newIp = "-";
 
     try {
-      final wifiIP = await wifiInfo.getWifiIP();
-      if (wifiIP != null) {
-        newConnectivity = "Wi-Fi";
-        newIp = wifiIP;
-      } else {
-        // Try getting public IP for mobile data
-        final publicIp = await _getPublicIP();
-        if (publicIp != "-") {
-          newConnectivity = "Mobile Data";
-          newIp = publicIp;
-        }
+      final networkIP = await wifiInfo.getWifiIP();
+      final connectivityResult = await Connectivity().checkConnectivity();
+
+      if (connectivityResult.contains(ConnectivityResult.wifi)) newConnectivity = "Wi-Fi";
+      if (connectivityResult.contains(ConnectivityResult.mobile)) newConnectivity = "Mobile Data";
+
+      if (networkIP != null) {
+        newIp = networkIP;
       }
     } catch (_) {}
 
     // Update only if changed
     if (newConnectivity != connectivity || newIp != ipAddress) {
-      final wifiIP = await wifiInfo.getWifiIP();
-        final publicIp = await _getPublicIP();
       setState(() {
         connectivity = newConnectivity;
         ipAddress = newIp;
         if (connectivity == "Offline") speed = "-";
-        if (wifiIP != null) newConnectivity = "Wi-Fi";
-        if (publicIp != "-") newConnectivity = "Mobile Data";
       });
     }
-  }
-
-  Future<String> _getPublicIP() async {
-    try {
-      final response =
-          await http.get(Uri.parse('https://api.ipify.org?format=json')).timeout(
-                const Duration(seconds: 3),
-              );
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return data['ip'] ?? "-";
-      }
-    } catch (_) {}
-    return "-";
   }
 
   Future<void> _updatePing() async {
@@ -120,8 +97,7 @@ class _MovableNetworkPopupState extends State<MovableNetworkPopup>
   @override
   Widget build(BuildContext context) {
     final surface = CustomColors.getThemeColor(context, 'surface');
-    final surfaceHighest =
-        CustomColors.getThemeColor(context, 'surfaceContainerHighest');
+    final surfaceHighest = CustomColors.getThemeColor(context, 'surfaceContainerHighest');
     final textColor = CustomColors.getThemeColor(context, 'textColor');
     final titleColor = CustomColors.getThemeColor(context, 'onPrimaryContainer');
     final primary = CustomColors.getThemeColor(context, 'primary');
@@ -132,15 +108,12 @@ class _MovableNetworkPopupState extends State<MovableNetworkPopup>
       left: position.dx,
       top: position.dy,
       child: Draggable(
-        feedback: _buildPopup(surface, surfaceHighest, textColor, titleColor,
-            primary, tertiary, errorColor,
-            opacity: 0.85),
+        feedback: _buildPopup(surface, surfaceHighest, textColor, titleColor, primary, tertiary, errorColor, opacity: 0.85),
         childWhenDragging: Container(),
         onDragEnd: (details) => setState(() => position = details.offset),
         child: FadeTransition(
           opacity: _fadeIn,
-          child: _buildPopup(surface, surfaceHighest, textColor, titleColor,
-              primary, tertiary, errorColor),
+          child: _buildPopup(surface, surfaceHighest, textColor, titleColor, primary, tertiary, errorColor),
         ),
       ),
     );
@@ -157,15 +130,9 @@ class _MovableNetworkPopupState extends State<MovableNetworkPopup>
     double opacity = 1,
   }) {
     final isOffline = connectivity == "Offline";
-    final gradient = isOffline
-        ? [errorColor.withOpacity(0.6), errorColor.withOpacity(0.9)]
-        : [primary.withOpacity(0.7), tertiary.withOpacity(0.9)];
+    final gradient = isOffline ? [errorColor.withOpacity(0.6), errorColor.withOpacity(0.9)] : [primary.withOpacity(0.7), tertiary.withOpacity(0.9)];
 
-    final icon = isOffline
-        ? Icons.wifi_off_rounded
-        : (connectivity == "Mobile Data"
-            ? Icons.signal_cellular_alt_rounded
-            : Icons.wifi_rounded);
+    final icon = isOffline ? Icons.wifi_off_rounded : (connectivity == "Mobile Data" ? Icons.signal_cellular_alt_rounded : Icons.wifi_rounded);
 
     return Material(
       color: Colors.transparent,
@@ -185,9 +152,7 @@ class _MovableNetworkPopupState extends State<MovableNetworkPopup>
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: isOffline
-                  ? errorColor.withOpacity(0.4)
-                  : tertiary.withOpacity(0.5),
+              color: isOffline ? errorColor.withOpacity(0.4) : tertiary.withOpacity(0.5),
               blurRadius: 12,
               offset: const Offset(3, 3),
             ),

@@ -1,5 +1,8 @@
 // ignore_for_file: deprecated_member_use, sized_box_for_whitespace, unrelated_type_equality_checks, use_build_context_synchronously
+import 'package:blue_art_mad2/components/movable_network_popup.dart';
+import 'package:blue_art_mad2/services/localSharedPreferences.dart';
 import 'package:blue_art_mad2/services/shakeDectector.dart';
+import 'package:blue_art_mad2/services/sharedPrefValues.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:blue_art_mad2/layout/Components/PageConnect.dart';
 import 'package:blue_art_mad2/models/products.dart';
@@ -29,44 +32,70 @@ class _LayoutState extends ConsumerState<Layout> {
   bool _isLoading = true;
   ShakeDetector? _shakeDetector;
 
+  OverlayEntry? _networkOverlay;
+
   @override
   void initState() {
     super.initState();
     _loadProducts();
+    _setNetworkToggle();
 
     _currentIndex = widget.initialTabIndex;
     _history.add(_currentIndex);
 
+    // Shake detector
     _shakeDetector = ShakeDetector(
       onShake: () async {
         if (_currentIndex != 0) return;
 
-        // Check internet
-        var connectivityResult = await Connectivity().checkConnectivity();
-        if (connectivityResult == ConnectivityResult.none) {
-          debugPrint("No internet connection. Shake ignored.");
-          return;
-        }
+        final shakePref = await LocalSharedPreferences.getString(SharedPrefValues.isShake);
+        if (shakePref?.toLowerCase() == 'false') return;
 
-        debugPrint("Device shaken! Updating DB...");
+        var connectivityResult = await Connectivity().checkConnectivity();
+        if (connectivityResult == ConnectivityResult.none) return;
+
         _refreshProducts();
       },
     );
   }
 
+  Future<void> _setNetworkToggle() async {
+    await LocalSharedPreferences.saveString(SharedPrefValues.isNetwork, 'false');
+  }
+
+  // show network popup
+  Future<void> showNetworkPopup(String status) async {
+    removeNetworkPopup();
+
+    final overlay = Overlay.of(context);
+    final networkToggle = await LocalSharedPreferences.getString(SharedPrefValues.isNetwork);
+
+    if (networkToggle?.toLowerCase() == 'false') return;
+
+    _networkOverlay = OverlayEntry(
+      builder: (_) => MovableNetworkPopup(),
+    );
+    overlay.insert(_networkOverlay!);
+  }
+
+  void removeNetworkPopup() {
+    _networkOverlay?.remove();
+    _networkOverlay = null;
+  }
+
+  // refresh Product data
   Future<void> _refreshProducts() async {
     try {
-      // Fetch from API
+      final shakeSharedPref = await LocalSharedPreferences.getString(SharedPrefValues.isShake);
+      if (shakeSharedPref?.toLowerCase() == 'false') return;
+
       setState(() => _isLoading = true);
       await NetworkProducts(ref).getArtProducts();
       await NetworkProducts(ref).getCollectiblesProducts();
 
-      // Update offline SQFlite DB
       await ProductDBHelper.updateAllProducts(ProductStore().artProducts, 'art_products');
       await ProductDBHelper.updateAllProducts(ProductStore().collectiblesProducts, 'collectibles_products');
       setState(() => _isLoading = false);
-
-      debugPrint("DB & live store updated successfully!");
     } catch (e) {
       setState(() => _isLoading = false);
       debugPrint("Refresh failed: $e");
@@ -76,29 +105,28 @@ class _LayoutState extends ConsumerState<Layout> {
   @override
   void dispose() {
     _shakeDetector?.dispose();
+    removeNetworkPopup();
     super.dispose();
   }
 
+  // load Product data
   Future<void> _loadProducts() async {
     setState(() => _isLoading = true);
-
-    // Load DB first
     final dbArt = await ProductDBHelper.getProducts('art_products');
     final dbCollectibles = await ProductDBHelper.getProducts('collectibles_products');
 
-    // If DB is not empty
     if (dbArt.isNotEmpty || dbCollectibles.isNotEmpty) {
       ProductStore().setArtProducts(dbArt);
       ProductStore().setCollectiblesProducts(dbCollectibles);
       setState(() => _isLoading = false);
       _fetchAndUpdateProducts();
     } else {
-      // If DB is empty
       await _fetchAndUpdateProducts();
       setState(() => _isLoading = false);
     }
   }
 
+  // fetch Product data
   Future<void> _fetchAndUpdateProducts() async {
     try {
       await NetworkProducts(ref).getArtProducts();
@@ -108,10 +136,8 @@ class _LayoutState extends ConsumerState<Layout> {
       await ProductDBHelper.updateAllProducts(ProductStore().collectiblesProducts, 'collectibles_products');
     } catch (e) {
       debugPrint('API fetch failed: $e');
-
       final artEmpty = (await ProductDBHelper.getProducts('art_products')).isEmpty;
       final colEmpty = (await ProductDBHelper.getProducts('collectibles_products')).isEmpty;
-
       if (artEmpty && colEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('No products available. Please try again later.')),
@@ -120,6 +146,7 @@ class _LayoutState extends ConsumerState<Layout> {
     }
   }
 
+  // on Product select
   void _onProductSelect(Product product) {
     setState(() {
       _selectedProduct = product;
@@ -127,6 +154,7 @@ class _LayoutState extends ConsumerState<Layout> {
     });
   }
 
+  // on Category select
   void _onCategorySelect(String category) {
     setState(() {
       _selectedProductCategory = category;
@@ -165,49 +193,46 @@ class _LayoutState extends ConsumerState<Layout> {
           backgroundColor: CustomColors.getThemeColor(context, 'surface'),
           appBar: TopAppBar(onTabSelect: _onPageNav),
           drawer: AppDrawer(onTabSelect: _onPageNav),
-          body: _isLoading
-              ? Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Spinner
-                      SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 6,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            CustomColors.getThemeColor(context, 'onPrimary'),
+          body: Stack(
+            children: [
+              _isLoading
+                  ? Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 6,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                CustomColors.getThemeColor(context, 'onPrimary'),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-
-                      // Loading text
-                      Text(
-                        "Loading products...",
-                        style: TextStyle(
-                          color: CustomColors.getThemeColor(
-                            context,
-                            'onPrimary',
+                          const SizedBox(height: 20),
+                          Text(
+                            "Loading products...",
+                            style: TextStyle(
+                              color: CustomColors.getThemeColor(context, 'onPrimary'),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                )
-              : PageContent(
-                  index: _currentIndex,
-                  onPageNav: _onPageNav,
-                  selectedProduct: _selectedProduct,
-                  onProductSelect: _onProductSelect,
-                  selectedProductCategory: _selectedProductCategory,
-                  onCategorySelect: _onCategorySelect,
-                ),
+                    )
+                  : PageContent(
+                      index: _currentIndex,
+                      onPageNav: _onPageNav,
+                      selectedProduct: _selectedProduct,
+                      onProductSelect: _onProductSelect,
+                      selectedProductCategory: _selectedProductCategory,
+                      onCategorySelect: _onCategorySelect,
+                      onNetworkToggle: showNetworkPopup, 
+                    ),
+            ],
+          ),
           bottomNavigationBar: isLandscape
               ? null
               : CustomBottomNavBar(

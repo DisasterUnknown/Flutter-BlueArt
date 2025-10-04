@@ -4,6 +4,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:blue_art_mad2/models/products.dart';
+import 'package:blue_art_mad2/services/localSharedPreferences.dart';
+import 'package:blue_art_mad2/services/sharedPrefValues.dart';
 import 'package:blue_art_mad2/store/deviceStore/userCartManagement.dart';
 import 'package:blue_art_mad2/store/firebaseStore/firebaseDB.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
@@ -173,7 +175,9 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                         firebaseDB.removeFavorite((product!.id).toString());
                       }
 
-                      if (await Vibration.hasVibrator()) {
+                      final isVibrate = await LocalSharedPreferences.getString(SharedPrefValues.isVibrate);
+
+                      if (await Vibration.hasVibrator() && isVibrate?.toLowerCase() == 'true') {
                         Vibration.vibrate(duration: 200);
                       }
 
@@ -488,9 +492,10 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                             ),
                           ),
                           onTap: () async {
+                            final isVibrate = await LocalSharedPreferences.getString(SharedPrefValues.isVibrate);
                             CartManager(ref).addAndUpdateCart(product!, _productQuantity);
                             _handleMsgDisplay();
-                            if (await Vibration.hasVibrator()) {
+                            if (await Vibration.hasVibrator() && isVibrate?.toLowerCase() == 'true') {
                               Vibration.vibrate(duration: 200);
                             }
                           },

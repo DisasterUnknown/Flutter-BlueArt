@@ -3,6 +3,8 @@
 import 'dart:convert';
 
 import 'package:blue_art_mad2/models/products.dart';
+import 'package:blue_art_mad2/services/localSharedPreferences.dart';
+import 'package:blue_art_mad2/services/sharedPrefValues.dart';
 import 'package:blue_art_mad2/store/deviceStore/userCartManagement.dart';
 import 'package:blue_art_mad2/store/liveStore/productLiveStore.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
@@ -30,8 +32,8 @@ class _CartPageState extends ConsumerState<CartPage> {
   List<Map<String, dynamic>> _cartList = [];
 
   @override
-  void didUpdateWidget(CartPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _loadCart();
   }
 
@@ -224,7 +226,9 @@ class _CartPageState extends ConsumerState<CartPage> {
 
                                           setState(() {});
 
-                                          if (await Vibration.hasVibrator()) {
+                                          final isVibrate = await LocalSharedPreferences.getString(SharedPrefValues.isVibrate);
+
+                                          if (await Vibration.hasVibrator() && isVibrate?.toLowerCase() == 'true') {
                                             Vibration.vibrate(duration: 200);
                                           }
                                         },

@@ -3,6 +3,8 @@
 import 'dart:convert';
 
 import 'package:blue_art_mad2/models/products.dart';
+import 'package:blue_art_mad2/services/localSharedPreferences.dart';
+import 'package:blue_art_mad2/services/sharedPrefValues.dart';
 import 'package:blue_art_mad2/store/firebaseStore/firebaseDB.dart';
 import 'package:blue_art_mad2/store/liveStore/productLiveStore.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
@@ -177,7 +179,9 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
                                               _loadFavorites();
                                             });
 
-                                            if (await Vibration.hasVibrator()) {
+                                            final isVibrate = await LocalSharedPreferences.getString(SharedPrefValues.isVibrate);
+
+                                            if (await Vibration.hasVibrator() && isVibrate?.toLowerCase() == 'true') {
                                               Vibration.vibrate(duration: 200);
                                             }
                                           },

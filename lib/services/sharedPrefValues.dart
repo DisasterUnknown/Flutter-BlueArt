@@ -11,4 +11,7 @@ class SharedPrefValues {
   static const String localIP = 'localIP';
   static const String localPort = 'localPort';
   static const String protocol = 'protocol';
+  static const String isVibrate = 'isVibrate';
+  static const String isShake = 'isShake';
+  static const String isNetwork = 'isNetwork';
 }

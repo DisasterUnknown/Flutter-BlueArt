@@ -1,5 +1,4 @@
 // ignore_for_file: file_names
-
 import 'package:blue_art_mad2/Pages/cartPage.dart';
 import 'package:blue_art_mad2/Pages/checkOutPage.dart';
 import 'package:blue_art_mad2/Pages/favoritesPage.dart';
@@ -8,7 +7,10 @@ import 'package:blue_art_mad2/Pages/viewCategoriesPage.dart';
 import 'package:blue_art_mad2/Pages/viewProductDetails.dart';
 import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/pages/profilePage.dart';
+import 'package:blue_art_mad2/pages/settingsPage.dart';
 import 'package:flutter/material.dart';
+
+typedef NetworkToggleCallback = void Function(String status);
 
 class PageContent extends StatelessWidget {
   final int index;
@@ -17,8 +19,18 @@ class PageContent extends StatelessWidget {
   final Function(String)? onCategorySelect;
   final Product? selectedProduct;
   final String? selectedProductCategory;
+  final NetworkToggleCallback? onNetworkToggle;
 
-  const PageContent({super.key, required this.index, required this.onPageNav, this.selectedProduct, this.onProductSelect, this.selectedProductCategory, this.onCategorySelect});
+  const PageContent({
+    super.key,
+    required this.index,
+    required this.onPageNav,
+    this.selectedProduct,
+    this.onProductSelect,
+    this.selectedProductCategory,
+    this.onCategorySelect,
+    this.onNetworkToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +43,12 @@ class PageContent extends StatelessWidget {
       Viewcategoriespage(onProductSelect: onProductSelect, selectedProductCategory: selectedProductCategory),
     ];
 
-    // Pages where the state should remove
     if (index == 8) {
       return CheckOutPage(onPageNav: onPageNav);
     } else if (index == 9) {
       return ProfilePage();
+    } else if (index == 10) {
+      return SettingsPage(onNetworkToggle: onNetworkToggle); // PASS callback
     } else if (index >= 0 && index < stateNotLossPages.length) {
       return IndexedStack(index: index, children: stateNotLossPages);
     } else {

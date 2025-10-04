@@ -89,7 +89,7 @@ class _MovableNetworkPopupState extends State<MovableNetworkPopup> with SingleTi
       socket.destroy();
 
       final pingMs = stopwatch.elapsedMilliseconds;
-      setState(() => speed = "Ping: ${pingMs}ms");
+      setState(() => speed = "${pingMs}ms");
     } catch (_) {
       stopwatch.stop();
       setState(() => speed = "Offline");
@@ -196,7 +196,7 @@ class _MovableNetworkPopupState extends State<MovableNetworkPopup> with SingleTi
             const SizedBox(height: 8),
             _infoRow("IP Address", ipAddress, textColor),
             const SizedBox(height: 4),
-            _infoRow("Speed", speed, textColor),
+            _infoRow("Ping", speed, textColor),
             const SizedBox(height: 4),
             if (isOffline)
               Padding(

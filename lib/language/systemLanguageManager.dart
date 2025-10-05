@@ -15,7 +15,7 @@ class CustomLanguages {
   /// Load JSON language files at app startup
   static Future<void> init() async {
     await _loadLanguages();
-    await _loadPreference();
+    await loadPreference();
   }
 
   /// Load JSON language files once
@@ -33,9 +33,9 @@ class CustomLanguages {
   }
 
   /// Load preferred language once and cache it
-  static Future<void> _loadPreference() async {
+  static Future<void> loadPreference() async {
     final prefLang = await LocalSharedPreferences.getString(SharedPrefValues.prefLanguage);
-    _prefLanguage = prefLang ?? 'ja';
+    _prefLanguage = prefLang ?? 'en';
   }
 
   /// returns Japanese if pref, fallback to English

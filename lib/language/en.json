@@ -73,7 +73,6 @@
   {"tag": "cardholderName", "value": "Cardholder Name"},
   {"tag": "usernameRange", "value": "Username Must be at Least 3 Characters Long!!"},
   {"tag": "username", "value": "Username"},
-  {"tag": "pleaseEnterUsername", "value": "Please enter username"},
   {"tag": "usernameCannotBeEmpty", "value": "Username cannot be empty"},
   {"tag": "alreadyHaveAccount", "value": "Already have an account?"},
   {"tag": "pleaseEnterEmail", "value": "Please enter email"},
@@ -98,9 +97,12 @@
   {"tag": "shakeSensor", "value": "Shake Sensor"},
   {"tag": "vibration", "value": "Vibration"},
   {"tag": "networkConnectivity", "value": "Network Connectivity"},
+  {"tag": "languageChange", "value": "Switch to Japanese Language"},
   {"tag": "home", "value": "Home"},
   {"tag": "cart", "value": "Cart"},
   {"tag": "favorites", "value": "Favorites"},
   {"tag": "logout", "value": "Logout"},
-  {"tag": "productAddedToCart", "value": "Product Added To Cart!!"}
+  {"tag": "productAddedToCart", "value": "Product Added To Cart!!"},
+  {"tag": "iPAddress", "value": "IP Address"},
+  {"tag": "ping", "value": "Ping"}
 ]

@@ -195,9 +195,9 @@ class _MovableNetworkPopupState extends State<MovableNetworkPopup> with SingleTi
               ],
             ),
             const SizedBox(height: 8),
-            _infoRow("IP Address", ipAddress, textColor),
+            _infoRow(CustomLanguages.getTextSync('iPAddress'), ipAddress, textColor),
             const SizedBox(height: 4),
-            _infoRow("Ping", speed, textColor),
+            _infoRow(CustomLanguages.getTextSync('ping'), speed, textColor),
             const SizedBox(height: 4),
             if (isOffline)
               Padding(

@@ -58,6 +58,7 @@
   {"tag": "email", "value": "メールアドレス"},
   {"tag": "emailAlreadyTaken", "value": "このメールアドレスはすでに使用されています"},
   {"tag": "error", "value": "エラー"},
+  {"tag": "network", "value": "ネットワーク"},
   {"tag": "internalNetworkError", "value": "内部ネットワークエラーが発生しました"},
   {"tag": "password", "value": "パスワード"},
   {"tag": "pleaseEnterPassword", "value": "パスワードを入力してください"},
@@ -96,9 +97,12 @@
   {"tag": "shakeSensor", "value": "シェイクセンサー"},
   {"tag": "vibration", "value": "振動"},
   {"tag": "networkConnectivity", "value": "ネットワーク接続"},
+  {"tag": "languageChange", "value": "日本語に切り替え"},
   {"tag": "home", "value": "ホーム"},
   {"tag": "cart", "value": "カート"},
   {"tag": "favorites", "value": "お気に入り"},
   {"tag": "logout", "value": "ログアウト"},
-  {"tag": "productAddedToCart", "value": "商品をカートに追加しました!!"}
+  {"tag": "productAddedToCart", "value": "商品がカートに追加されました!!"},
+  {"tag": "iPAddress", "value": "IPアドレス"},
+  {"tag": "ping", "value": "ピング"}
 ]

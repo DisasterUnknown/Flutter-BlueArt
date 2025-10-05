@@ -28,18 +28,28 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
   List<String> favorites = [];
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void didUpdateWidget(covariant FavoritesPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _loadPage();
     _loadFavorites();
   }
 
-  Future<void> _loadFavorites() async {
-    final firebaseDB = FirebaseDBService(ref);
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _loadPage();
+    _loadFavorites();
+  }
 
+  Future<void> _loadPage() async {
     setState(() {
       isOnline = false;
       favorites = [];
     });
+  }
+
+  Future<void> _loadFavorites() async {
+    final firebaseDB = FirebaseDBService(ref);
 
     final favs = await firebaseDB.getFavorites();
     setState(() {

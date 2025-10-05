@@ -32,6 +32,12 @@ class _CartPageState extends ConsumerState<CartPage> {
   List<Map<String, dynamic>> _cartList = [];
 
   @override
+  void didUpdateWidget(covariant CartPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _loadCart();
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _loadCart();

@@ -1,3 +1,4 @@
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/routes/app_route.dart';
 import 'package:blue_art_mad2/states/authStateManagement.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
@@ -10,6 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await CustomColors.loadThemes();
+  await CustomLanguages.init();
 
   // RiverPod
   final container = ProviderContainer();

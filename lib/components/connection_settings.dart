@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, deprecated_member_use
 
 import 'dart:ui';
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/services/sharedPrefValues.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -58,8 +59,8 @@ class _ConnectionSettingsPopupState extends State<ConnectionSettingsPopup> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
-                    'Connection Settings',
+                  Text(
+                    CustomLanguages.getTextSync('connectionSettings'),
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,
@@ -70,7 +71,7 @@ class _ConnectionSettingsPopupState extends State<ConnectionSettingsPopup> {
 
                   // Radio buttons
                   RadioListTile<String>(
-                    title: const Text('Online (Railway)', style: TextStyle(color: Colors.white)),
+                    title: Text(CustomLanguages.getTextSync('onlineRailway'), style: TextStyle(color: Colors.white)),
                     value: 'online',
                     groupValue: selectedConnection,
                     activeColor: Colors.blue,
@@ -79,7 +80,7 @@ class _ConnectionSettingsPopupState extends State<ConnectionSettingsPopup> {
                     },
                   ),
                   RadioListTile<String>(
-                    title: const Text('Local', style: TextStyle(color: Colors.white)),
+                    title: Text(CustomLanguages.getTextSync('local'), style: TextStyle(color: Colors.white)),
                     value: 'local',
                     groupValue: selectedConnection,
                     activeColor: Colors.blue,
@@ -93,10 +94,10 @@ class _ConnectionSettingsPopupState extends State<ConnectionSettingsPopup> {
                     TextFormField(
                       controller: ipController,
                       style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'Local IP',
+                      decoration: InputDecoration(
+                        labelText: CustomLanguages.getTextSync('localIP'),
                         labelStyle: TextStyle(color: Colors.grey),
-                        hintText: "Enter IP here",
+                        hintText: CustomLanguages.getTextSync('enterIP'),
                         hintStyle: TextStyle(color: Colors.grey),
                       ),
                       keyboardType: TextInputType.number,
@@ -106,10 +107,10 @@ class _ConnectionSettingsPopupState extends State<ConnectionSettingsPopup> {
                       ],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "IP cannot be empty";
+                          return CustomLanguages.getTextSync('iPCannotBeEmpty');
                         }
                         if (!ipRegex.hasMatch(value.trim())) {
-                          return "Enter a valid IP (e.g., 192.168.1.1)";
+                          return CustomLanguages.getTextSync('enterValidIP');
                         }
                         return null;
                       },
@@ -118,10 +119,10 @@ class _ConnectionSettingsPopupState extends State<ConnectionSettingsPopup> {
                       controller: portController,
                       style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        labelText: 'Local Port',
+                      decoration: InputDecoration(
+                        labelText: CustomLanguages.getTextSync('localPort'),
                         labelStyle: TextStyle(color: Colors.grey),
-                        hintText: "Enter local hosted port",
+                        hintText: CustomLanguages.getTextSync('enterHostedPort'),
                         hintStyle: TextStyle(color: Colors.grey),
                       ),
                       inputFormatters: [
@@ -130,11 +131,11 @@ class _ConnectionSettingsPopupState extends State<ConnectionSettingsPopup> {
                       ],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Port cannot be empty";
+                          return CustomLanguages.getTextSync('portCannotBeEmpty');
                         }
                         final portNum = int.tryParse(value);
                         if (portNum == null || portNum < 1 || portNum > 65535) {
-                          return "Port must be 1-65535";
+                          return CustomLanguages.getTextSync('portRange');
                         }
                         return null;
                       },
@@ -147,7 +148,7 @@ class _ConnectionSettingsPopupState extends State<ConnectionSettingsPopup> {
                     children: [
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: const Text('Cancel', style: TextStyle(color: Colors.white)),
+                        child: Text(CustomLanguages.getTextSync('cancel'), style: TextStyle(color: Colors.white)),
                       ),
                       const SizedBox(width: 10),
                       ElevatedButton(
@@ -176,7 +177,7 @@ class _ConnectionSettingsPopupState extends State<ConnectionSettingsPopup> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: const Text('Save', style: TextStyle(color: Colors.white)),
+                        child: Text(CustomLanguages.getTextSync('save'), style: TextStyle(color: Colors.white)),
                       ),
                     ],
                   ),

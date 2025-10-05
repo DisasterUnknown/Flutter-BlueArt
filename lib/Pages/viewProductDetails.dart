@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/services/localSharedPreferences.dart';
 import 'package:blue_art_mad2/services/sharedPrefValues.dart';
@@ -81,7 +82,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
       _showMsg = true;
     });
 
-    msgContent = "Product Added To Cart!!";
+    msgContent = CustomLanguages.getTextSync('productAddedToCart');
 
     Timer(Duration(seconds: 3), () {
       if (mounted) {
@@ -99,7 +100,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
     final productDescriptionFormWidth = screenWidth > 600 ? screenWidth * 0.75 : screenWidth * 1.0;
 
     if (product == null) {
-      return Center(child: Text("No product selected"));
+      return Center(child: Text(CustomLanguages.getTextSync('noProductSelected')));
     }
 
     return Center(
@@ -220,7 +221,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Product Price: ",
+                          CustomLanguages.getTextSync('productPrice'),
                           style: TextStyle(
                             color: CustomColors.getThemeColor(
                               context,
@@ -259,7 +260,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Discount: ",
+                          CustomLanguages.getTextSync('discount'),
                           style: TextStyle(
                             color: CustomColors.getThemeColor(
                               context,
@@ -297,7 +298,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Price: ",
+                          CustomLanguages.getTextSync('price'),
                           style: TextStyle(
                             color: CustomColors.getThemeColor(
                               context,
@@ -343,7 +344,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                         Column(
                           children: [
                             Text(
-                              "Quantity: ",
+                              CustomLanguages.getTextSync('quantity'),
                               style: TextStyle(
                                 color: CustomColors.getThemeColor(
                                   context,
@@ -478,7 +479,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
                               ),
                               child: Center(
                                 child: Text(
-                                  "Add To Cart",
+                                  CustomLanguages.getTextSync('addToCart'),
                                   style: TextStyle(
                                     color: CustomColors.getThemeColor(
                                       context,
@@ -514,7 +515,7 @@ class _ViewProductDetailsPageState extends ConsumerState<ViewProductDetailsPage>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Description",
+                  CustomLanguages.getTextSync('description'),
                   style: TextStyle(
                     color: CustomColors.getThemeColor(context, 'textColor'),
                     fontWeight: FontWeight.bold,

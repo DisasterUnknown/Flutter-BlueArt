@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'dart:ui';
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:flutter/material.dart';
 
 void showCustomDialog(BuildContext context, String title, String content) {
@@ -62,8 +63,8 @@ void showCustomDialog(BuildContext context, String title, String content) {
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                     onPressed: () => Navigator.pop(context),
-                    child: const Text(
-                      "OK",
+                    child: Text(
+                      CustomLanguages.getTextSync('ok'),
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'dart:async';
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/network/product/checkOut.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _CheckOutPageState extends ConsumerState<CheckOutPage> {
   final TextEditingController _cvcIN = TextEditingController();
   String? dbMessage = "";
   bool _showMsg = false;
-  String _selectedShippingMethod = "Standard";
+  String _selectedShippingMethod = CustomLanguages.getTextSync('shippingMethod1');
 
   // CheckOut Function
   void _checkOut() async {
@@ -90,7 +91,7 @@ class _CheckOutPageState extends ConsumerState<CheckOutPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Complete Purchase",
+                    CustomLanguages.getTextSync('completePurchase'),
                     style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontWeight: FontWeight.bold, fontSize: 30),
                   ),
 
@@ -123,14 +124,14 @@ class _CheckOutPageState extends ConsumerState<CheckOutPage> {
                       }),
                     ],
                     decoration: InputDecoration(
-                      labelText: "Phone Number",
+                      labelText: CustomLanguages.getTextSync('phoneNumber'),
                       labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please Enter your Contact Number!!';
+                        return CustomLanguages.getTextSync('pleaseEnterContactNumber');
                       } else if (value.length < 12) {
-                        return 'Contact Number Must be at Least 10 Digits Long!!';
+                        return CustomLanguages.getTextSync('contactRange');
                       }
                       return null;
                     },
@@ -147,14 +148,14 @@ class _CheckOutPageState extends ConsumerState<CheckOutPage> {
                       fontWeight: FontWeight.w600,
                     ),
                     decoration: InputDecoration(
-                      labelText: "Address",
+                      labelText: CustomLanguages.getTextSync('address'),
                       labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please Enter Your Address!!';
+                        return CustomLanguages.getTextSync('pleaseEnterAddress');
                       } else if (value.length < 5) {
-                        return 'Address Must be at Least 5 Characters Long!!';
+                        return CustomLanguages.getTextSync('addressRange');
                       }
                       return null;
                     },
@@ -167,18 +168,23 @@ class _CheckOutPageState extends ConsumerState<CheckOutPage> {
                     value: _selectedShippingMethod,
                     dropdownColor: CustomColors.getThemeColor(context, 'surfaceContainerHighest'),
                     decoration: InputDecoration(
-                      labelText: 'Shipping Method',
+                      labelText: CustomLanguages.getTextSync('shippingMethod'),
                       labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    items: ['Standard', 'Express', 'Next-Day'].map((method) {
-                      return DropdownMenuItem(
-                        value: method,
-                        child: Text(
-                          method,
-                          style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontWeight: FontWeight.bold, fontSize: 22),
-                        ),
-                      );
-                    }).toList(),
+                    items:
+                        [
+                          CustomLanguages.getTextSync('shippingMethod1'),
+                          CustomLanguages.getTextSync('shippingMethod2'),
+                          CustomLanguages.getTextSync('shippingMethod3'),
+                        ].map((method) {
+                          return DropdownMenuItem(
+                            value: method,
+                            child: Text(
+                              method,
+                              style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontWeight: FontWeight.bold, fontSize: 22),
+                            ),
+                          );
+                        }).toList(),
                     onChanged: (value) {
                       setState(() {
                         _selectedShippingMethod = value!;
@@ -197,14 +203,14 @@ class _CheckOutPageState extends ConsumerState<CheckOutPage> {
                       fontWeight: FontWeight.w600,
                     ),
                     decoration: InputDecoration(
-                      labelText: 'Cardholder Name',
+                      labelText: CustomLanguages.getTextSync('cardholderName'),
                       labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please Enter Your Username!!';
+                        return CustomLanguages.getTextSync('pleaseEnterUsername');
                       } else if (value.length < 3) {
-                        return 'Username Must be at Least 3 Characters Long!!';
+                        return CustomLanguages.getTextSync('usernameRange');
                       }
                       return null;
                     },
@@ -239,14 +245,14 @@ class _CheckOutPageState extends ConsumerState<CheckOutPage> {
                       }),
                     ],
                     decoration: InputDecoration(
-                      labelText: 'Card Number',
+                      labelText: CustomLanguages.getTextSync('cardNumber'),
                       labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please Enter your Card Number!!';
+                        return CustomLanguages.getTextSync('pleaseEnterCardNumber');
                       } else if (value.length < 14) {
-                        return 'Card Number Must be at Least 12 Digits Long!!';
+                        return CustomLanguages.getTextSync('cardNumberRange');
                       }
                       return null;
                     },
@@ -280,14 +286,14 @@ class _CheckOutPageState extends ConsumerState<CheckOutPage> {
                       }),
                     ],
                     decoration: InputDecoration(
-                      labelText: 'CVC',
+                      labelText: CustomLanguages.getTextSync('cvc'),
                       labelStyle: TextStyle(color: CustomColors.getThemeColor(context, 'labelMedium'), fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please Enter Your CVC!!';
+                        return CustomLanguages.getTextSync('pleaseEnterCvc');
                       } else if (value.length != 4) {
-                        return 'CVC Must be 4 Characters Long!!';
+                        return CustomLanguages.getTextSync('cvcRange');
                       }
                       return null;
                     },

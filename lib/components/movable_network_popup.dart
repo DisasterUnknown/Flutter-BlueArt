@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -182,7 +183,7 @@ class _MovableNetworkPopupState extends State<MovableNetworkPopup> with SingleTi
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    "Network: $connectivity",
+                    "${CustomLanguages.getTextSync('network')} $connectivity",
                     style: TextStyle(
                       color: titleColor,
                       fontWeight: FontWeight.bold,
@@ -202,7 +203,7 @@ class _MovableNetworkPopupState extends State<MovableNetworkPopup> with SingleTi
               Padding(
                 padding: const EdgeInsets.only(top: 6.0),
                 child: Text(
-                  "⚠ Connection Lost",
+                  CustomLanguages.getTextSync('connectionLost'),
                   style: TextStyle(
                     color: errorColor,
                     fontWeight: FontWeight.w600,

@@ -1,4 +1,5 @@
 // ignore_for_file: use_build_context_synchronously, deprecated_member_use, file_names
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/services/localSharedPreferences.dart';
 import 'package:blue_art_mad2/services/sharedPrefValues.dart';
 import 'package:flutter/material.dart';
@@ -115,7 +116,7 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           const SizedBox(height: 30),
           Text(
-            "Settings",
+            CustomLanguages.getTextSync('settings'),
             style: TextStyle(
               color: CustomColors.getThemeColor(context, 'textColor'),
               fontWeight: FontWeight.bold,
@@ -123,9 +124,9 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           const SizedBox(height: 20),
-          _buildToggleTile("Shake Sensor", shakeEnabled, _toggleShake),
-          _buildToggleTile("Vibration", vibrationEnabled, _toggleVibration),
-          _buildToggleTile("Network Connectivity", networkEnabled, _toggleNetwork),
+          _buildToggleTile(CustomLanguages.getTextSync('shakeSensor'), shakeEnabled, _toggleShake),
+          _buildToggleTile(CustomLanguages.getTextSync('vibration'), vibrationEnabled, _toggleVibration),
+          _buildToggleTile(CustomLanguages.getTextSync('networkConnectivity'), networkEnabled, _toggleNetwork),
           const SizedBox(height: 50),
         ],
       ),

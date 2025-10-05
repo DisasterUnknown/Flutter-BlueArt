@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/services/localSharedPreferences.dart';
 import 'package:blue_art_mad2/services/sharedPrefValues.dart';
@@ -57,7 +58,7 @@ class _CartPageState extends ConsumerState<CartPage> {
         children: [
           SizedBox(height: 30),
           Text(
-            "Shopping Cart",
+            CustomLanguages.getTextSync('shoppingCart'),
             style: TextStyle(
               color: CustomColors.getThemeColor(context, 'textColor'),
               fontWeight: FontWeight.bold,
@@ -212,7 +213,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                                               bottom: 1,
                                             ),
                                             child: Text(
-                                              "Remove",
+                                              CustomLanguages.getTextSync('remove'),
                                               style: TextStyle(
                                                 color: CustomColors.getThemeColor(
                                                   context,
@@ -266,7 +267,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                         child: Column(
                           children: [
                             Text(
-                              "Total Price!!",
+                              CustomLanguages.getTextSync('totalPrice'),
                               style: TextStyle(
                                 color: CustomColors.getThemeColor(
                                   context,
@@ -323,7 +324,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                                     bottom: 5,
                                   ),
                                   child: Text(
-                                    "Check Out!",
+                                    CustomLanguages.getTextSync('checkOut'),
                                     style: TextStyle(
                                       color: CustomColors.getThemeColor(
                                         context,

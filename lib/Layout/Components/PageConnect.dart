@@ -5,6 +5,7 @@ import 'package:blue_art_mad2/Pages/favoritesPage.dart';
 import 'package:blue_art_mad2/Pages/homePage.dart';
 import 'package:blue_art_mad2/Pages/viewCategoriesPage.dart';
 import 'package:blue_art_mad2/Pages/viewProductDetails.dart';
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/pages/profilePage.dart';
 import 'package:blue_art_mad2/pages/settingsPage.dart';
@@ -52,7 +53,7 @@ class PageContent extends StatelessWidget {
     } else if (index >= 0 && index < stateNotLossPages.length) {
       return IndexedStack(index: index, children: stateNotLossPages);
     } else {
-      return Center(child: Text('Page not found'));
+      return Center(child: Text(CustomLanguages.getTextSync('pageNotFound')));
     }
   }
 }

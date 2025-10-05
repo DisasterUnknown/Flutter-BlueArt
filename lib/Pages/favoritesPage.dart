@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/services/localSharedPreferences.dart';
 import 'package:blue_art_mad2/services/sharedPrefValues.dart';
@@ -65,7 +66,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(
-            "You're currently offline. Please connect to the internet to view your favorite products.",
+            CustomLanguages.getTextSync('currentlyOffline'),
             style: TextStyle(
               color: CustomColors.getThemeColor(context, 'textColor'),
               fontSize: 20,
@@ -79,7 +80,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Text(
-            "You don't have any favorites yet. Add some to see them here.",
+            CustomLanguages.getTextSync('noFavourits'),
             style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontSize: 20),
             textAlign: TextAlign.center,
           ),
@@ -91,7 +92,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
           children: [
             SizedBox(height: 30),
             Text(
-              "Favorite Products",
+              CustomLanguages.getTextSync('favoriteProducts'),
               style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontWeight: FontWeight.bold, fontSize: 30),
             ),
             SizedBox(height: 15),
@@ -178,7 +179,7 @@ class _FavoritesPageState extends ConsumerState<FavoritesPage> {
                                             child: Padding(
                                               padding: EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 1),
                                               child: Text(
-                                                "Remove",
+                                                CustomLanguages.getTextSync('remove'),
                                                 style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontWeight: FontWeight.bold, fontSize: 16),
                                               ),
                                             ),

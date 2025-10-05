@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 import 'package:blue_art_mad2/components/connection_settings.dart';
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/network/auth/login.dart';
 import 'package:blue_art_mad2/components/dialog_box.dart';
 import 'package:blue_art_mad2/components/loading_box.dart';
@@ -124,7 +125,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               children: [
                                 Center(
                                   child: Text(
-                                    "BlueArt Login",
+                                    CustomLanguages.getTextSync('blueArtLogin'),
                                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -151,7 +152,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               controller: _emailIN,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
-                                labelText: "Email",
+                                labelText: CustomLanguages.getTextSync('email'),
                                 labelStyle: const TextStyle(color: Colors.white70),
                                 errorStyle: const TextStyle(
                                   color: Color.fromARGB(255, 255, 170, 170),
@@ -166,9 +167,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Please enter email";
+                                  return CustomLanguages.getTextSync('pleaseEnterEmail');
                                 } else if (!value.contains('@')) {
-                                  return "Enter a valid email";
+                                  return CustomLanguages.getTextSync('enterValidEmail');
                                 }
                                 return null;
                               },
@@ -179,7 +180,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               obscureText: _showPassword,
                               style: const TextStyle(color: Colors.white),
                               decoration: InputDecoration(
-                                labelText: "Password",
+                                labelText: CustomLanguages.getTextSync('password'),
                                 labelStyle: const TextStyle(color: Colors.white70),
                                 errorStyle: const TextStyle(
                                   color: Color.fromARGB(255, 255, 170, 170),
@@ -205,9 +206,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Please enter password";
+                                  return CustomLanguages.getTextSync('pleaseEnterPassword');
                                 } else if (value.length < 6) {
-                                  return "Password must be at least 6 characters";
+                                  return CustomLanguages.getTextSync('passwordLength');
                                 }
                                 return null;
                               },
@@ -217,9 +218,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                               text: TextSpan(
                                 style: const TextStyle(color: Colors.white70),
                                 children: [
-                                  const TextSpan(text: "No account? "),
+                                  TextSpan(text: CustomLanguages.getTextSync('noAccount')),
                                   TextSpan(
-                                    text: "Register!",
+                                    text: " ${CustomLanguages.getTextSync('register')}!",
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       decoration: TextDecoration.underline,
@@ -249,8 +250,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                   backgroundColor: Colors.blueAccent.withOpacity(0.9),
                                   foregroundColor: Colors.white,
                                 ),
-                                child: const Text(
-                                  'Login',
+                                child: Text(
+                                  CustomLanguages.getTextSync('login'),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,

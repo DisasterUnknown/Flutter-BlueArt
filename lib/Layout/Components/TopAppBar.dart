@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
       foregroundColor: CustomColors.getThemeColor(context, 'onPrimary'),
       title: GestureDetector(
         child: Text(
-          'BlueArt',
+          CustomLanguages.getTextSync('appTitle'),
           style: TextStyle(
             color: CustomColors.getThemeColor(context, 'textColor'),
             fontWeight: FontWeight.bold,

@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/store/liveStore/productLiveStore.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
@@ -45,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Art",
+                        CustomLanguages.getTextSync('art'),
                         style: TextStyle(
                           color: CustomColors.getThemeColor(
                             context,
@@ -57,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       GestureDetector(
                         child: Text(
-                          "See More > ",
+                          CustomLanguages.getTextSync('seeMore'),
                           style: TextStyle(
                             color: CustomColors.getThemeColor(
                               context,
@@ -225,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Collectables",
+                        CustomLanguages.getTextSync('collectables'),
                         style: TextStyle(
                           color: CustomColors.getThemeColor(
                             context,
@@ -237,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       GestureDetector(
                         child: Text(
-                          "See More > ",
+                          CustomLanguages.getTextSync('seeMore'),
                           style: TextStyle(
                             color: CustomColors.getThemeColor(
                               context,

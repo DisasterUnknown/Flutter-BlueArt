@@ -14,4 +14,5 @@ class SharedPrefValues {
   static const String isVibrate = 'isVibrate';
   static const String isShake = 'isShake';
   static const String isNetwork = 'isNetwork';
+  static const String prefLanguage = 'prefLanguage';
 }

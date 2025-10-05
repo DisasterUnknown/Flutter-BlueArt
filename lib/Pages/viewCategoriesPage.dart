@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/models/products.dart';
 import 'package:blue_art_mad2/store/liveStore/productLiveStore.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
@@ -29,11 +30,11 @@ class Viewcategoriespage extends StatelessWidget {
   // Checking the Page Topic Name
   String _pageTitle() {
     if (selectedProductCategory == 'art') {
-      return 'Art';
+      return CustomLanguages.getTextSync('art');
     } else if (selectedProductCategory == 'figure') {
-      return 'Action Figures';
+      return CustomLanguages.getTextSync('actionFigures');
     } else {
-      return 'Products';
+      return CustomLanguages.getTextSync('products');
     }
   }
 

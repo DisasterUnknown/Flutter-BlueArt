@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, sized_box_for_whitespace, unrelated_type_equality_checks, use_build_context_synchronously
 import 'package:blue_art_mad2/components/movable_network_popup.dart';
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/services/localSharedPreferences.dart';
 import 'package:blue_art_mad2/services/shakeDectector.dart';
 import 'package:blue_art_mad2/services/sharedPrefValues.dart';
@@ -140,7 +141,7 @@ class _LayoutState extends ConsumerState<Layout> {
       final colEmpty = (await ProductDBHelper.getProducts('collectibles_products')).isEmpty;
       if (artEmpty && colEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('No products available. Please try again later.')),
+          SnackBar(content: Text(CustomLanguages.getTextSync('noProductsAvailable'))),
         );
       }
     }
@@ -212,7 +213,7 @@ class _LayoutState extends ConsumerState<Layout> {
                           ),
                           const SizedBox(height: 20),
                           Text(
-                            "Loading products...",
+                            CustomLanguages.getTextSync('loadingProducts'),
                             style: TextStyle(
                               color: CustomColors.getThemeColor(context, 'onPrimary'),
                               fontSize: 18,

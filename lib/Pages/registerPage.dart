@@ -3,6 +3,7 @@
 import 'dart:ui';
 import 'package:blue_art_mad2/components/dialog_box.dart';
 import 'package:blue_art_mad2/components/loading_box.dart';
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/network/auth/register.dart';
 import 'package:blue_art_mad2/routes/app_route.dart';
 import 'package:flutter/gestures.dart';
@@ -46,15 +47,15 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       if (statusCode == 200) {
         Navigator.pushReplacementNamed(context, AppRoute.layout);
       } else if (statusCode == 422) {
-        showCustomDialog(context, 'Error', 'Email already taken...');
+        showCustomDialog(context, CustomLanguages.getTextSync('error'), CustomLanguages.getTextSync('emailAlreadyTaken'));
       } else {
-        showCustomDialog(context, 'Error', data['message']);
+        showCustomDialog(context, CustomLanguages.getTextSync('error'), data['message']);
       }
     } catch (e) {
       if (!mounted) return;
       Navigator.pop(context);
-      showCustomDialog(context, 'Network', '$e');
-      showCustomDialog(context, 'Network', 'Internal network error...');
+      showCustomDialog(context, CustomLanguages.getTextSync('network'), '$e');
+      showCustomDialog(context, CustomLanguages.getTextSync('network'), CustomLanguages.getTextSync('internalNetworkError'));
     }
   }
 
@@ -132,7 +133,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              "Create Account",
+                              CustomLanguages.getTextSync('createAccount'),
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineMedium
@@ -147,12 +148,12 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                             TextFormField(
                               controller: _unameIN,
                               style: const TextStyle(color: Colors.white),
-                              decoration: _inputDecoration("Username"),
+                              decoration: _inputDecoration(CustomLanguages.getTextSync('username')),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Please enter username";
+                                  return CustomLanguages.getTextSync('pleaseEnterUsername');
                                 } else if (value.length < 3) {
-                                  return "Username must be at least 3 characters";
+                                  return CustomLanguages.getTextSync('usernameRange');
                                 }
                                 return null;
                               },
@@ -164,12 +165,12 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               controller: _emailIN,
                               keyboardType: TextInputType.emailAddress,
                               style: const TextStyle(color: Colors.white),
-                              decoration: _inputDecoration("Email"),
+                              decoration: _inputDecoration(CustomLanguages.getTextSync('email')),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Please enter email";
+                                  return CustomLanguages.getTextSync('pleaseEnterEmail');
                                 } else if (!value.contains('@')) {
-                                  return "Enter a valid email";
+                                  return CustomLanguages.getTextSync('enterValidEmail');
                                 }
                                 return null;
                               },
@@ -182,7 +183,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               obscureText: _showPassword,
                               style: const TextStyle(color: Colors.white),
                               decoration: _inputDecoration(
-                                "Password",
+                                CustomLanguages.getTextSync('password'),
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     _showPassword
@@ -199,9 +200,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               ),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Please enter password";
+                                  return CustomLanguages.getTextSync('pleaseEnterPassword');
                                 } else if (value.length < 6) {
-                                  return "Password must be at least 6 characters";
+                                  return CustomLanguages.getTextSync('passwordLength');
                                 }
                                 return null;
                               },
@@ -213,12 +214,12 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               controller: _confirmIN,
                               obscureText: _showPassword,
                               style: const TextStyle(color: Colors.white),
-                              decoration: _inputDecoration("Confirm Password"),
+                              decoration: _inputDecoration(CustomLanguages.getTextSync('confirmPassword')),
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return "Please confirm password";
+                                  return CustomLanguages.getTextSync('pleaseConfirmPassword');
                                 } else if (value != _passIN.text) {
-                                  return "Passwords do not match";
+                                  return CustomLanguages.getTextSync('passwordsNotMatch');
                                 }
                                 return null;
                               },
@@ -230,9 +231,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                               text: TextSpan(
                                 style: const TextStyle(color: Colors.white70),
                                 children: [
-                                  const TextSpan(text: "Already have an account? "),
+                                  TextSpan(text: CustomLanguages.getTextSync('alreadyHaveAccount')),
                                   TextSpan(
-                                    text: "Login!",
+                                    text: " ${CustomLanguages.getTextSync('login')}!",
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       decoration: TextDecoration.underline,
@@ -267,8 +268,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                       Colors.blueAccent.withOpacity(0.9),
                                   foregroundColor: Colors.white,
                                 ),
-                                child: const Text(
-                                  'Register',
+                                child: Text(
+                                  CustomLanguages.getTextSync('register'),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,

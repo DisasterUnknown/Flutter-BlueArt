@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, deprecated_member_use
 
 import 'dart:ui';
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -74,19 +75,19 @@ class CustomBottomNavBar extends StatelessWidget {
                       color: CustomColors.getThemeColor(context, 'bottomNavigationBarUnselected'),
                       iconSize: 24,
                       curve: Curves.easeInOut,
-                      tabs: const [
-                        GButton(icon: Icons.home_outlined, text: 'Home'),
+                      tabs: [
+                        GButton(icon: Icons.home_outlined, text: CustomLanguages.getTextSync('home')),
                         GButton(
                           icon: Icons.shopping_cart_outlined,
-                          text: 'Cart',
+                          text: CustomLanguages.getTextSync('cart'),
                         ),
                         GButton(
                           icon: Icons.favorite_outline,
-                          text: 'Favorites',
+                          text: CustomLanguages.getTextSync('favorites'),
                         ),
                         GButton(
                           icon: Icons.category_outlined,
-                          text: 'Products',
+                          text: CustomLanguages.getTextSync('products'),
                         ),
                       ],
                     ),

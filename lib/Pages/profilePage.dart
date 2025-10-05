@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/network/user/resetPassword.dart';
 import 'package:blue_art_mad2/network/user/updateProfile.dart';
 import 'package:blue_art_mad2/services/localSharedPreferences.dart';
@@ -101,7 +102,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ListTile(
                 leading: Icon(Icons.camera_alt, color: CustomColors.getThemeColor(context, 'primary')),
                 title: Text(
-                  "Camera",
+                  CustomLanguages.getTextSync('camera'),
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: CustomColors.getThemeColor(context, 'textColor')),
                 ),
                 onTap: () async {
@@ -114,7 +115,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               ListTile(
                 leading: Icon(Icons.photo_library, color: CustomColors.getThemeColor(context, 'primary')),
                 title: Text(
-                  "Gallery",
+                  CustomLanguages.getTextSync('gallery'),
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: CustomColors.getThemeColor(context, 'textColor')),
                 ),
                 onTap: () async {
@@ -143,7 +144,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     setState(() => _usernameError = null);
 
     if (_usernameController.text.isEmpty) {
-      setState(() => _usernameError = "Username cannot be empty");
+      setState(() => _usernameError = CustomLanguages.getTextSync('usernameCannotBeEmpty'));
       return;
     }
 
@@ -159,7 +160,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         if (mounted) setState(() => _showProfileMsg = false);
       });
     } else {
-      final message = result['body']['message'] ?? "Failed to Update Profile!";
+      final message = result['body']['message'] ?? CustomLanguages.getTextSync('failedUpdateProfile');
       setState(() => _passwordError = message.toString());
     }
   }
@@ -168,12 +169,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
     setState(() => _passwordError = null);
 
     if (_oldPasswordController.text.isEmpty || _newPasswordController.text.isEmpty || _confirmPasswordController.text.isEmpty) {
-      setState(() => _passwordError = "All password fields are required");
+      setState(() => _passwordError = CustomLanguages.getTextSync('allPasswordFieldsRequired'));
       return;
     }
 
     if (_newPasswordController.text != _confirmPasswordController.text) {
-      setState(() => _passwordError = "Passwords do not match!");
+      setState(() => _passwordError = CustomLanguages.getTextSync('passwordsDoNotMatch'));
       return;
     }
 
@@ -221,7 +222,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               child: Column(
                 children: [
                   Text(
-                    "Profile Settings",
+                    CustomLanguages.getTextSync('profileSettings'),
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: CustomColors.getThemeColor(context, 'textColor')),
                   ),
                   const SizedBox(height: 20),
@@ -244,14 +245,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   TextField(
                     controller: _usernameController,
                     style: TextStyle(color: CustomColors.getThemeColor(context, 'textColor'), fontSize: 18),
-                    decoration: InputDecoration(labelText: "Username", errorText: _usernameError),
+                    decoration: InputDecoration(labelText: CustomLanguages.getTextSync('username'), errorText: _usernameError),
                   ),
                   const SizedBox(height: 20),
                   AnimatedOpacity(
                     duration: const Duration(milliseconds: 500),
                     opacity: _showProfileMsg ? 1.0 : 0.0,
                     child: Text(
-                      'Profile Updated Successfully',
+                      CustomLanguages.getTextSync('profileUpdatedSuccessfully'),
                       style: TextStyle(color: CustomColors.getThemeColor(context, 'labelSmall'), fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
@@ -261,7 +262,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       backgroundColor: CustomColors.getThemeColor(context, 'primary'),
                       foregroundColor: CustomColors.getThemeColor(context, 'onPrimary'),
                     ),
-                    child: const Text("Save Profile"),
+                    child: Text(CustomLanguages.getTextSync('saveProfile')),
                   ),
                 ],
               ),
@@ -280,21 +281,21 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
               child: Column(
                 children: [
                   Text(
-                    "Change Password",
+                    CustomLanguages.getTextSync('changePassword'),
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: CustomColors.getThemeColor(context, 'textColor')),
                   ),
                   const SizedBox(height: 20),
-                  _buildPasswordField(_oldPasswordController, "Old Password", _showOldPassword, (val) => setState(() => _showOldPassword = val)),
+                  _buildPasswordField(_oldPasswordController, CustomLanguages.getTextSync('oldPassword'), _showOldPassword, (val) => setState(() => _showOldPassword = val)),
                   const SizedBox(height: 16),
-                  _buildPasswordField(_newPasswordController, "New Password", _showNewPassword, (val) => setState(() => _showNewPassword = val)),
+                  _buildPasswordField(_newPasswordController, CustomLanguages.getTextSync('newPassword'), _showNewPassword, (val) => setState(() => _showNewPassword = val)),
                   const SizedBox(height: 16),
-                  _buildPasswordField(_confirmPasswordController, "Confirm Password", _showConfirmPassword, (val) => setState(() => _showConfirmPassword = val)),
+                  _buildPasswordField(_confirmPasswordController, CustomLanguages.getTextSync('confirmPassword'), _showConfirmPassword, (val) => setState(() => _showConfirmPassword = val)),
                   const SizedBox(height: 20),
                   AnimatedOpacity(
                     duration: const Duration(milliseconds: 500),
                     opacity: _showPasswordMsg ? 1.0 : 0.0,
                     child: Text(
-                      'Password Updated Successfully',
+                      CustomLanguages.getTextSync('passUpdatedSuccessfully'),
                       style: TextStyle(color: CustomColors.getThemeColor(context, 'labelSmall'), fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
@@ -304,7 +305,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                       backgroundColor: CustomColors.getThemeColor(context, 'primary'),
                       foregroundColor: CustomColors.getThemeColor(context, 'onPrimary'),
                     ),
-                    child: const Text("Save Password"),
+                    child: Text(CustomLanguages.getTextSync('savePassword')),
                   ),
                 ],
               ),

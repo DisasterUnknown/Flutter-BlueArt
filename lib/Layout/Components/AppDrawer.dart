@@ -1,4 +1,5 @@
 // ignore_for_file: file_names, deprecated_member_use
+import 'package:blue_art_mad2/language/systemLanguageManager.dart';
 import 'package:blue_art_mad2/network/auth/login.dart';
 import 'package:blue_art_mad2/theme/systemColorManager.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class AppDrawer extends ConsumerWidget {
                       const Icon(Icons.menu_rounded, color: Colors.white, size: 28),
                       const SizedBox(width: 12),
                       Text(
-                        'Main Menu',
+                        CustomLanguages.getTextSync('mainMenu'),
                         style: TextStyle(
                           color: textColor,
                           fontWeight: FontWeight.bold,
@@ -65,7 +66,7 @@ class AppDrawer extends ConsumerWidget {
                     _drawerItem(
                       context,
                       icon: Icons.home_rounded,
-                      title: 'Home',
+                      title: CustomLanguages.getTextSync('home'),
                       onTap: () {
                         Navigator.pop(context);
                         onTabSelect(0);
@@ -74,7 +75,7 @@ class AppDrawer extends ConsumerWidget {
                     _drawerItem(
                       context,
                       icon: Icons.shopping_cart_rounded,
-                      title: 'Cart',
+                      title: CustomLanguages.getTextSync('cart'),
                       onTap: () {
                         Navigator.pop(context);
                         onTabSelect(1);
@@ -83,7 +84,7 @@ class AppDrawer extends ConsumerWidget {
                     _drawerItem(
                       context,
                       icon: Icons.favorite_rounded,
-                      title: 'Favorites',
+                      title: CustomLanguages.getTextSync('favorites'),
                       onTap: () {
                         Navigator.pop(context);
                         onTabSelect(2);
@@ -92,7 +93,7 @@ class AppDrawer extends ConsumerWidget {
                     _drawerItem(
                       context,
                       icon: Icons.storefront_rounded,
-                      title: 'Products',
+                      title: CustomLanguages.getTextSync('products'),
                       onTap: () {
                         Navigator.pop(context);
                         onTabSelect(3);
@@ -119,7 +120,7 @@ class AppDrawer extends ConsumerWidget {
                     _drawerItem(
                       context,
                       icon: Icons.settings_rounded,
-                      title: 'Settings',
+                      title: CustomLanguages.getTextSync('settings'),
                       onTap: () {
                         Navigator.pop(context);
                         onTabSelect(10);
@@ -128,7 +129,7 @@ class AppDrawer extends ConsumerWidget {
                     _drawerItem(
                       context,
                       icon: Icons.logout_rounded,
-                      title: 'Logout',
+                      title: CustomLanguages.getTextSync('logout'),
                       color: Colors.redAccent,
                       onTap: () async {
                         await AuthLogin(ref).logout(context);
